@@ -1,0 +1,63 @@
+.playerContainer{
+    margin-left: 20px;
+    background-color: white;
+    margin-top: 30px;
+    height: 70vh;
+    width: 60vw;
+}
+.smallStuff{
+    margin-top: 10px;
+    justify-content: space-around;
+    display: flex;
+    margin-left: 20px;
+    width: 60vw;
+}
+.smallStuff button{
+    font-size: 1.5rem;
+    padding: 5px 20px;
+    border: none;
+    border-radius: 6px;
+    color: white;
+    background-color: orange;
+}
+.downloadBtn{
+    font-size: 1.5rem;
+    padding: 5px 20px;
+    align-content: center;
+    background-color: orange;
+    color: white;
+    border-radius: 6px;
+}
+.addToLibrary{
+    width: 300px;
+    border: 3px solid orange;
+    height: 352px;
+    color: white;
+    background: black;
+    display: flex
+;
+    position: absolute;
+    flex-direction: column;
+    top: 39%;
+}
+.addToLibrary h3{
+    margin-left: 17px;
+    display: inline-block;
+}
+.addLibraryBtn{
+    top: 13px;
+    right: 21px;
+    position: absolute;
+    display: inline-block;
+}
+.libraryForm{
+    gap: 10px;
+    display: flex;
+    flex-direction: column;
+}
+.libraryForm label{
+    font-size: 1.2rem;
+}
+.addToLibrary .flex-row{
+    justify-content: space-around;
+}

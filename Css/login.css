@@ -1,0 +1,30 @@
+.loginContainer{
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    height: 85vh;
+}
+.loginForm{
+    gap: 6px;
+    width: 70vw;
+    background-color: black;
+    display: flex
+;
+    flex-direction: column;
+    padding: 60px 50px;
+
+}
+.loginForm input{
+    height: 25px;
+}
+.loginBtn{
+    color: white;
+    background-color: orange;
+    margin-top: 20px;
+    width: 25vw;
+    border: none;
+}
+.loginForm a{
+    color: white;
+    text-decoration: none;
+}

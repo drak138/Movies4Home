@@ -1,0 +1,66 @@
+a{
+    text-decoration: none;
+}
+header{
+    color: white;
+    padding: 20px 70px;
+    justify-content: space-between;
+    align-items: center;
+    background-color: black;
+    display: flex;
+}
+header .logo{
+    font-size: 2.5em;
+}
+header .logo span{
+    color: orange;
+}
+header a{
+    color: white;
+}
+header .search input{
+    border: black;
+    border-radius: 14px;
+    width: 44vw;
+    height: 40px;
+}
+header i{
+    color: white;
+}
+
+.profilePic{
+    width: 55px;
+    border-radius: 50%;
+    background-color: gray;
+}
+.downloadsLimit{
+    border-radius: 50%;
+    justify-items: center;
+    right: 112px;
+    background: orange;
+    top: 13px;
+    width: 22px;
+    position: absolute;
+}
+.downloadsLeft{
+    padding-right: 4px;
+    margin: 0px;
+}
+.profile:hover .profileAcord{
+    gap: 3px;
+    align-items: center;
+    width: 90px;
+    right: 51px;
+    top: 55px;
+    background: black;
+    border: orange 2px solid;
+    position: absolute;
+    z-index: 1;
+    display: flex
+;
+    flex-direction: column;
+    padding: 0px;
+}
+.profileAcord{
+    display: none;
+}

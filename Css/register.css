@@ -1,0 +1,33 @@
+h2{
+    margin: 0px;
+}
+.registerContainer{
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    height: 85vh;
+}
+.registerForm{
+    gap: 6px;
+    width: 70vw;
+    background-color: black;
+    display: flex
+;
+    flex-direction: column;
+    padding: 60px 50px;
+
+}
+.registerForm input{
+    height: 25px;
+}
+.registerBtn{
+    color: white;
+    background-color: orange;
+    margin-top: 20px;
+    width: 25vw;
+    border: none;
+}
+.registerForm a{
+    color: white;
+    text-decoration: none;
+}
