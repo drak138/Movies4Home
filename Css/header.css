@@ -46,7 +46,8 @@ header i{
     padding-right: 4px;
     margin: 0px;
 }
-.profile:hover .profileAcord{
+.profile .profileAcord{
+    display: none;
     gap: 3px;
     align-items: center;
     width: 90px;
@@ -56,11 +57,9 @@ header i{
     border: orange 2px solid;
     position: absolute;
     z-index: 1;
-    display: flex
-;
     flex-direction: column;
     padding: 0px;
 }
-.profileAcord{
-    display: none;
-}
+.profileAcord.active {
+    display: flex;
+  }
