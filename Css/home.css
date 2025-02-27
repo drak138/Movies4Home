@@ -50,18 +50,6 @@
     background-color: orange;
     padding: 10px 50px;
 }
-.movie1{
-    background-image: url(https://image.tmdb.org/t/p/original/3V4kLQg0kSqPLctI5ziYWabAZYF.jpg);
-}
-.movie2{
-    background-image: url(https://image.tmdb.org/t/p/original/qfAfE5auxsuxhxPpnETRAyTP5ff.jpg);
-}
-.movie3{
-    background-image: url(https://image.tmdb.org/t/p/original/1ulX4rDlS97lbDi929PUrEi507V.jpg);
-}
-.movie4{
-    background-image: url(https://image.tmdb.org/t/p/original/rOMLLMGgDgGG6XeT3P8sUdUb8nl.jpg);
-}
 .listType{
     margin-left: 20px;
 }
@@ -106,6 +94,9 @@
     position: relative;
     gap: 14px;
     display: flex;
+}
+.movieCard{
+    width: 300px;
 }
 .moviePoster{
     align-items: flex-end;

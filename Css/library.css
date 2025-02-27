@@ -1,0 +1,65 @@
+.libContainer{
+    justify-content: center;
+    gap: 50px;
+    display: flex
+;
+height: 64vh;
+}
+.libraries{
+    height: -webkit-fill-available;
+    flex-direction: column;
+    display: flex
+;
+    width: fit-content;
+    border: 2px solid orange;
+    padding: 20px;
+}
+.libraries ul{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.libActions{
+    display: flex;
+    gap: 10px;
+margin-top:auto;
+}
+.libActions button{
+    border: none;
+    background-color: orange;
+    color: white;
+    border-radius: 6px;
+    padding: 5px 10px;
+}
+
+.savedMovies{
+    width: 880px;
+    border: 2px solid orange;
+    gap: 40px;
+    overflow-y: scroll;
+    flex-wrap: wrap;
+    display: flex
+;
+    padding: 30px;
+;
+}
+.savedMovies .movieWithRemove{
+    display: flex;
+    width: 13vw;
+    gap: 10px;
+    flex-direction: column;
+}
+.savedMovies .movieWithRemove .movieCard{
+    height: 340px;
+    width: 190px;
+}
+.savedMovies .movieWithRemove .movieCard .moviePoster{
+    width: unset;
+}
+.removeButton{
+    background-color: orange;
+    color: white;
+    border: none;
+    border-radius: 6px;
+}
