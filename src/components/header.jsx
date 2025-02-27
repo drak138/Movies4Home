@@ -22,8 +22,8 @@ export default function header() {
                 <Link to="/library">Library</Link>
                 <a href="">Logout</a>
                 {/* Guest */}
-                <a href="">Register</a>
-                <a href="">Login</a>
+                <Link to="/register">Register</Link>
+                <Link to="/signup">Log in</Link>
             </ul>
         </div>
 

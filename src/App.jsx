@@ -3,6 +3,8 @@ import './App.css'
 import Header from './components/header';
 import Home from './pages/home';
 import Library from './pages/library';
+import Register from './pages/register';
+import LogIn from './pages/login';
 
 function App() {
 
@@ -12,6 +14,8 @@ function App() {
         <Routes>
         <Route path='/' element={<Home/>}/>
         <Route path='/library' element={<Library/>}/>
+        <Route path='/register' element={<Register/>}></Route>
+        <Route path='/signup' element={<LogIn/>}></Route>
         </Routes>
         </>
     );
