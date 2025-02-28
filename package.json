@@ -3,7 +3,6 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "http://.github.io/Movies4Home/",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
