@@ -4,12 +4,15 @@
   "version": "0.0.0",
   "type": "module",
    "homepage": "https://drak138.github.io/Movies4Home/",
-  "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "lint": "eslint .",
-    "preview": "vite preview"
-  },
+"scripts": {
+  "dev": "vite",
+  "build": "vite build",
+  "lint": "eslint .",
+  "preview": "vite preview",
+  "predeploy": "vite build",
+  "deploy": "npx gh-pages -d dist"
+}
+,
   "dependencies": {
     "localforage": "^1.10.0",
     "match-sorter": "^8.0.0",
