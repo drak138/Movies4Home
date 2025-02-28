@@ -29,7 +29,7 @@ export default function Header() {
 
   return (
     <header>
-      <Link className="logo" to="/">
+      <Link className="logo" to="/Movies4Home">
         Movies<span>4</span>Home
       </Link>
 
