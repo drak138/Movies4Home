@@ -29,7 +29,7 @@ export default function Header() {
 
   return (
     <header>
-      <Link className="logo" to="/Movies4Home">
+      <Link className="logo" to="/Movies4Home/">
         Movies<span>4</span>Home
       </Link>
 
@@ -42,7 +42,7 @@ export default function Header() {
 
       {/* Profile Section with ref */}
       <div className="profile" ref={profileRef}>
-        <img className="profilePic" src="/guest.png" alt="" onClick={toggleProfileMenu} />
+        <img className="profilePic" src="/public/guest.png" alt="" onClick={toggleProfileMenu} />
 
         <div className="downloadsLimit">
           <p className="downloadsLeft">3</p>
