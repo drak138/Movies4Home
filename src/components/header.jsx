@@ -32,7 +32,6 @@ export default function Header() {
       <Link className="logo" to="/Movies4Home/">
         Movies<span>4</span>Home
       </Link>
-
       <div className="search">
         <input type="text" placeholder="Enter movie name" />
         <a>
