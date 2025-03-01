@@ -42,7 +42,7 @@ export default function Header() {
 
       {/* Profile Section with ref */}
       <div className="profile" ref={profileRef}>
-        <img className="profilePic" src="/public/guest.png" alt="" onClick={toggleProfileMenu} />
+        <img className="profilePic" src="/Movies4Home/guest.png" alt="" onClick={toggleProfileMenu} />
 
         <div className="downloadsLimit">
           <p className="downloadsLeft">3</p>

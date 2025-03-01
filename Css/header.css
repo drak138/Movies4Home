@@ -18,7 +18,13 @@ header .logo span{
 header a{
     color: white;
 }
+header .search{
+    gap: 15px;
+    display: flex;
+    align-items: center;
+}
 header .search input{
+    padding: 0px 10px;
     border: black;
     border-radius: 14px;
     width: 44vw;
