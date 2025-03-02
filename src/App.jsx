@@ -5,6 +5,7 @@ import Home from './pages/home';
 import Library from './pages/library';
 import Register from './pages/register';
 import LogIn from './pages/login';
+import Profile from './pages/profile';
 
 function App() {
 
@@ -12,8 +13,9 @@ function App() {
         <>
         <Header/>
         <Routes>
-        <Route path='/Movies4Home/' element={<Home/>}/>
+        <Route path='/' element={<Home/>}/>
         <Route path='/library' element={<Library/>}/>
+        <Route path='/profile' element={<Profile/>}></Route>
         <Route path='/register' element={<Register/>}></Route>
         <Route path='/signup' element={<LogIn/>}></Route>
         </Routes>

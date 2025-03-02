@@ -4,6 +4,9 @@ export default function AuthForm({ type }) {
       <section className="authContainer container">
         <form className="authForm" action="" method="POST">
           <h2>{type}</h2>
+
+          <label htmlFor="username">Username</label>
+          <input type="text" id="username" name="username" />
   
           <label htmlFor="email">Email</label>
           <input type="text" id="email" name="email" />

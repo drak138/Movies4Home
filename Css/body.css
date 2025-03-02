@@ -18,6 +18,11 @@ body{
     overflow-x: hidden;
     background-color: black;
 }
+button{
+    background-color: transparent;
+    color: white;
+    border: none;
+}
 button,a:hover{
     cursor: pointer;
 }

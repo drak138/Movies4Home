@@ -46,7 +46,7 @@ margin-top:auto;
 }
 .savedMovies .movieWithRemove{
     display: flex;
-    width: 13vw;
+    width: 11vw;
     gap: 10px;
     flex-direction: column;
 }
@@ -56,7 +56,19 @@ margin-top:auto;
 }
 .removeButton{
     background-color: orange;
-    color: white;
     border: none;
     border-radius: 6px;
 }
+@media (min-width: 768px) {
+    .movieWithRemove {
+      width: 20vw; /* Adjust width for tablets */
+      max-width: 300px;
+    }
+  }
+  
+  @media (min-width: 1080px) {
+    .movieWithRemove {
+      width: 11vw; /* Adjust width for desktop */
+      max-width: 350px;
+    }
+  }

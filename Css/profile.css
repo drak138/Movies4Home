@@ -1,0 +1,68 @@
+.profileWrapper{
+    justify-content: center;
+    width: 100vw;
+    height: 85vh;
+    display: flex
+;
+    align-items: center;
+}
+.profileContainer{
+    border: 2px solid orange;
+    display: flex
+;
+    gap: 20px;
+    min-width: 426px;
+}
+.profileOverview{
+    border-right: 2px solid orange;
+    display: flex
+;
+    margin: 0px;
+    flex-direction: column;
+    padding: 50px 20px 50px 20px;
+    gap: 19px;
+}
+.profileOverview button{
+    font-size: 2rem;
+}
+.profileOverview .selected{
+    padding-right: 5px;
+}
+.overviewContainer, .settingsContainer{
+    padding-right: 20px;
+}
+.overview{
+    gap: 30px;
+    align-items: center;
+    display: flex
+;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+.userName{
+    font-size: 2rem;
+}
+.contents p, .settings{
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+.settings:hover{
+    cursor: pointer;
+}
+.change{
+    border: 2px solid orange;
+    padding: 4px
+}
+.changeForm{
+    display: flex;
+    flex-direction: column;
+}
+.changeForm input{
+    float:inline-end;
+    border: none;
+    border-radius: 6px;
+    margin-left: 4px;
+}
+.changeForm label{
+    margin-bottom: 10px;
+}

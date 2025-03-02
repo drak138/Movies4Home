@@ -23,6 +23,7 @@ header .search{
     display: flex;
     align-items: center;
 }
+
 header .search input{
     padding: 0px 10px;
     border: black;
@@ -38,6 +39,7 @@ header i{
     width: 55px;
     border-radius: 50%;
     background-color: gray;
+    cursor: pointer;
 }
 .downloadsLimit{
     border-radius: 50%;
