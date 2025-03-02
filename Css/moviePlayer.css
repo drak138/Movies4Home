@@ -1,4 +1,5 @@
 .playerContainer{
+    position: relative;
     margin-left: 20px;
     background-color: white;
     margin-top: 30px;
@@ -61,3 +62,42 @@
 .addToLibrary .flex-row{
     justify-content: space-around;
 }
+.loadingImg{
+    height:-webkit-fill-available;
+    width: -webkit-fill-available;
+}
+.movieDetails{
+    padding: 0px 30px;
+}
+.playerContainer p,.playerContainer i{
+    position: absolute;
+    top: 0;
+    opacity: 1;
+}
+  @keyframes pulsateShadow {
+    0% {
+      box-shadow: 0 0 15px 5px rgba(255, 165, 0, 1), 0 0 25px 10px rgba(255, 165, 0, 1);
+    }
+    50% {
+      box-shadow: 0 0 25px 10px rgba(255, 165, 0, 1), 0 0 40px 20px rgba(255, 165, 0, 1);
+    }
+    100% {
+      box-shadow: 0 0 15px 5px rgba(255, 165, 0, 1), 0 0 25px 10px rgba(255, 165, 0, 1);
+    }
+  }
+  
+  .playerContainer .onHover {
+    position: absolute;
+    top: 50%;
+    right: 50%;
+    color: white;
+    background-image: linear-gradient(orange, #7f5302);
+    border-radius: 50%;
+    padding: 10px 17px 10px 22px;
+    -webkit-background-clip: unset;
+    -webkit-text-fill-color: unset;
+    animation: pulsateShadow 1.5s infinite ease-in-out;
+    transform: translate(50%, -50%);  /* To center the element */
+  }
+  
+  

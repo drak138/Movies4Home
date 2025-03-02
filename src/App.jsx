@@ -6,6 +6,7 @@ import Library from './pages/library';
 import Register from './pages/register';
 import LogIn from './pages/login';
 import Profile from './pages/profile';
+import Movie from './pages/movie';
 
 function App() {
 
@@ -14,6 +15,8 @@ function App() {
         <Header/>
         <Routes>
         <Route path='/' element={<Home/>}/>
+        <Route path='/watch/:mediaType/:title/:id' element={<Movie/>}/>
+        <Route path="/watch/tv/:title/:id/season/:season/episode/:episode" element={<Movie/>}/>
         <Route path='/library' element={<Library/>}/>
         <Route path='/profile' element={<Profile/>}></Route>
         <Route path='/register' element={<Register/>}></Route>

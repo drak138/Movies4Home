@@ -14,7 +14,7 @@ export default function MovieCard({movie}){
               <i className="fa-solid fa-star"></i>
               <span>{vote_average.toFixed(1)}</span>
             </p>
-            <i class="fa-solid fa-play onHover"></i>
+            <i className="fa-solid fa-play onHover"></i>
             <img className='moviePoster' src={posterUrl} alt="" />
             </div>
             <p className="title">{title?title:name}</p>
