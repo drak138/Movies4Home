@@ -54,9 +54,6 @@ margin-top:auto;
     height: 340px;
     width: 190px;
 }
-.savedMovies .movieWithRemove .movieCard .moviePoster{
-    width: unset;
-}
 .removeButton{
     background-color: orange;
     color: white;

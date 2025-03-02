@@ -6,12 +6,23 @@ export default function MovieList({listType}) {
   const [type, setType] = useState("movie");  
   const { list } = useListHook({ type,listModel:listType });  
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
 
   const scrollAmount = 3; // Number of movies to scroll at a time
 
   useEffect(() => {
     setCurrentIndex(0); // Reset scroll position when type changes
   }, [type]);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setScreenWidth(window.innerWidth);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const scrollLeft = () => {
     setCurrentIndex((prevIndex) => Math.max(prevIndex - scrollAmount, 0));
@@ -22,6 +33,14 @@ export default function MovieList({listType}) {
       const maxIndex = list.results.length - scrollAmount;
       setCurrentIndex((prevIndex) => Math.min(prevIndex + scrollAmount, maxIndex));
     }
+  };
+
+  const getTranslateValue = () => {
+    let baseValue = 9.5; // Base value for translateX in vw
+    if (screenWidth < 768) baseValue = 16.4; // More space for mobile screens
+    if (screenWidth < 480) baseValue = 17; // Even more space for small screens
+
+    return currentIndex * baseValue;
   };
 
   return (
@@ -45,12 +64,11 @@ export default function MovieList({listType}) {
       </div>
 
       <div className="movieListWrapper" style={{ position: "relative"}}>
-
         <div 
           className="movieList" 
           style={{ 
             display: "flex", 
-            transform: `translateX(-${currentIndex * 195}px)`, // Adjust per movie width
+            transform: `translateX(-${getTranslateValue()}vw)`, // Dynamically calculated
             transition: "transform 0.5s ease-in-out"
           }}
         >
@@ -77,3 +95,4 @@ export default function MovieList({listType}) {
     </section>
   );
 }
+
