@@ -62,7 +62,7 @@ export default function TvSeasons({ details, id }) {
                             return isReleased ? (
                                 <Link 
                                     className="episode" 
-                                    to={`/Movies4Home/watch/tv/${details.name}/${details.id}/season/${season}/episode/${ep.episode_number}`} 
+                                    to={`/watch/tv/${details.name}/${details.id}/season/${season}/episode/${ep.episode_number}`} 
                                     key={ep.id}
                                 >
                                     <span>Episode {ep.episode_number}.{ep.air_date} - </span>{ep.name}
