@@ -11,11 +11,11 @@ export default function MovieInfo({details,id,title,mediaType}){
             setGenres(prev => [...prev, ...newGenres]);
         }
     }, [details?.genres]); // Add `details` as the dependency array
-    console.log(genres);
+    console.log(images);
     
     return(
         <section className="infoContainer">
-            <img style={{width:"20rem"}} src={`https://image.tmdb.org/t/p/original/${images?.logos.filter(iso=>iso.iso_639_1=="en")[0].file_path}`} alt={title} />
+            <img style={{width:"20rem"}} src={`https://image.tmdb.org/t/p/original/${images?.logos.length!==0?images?.logos.filter(iso=>iso.iso_639_1=="en")[0].file_path:"No Logo"}`} alt={title} />
             <section className="infoWrapper">
                 <img style={{width:"15rem"}} src={`https://image.tmdb.org/t/p/w780${details?.poster_path}`} alt="" />
                 <div className="additionalInfo">
@@ -32,7 +32,8 @@ export default function MovieInfo({details,id,title,mediaType}){
         DE: " Germany",
         FR: " France",
         IT: " Italy",
-        IN: " India"
+        IN: " India",
+        JP: " Japan"
         // Add more mappings here as needed
       }[details?.origin_country] || details?.origin_country
     }
@@ -45,7 +46,8 @@ export default function MovieInfo({details,id,title,mediaType}){
         fr: "French",
         it: "Italian",
         es: "Spanish",
-        ta: "Tamil"
+        ta: "Tamil",
+        ja: "Japanese"
         // Add more mappings here as needed
 }[details?.original_language] || details?.original_language}</span>
                     </p>

@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-export default function MoviePlayer({mediaType,id,details}){
+export default function MoviePlayer({mediaType,id,details,season,episode}){
     const [watching,setWatching]=useState(false)
-    const season=1
-    const episode=1
+    useEffect(()=>{
+        setWatching(false)
+    },[season,episode])
+    console.log(watching)
     return(
         // <div className="movieWrapper">
         //     <img src={`https://image.tmdb.org/t/p/original${details.backdrop_path}`} alt="" />

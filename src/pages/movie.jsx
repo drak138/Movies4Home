@@ -6,13 +6,13 @@ import MovieInfo from "../components/movieInfo";
 import TvSeasons from "../components/tvSeasons";
 
 export default function Movie(){
-    const {mediaType,id,title} = useParams()
+    const {mediaType,id,title,season,episode} = useParams()
     const res=UseDetailsHook({type:mediaType,movieId:id})
     const details=res.movieDetails
     return(
         <div className="playerWrapper">
         <section className="movieDetails">
-            <MoviePlayer mediaType={mediaType} id={id} details={details}/>
+            <MoviePlayer mediaType={mediaType} id={id} details={details} season={season} episode={episode}/>
             <MovieActions title={title} id={id}/>
             <MovieInfo details={details} id={id} title={title} mediaType={mediaType}/>
 
