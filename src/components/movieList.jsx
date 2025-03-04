@@ -36,7 +36,7 @@ export default function MovieList({listType}) {
   };
 
   const getTranslateValue = () => {
-    let baseValue = 14.2; // Base value for translateX in vw
+    let baseValue = 14.6; // Base value for translateX in vw
     if (screenWidth < 768) baseValue = 16.4; // More space for mobile screens
     if (screenWidth < 480) baseValue = 17; // Even more space for small screens
 
@@ -67,6 +67,7 @@ export default function MovieList({listType}) {
         <div 
           className="movieList" 
           style={{ 
+            gap:"20px",
             display: "flex", 
             transform: `translateX(-${getTranslateValue()}vw)`, // Dynamically calculated
             transition: "transform 0.5s ease-in-out"
