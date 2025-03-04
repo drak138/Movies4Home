@@ -5,7 +5,7 @@ export default function MovieCard({movie}){
     function encodeMovieName(movieName) {
         return encodeURIComponent(movieName.replace(':', '').toLowerCase().replace(/\s+/g, '-'));
       }
-      const encodedName = encodeMovieName(title?title:name);
+      const encodedName = encodeMovieName(title?title+`-${release_date.split("-")[0]}`:name);
     return(
         <Link to={`/watch/${title?"movie":"tv"}/${encodedName}/${id}`} className="movieCard">
             <div className='posterHolder'>

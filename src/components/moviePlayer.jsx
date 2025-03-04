@@ -1,15 +1,9 @@
-import { useParams} from "react-router-dom";
-import UseDetailsHook from "../hooks/useDetailsHook";
 import { useState } from "react";
 
-export default function MoviePlayer(){
-    const {mediaType,id} = useParams()
+export default function MoviePlayer({mediaType,id,details}){
     const [watching,setWatching]=useState(false)
-    const res=UseDetailsHook({type:mediaType,movieId:id})
-    const details=res.movieDetails
     const season=1
     const episode=1
-    console.log(details)
     return(
         // <div className="movieWrapper">
         //     <img src={`https://image.tmdb.org/t/p/original${details.backdrop_path}`} alt="" />

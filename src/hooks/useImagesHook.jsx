@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
 const TMDB_KEY = import.meta.env.VITE_TMDB_API_KEY;
 
-export default function useImagesHook({ movieId }) {
+export default function useImagesHook({ movieId ,mediaType}) {
   const [images, setImages] = useState(null);
 
   useEffect(() => {
     const fetchImg = async () => {
       try {
         const res = await fetch(
-          `https://api.themoviedb.org/3/movie/${movieId}/images?api_key=${TMDB_KEY}`
+          `https://api.themoviedb.org/3/${mediaType}/${movieId}/images?api_key=${TMDB_KEY}`
         );
         const movieImages = await res.json();
         setImages(movieImages); // Set the images

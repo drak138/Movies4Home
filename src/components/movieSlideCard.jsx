@@ -4,7 +4,7 @@ import useImagesHook from "../hooks/useImagesHook";
 export default function MovieSlideCard({ movie }) {
   const { backdrop_path, vote_average, id, release_date, overview, title } = movie;
   // Get movie details using the hook
-  const {images}=useImagesHook({ movieId:id })
+  const {images}=useImagesHook({ movieId:id ,mediaType:"movie"})
 
 
 
