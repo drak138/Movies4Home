@@ -43,7 +43,7 @@
     width: 50vw;
     font-size: 1.5rem;
 }
-.watchNowBtn{
+.watchNow{
     font-size: 1.2rem;
     border-radius: 13px;
     color: white;
@@ -90,6 +90,7 @@
     width: 100%;
     display: flex;
   }
+  .watchNow
 .movieList{
     position: relative;
     gap: 14px;
