@@ -1,9 +1,12 @@
 import { useState, useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Header() {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const profileRef = useRef(null); // Reference for detecting clicks outside
+  const [query,setQuery]=useState("")
+  const navigate= useNavigate()
+
 
   const toggleProfileMenu = () => {
     setIsProfileOpen(!isProfileOpen);
@@ -12,7 +15,6 @@ export default function Header() {
   const closeProfileMenu = () => {
     setIsProfileOpen(false);
   };
-
   // Close menu if clicking outside of profile div
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -27,18 +29,28 @@ export default function Header() {
     };
   }, []);
 
+  const handleSubmit=(e)=>{
+    e.preventDefault();
+    if (query) {
+      navigate(`/search/${query}/1`);
+    }
+  }
+
   return (
     <header>
       <Link className="logo" to="/">
         Movies<span>4</span>Home
       </Link>
 
-      <div className="search">
-        <input type="text" placeholder="Enter movie name" />
-        <a>
+      <form onSubmit={handleSubmit} className="search">
+        <input type="text" placeholder="Enter movie name"
+        value={query}
+        onChange={(e)=>{setQuery(e.target.value)}}
+        />
+        <button type="submit">
           <i className="fa-solid fa-magnifying-glass"></i>
-        </a>
-      </div>
+        </button>
+      </form>
 
       {/* Profile Section with ref */}
       <div className="profile" ref={profileRef}>

@@ -1,0 +1,49 @@
+.pagination{
+    display: flex;
+        justify-content: center;
+        gap: 55px;
+    
+}
+.arrows{
+    display: flex;
+        gap: 25px;
+}
+.arrows i:hover{
+    cursor: pointer;
+}
+.pages{
+    display: flex;
+    gap: 22px;
+}
+.pages span{
+    padding: 0px 5px;
+    border: 2px solid orange;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 9px;  
+    text-align: center;
+}
+.pages span:hover{
+    cursor: pointer;
+}
+.results{
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+    display: flex
+;
+}
+.results .movieCard{
+    height: 47vh;
+    width: 16vw;
+}
+@media (min-width: 1080px) {
+    .posterHolder {
+        height: 46vh;
+        width: 16vw;
+        max-width: 350px;
+    } 
+    
+}

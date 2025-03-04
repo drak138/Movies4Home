@@ -36,7 +36,7 @@ export default function MovieList({listType}) {
   };
 
   const getTranslateValue = () => {
-    let baseValue = 9.5; // Base value for translateX in vw
+    let baseValue = 14.2; // Base value for translateX in vw
     if (screenWidth < 768) baseValue = 16.4; // More space for mobile screens
     if (screenWidth < 480) baseValue = 17; // Even more space for small screens
 

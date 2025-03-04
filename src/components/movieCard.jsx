@@ -9,10 +9,10 @@ export default function MovieCard({movie}){
     return(
         <Link to={`/watch/${title?"movie":"tv"}/${encodedName}/${id}`} className="movieCard">
             <div className='posterHolder'>
-            <p className="year">{release_date?release_date.split("-")[0]:first_air_date.split("-")[0]}</p>
+            <p className="year">{release_date?release_date?.split("-")[0]:first_air_date?.split("-")[0]}</p>
             <p className="rating">
               <i className="fa-solid fa-star"></i>
-              <span>{vote_average.toFixed(1)}</span>
+              <span>{vote_average?.toFixed(1)}</span>
             </p>
             <i className="fa-solid fa-play onHover"></i>
             <img className='moviePoster' src={posterUrl} alt="" />
