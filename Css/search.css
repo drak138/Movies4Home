@@ -29,7 +29,7 @@
 }
 .results{
     justify-content: center;
-    gap: 30px;
+    gap: 50px;
     flex-wrap: wrap;
     margin-top: 20px;
     display: flex

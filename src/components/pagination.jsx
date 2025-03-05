@@ -9,7 +9,7 @@ export default function Pagination({ query, totalPages, currentPage }) {
 
     useEffect(() => {
         // Ensure the page range is calculated properly when `currentPage` changes
-        const adjustedStartPage = Math.max(1, currentPage - 4);
+        const adjustedStartPage = Math.max(1, currentPage - 5);
         const adjustedEndPage = Math.min(totalPages, adjustedStartPage + 9);
 
         setStartPage(adjustedStartPage);
