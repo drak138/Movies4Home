@@ -4,6 +4,9 @@
         gap: 55px;
     
 }
+.pagination .active{
+    background-color: orange;
+}
 .arrows{
     display: flex;
         gap: 25px;

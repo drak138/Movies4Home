@@ -42,7 +42,7 @@ export default function Pagination({ query, totalPages, currentPage }) {
                 {pageRange.map((page) => (
                     <span
                         key={page}
-                        className={currentPage === page ? "active" : ""}
+                        className={currentPage == page ? "active" : ""}
                         onClick={() => handlePageChange(page)}
                     >
                         {page}
