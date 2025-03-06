@@ -1,8 +1,9 @@
 import puppeteer from "puppeteer-extra";
 export default async function hrefStealer (url){
     try {
-        const browser = await puppeteer.launch({ headless: "true",    
-            executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || "/usr/bin/google-chrome"
+        const browser = await puppeteer.launch({ 
+            headless: "true",    
+            executablePath: puppeteer.executablePath()
         });
         const page = await browser.newPage();
         await page.goto(url, { waitUntil: "networkidle2" });
