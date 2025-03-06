@@ -3,7 +3,8 @@ export default async function hrefStealer (url){
     try {
         const browser = await puppeteer.launch({ 
             headless: true,    
-            executablePath: '/usr/bin/google-chrome-stable'
+            executablePath: '/opt/homebrew/bin/chromium',
+            args: ['--no-sandbox', '--disable-setuid-sandbox']
 
         });
         const page = await browser.newPage();
