@@ -1,6 +1,5 @@
 import express from "express";
 import cors from "cors";
-import puppeteer from "puppeteer";
 import hrefStealer from "./hrefStealer.js";
 
 const app = express();

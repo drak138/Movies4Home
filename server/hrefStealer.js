@@ -1,4 +1,4 @@
-import puppeteer from "puppeteer";
+import puppeteer from "puppeteer-extra";
 export default async function hrefStealer (url){
     try {
         const browser = await puppeteer.launch({ headless: "false" });
