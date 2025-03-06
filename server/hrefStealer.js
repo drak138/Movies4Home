@@ -2,7 +2,7 @@ import puppeteer from "puppeteer-extra";
 export default async function hrefStealer (url){
     try {
         const browser = await puppeteer.launch({ 
-            headless: "true",    
+            headless: true,    
             executablePath: puppeteer.executablePath()
         });
         const page = await browser.newPage();
