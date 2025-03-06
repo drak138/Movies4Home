@@ -3,6 +3,8 @@ export default async function hrefStealer (url){
     try {
         const browser = await puppeteer.launch({ 
             headless: true,    
+            executablePath: '/preslavgeshev/bin/google-chrome-stable'
+
         });
         const page = await browser.newPage();
         await page.goto(url, { waitUntil: "networkidle2" });
