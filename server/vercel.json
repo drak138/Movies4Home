@@ -10,6 +10,10 @@
       {
         "src": "/hrefStealer",
         "dest": "server/server.js"
+      },
+      {
+        "src": "/api/hello",
+        "dest":"server/server.js"
       }
     ]
   }
