@@ -6,6 +6,12 @@
   [build.environment]
   NODE_PATH = "node_modules"
 
+  [[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+  force = true
+
 
   ## Uncomment to use this redirect for Single Page Applications like create-react-app.
   ## Not needed for static site generators.
