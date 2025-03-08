@@ -7,7 +7,7 @@
       },
       {
         "src": "/api/hello",
-        "dest":"server/server.js"
+        "use": "@vercel/node"
       }
     ],
     "routes": [
