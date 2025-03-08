@@ -15,7 +15,7 @@ export default function MovieInfo({details,id,title,mediaType}){
     
     return(
         <section className="infoContainer">
-            <img style={{width:"20rem"}} src={`https://image.tmdb.org/t/p/original/${images?.logos.length!==0?images?.logos.filter(iso=>iso.iso_639_1=="en")[0].file_path:"No Logo"}`} alt={title} />
+            <img style={{width:"20rem"}} src={`https://image.tmdb.org/t/p/original/${images?.logos.filter(iso=>iso.iso_639_1=="en").length!==0?images?.logos.filter(iso=>iso.iso_639_1=="en")[0].file_path:"No Logo"}`} alt={title} />
             <section className="infoWrapper">
                 <img style={{width:"15rem"}} src={`https://image.tmdb.org/t/p/w780${details?.poster_path}`} alt="" />
                 <div className="additionalInfo">

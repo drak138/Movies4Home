@@ -2,7 +2,7 @@ import puppeteer from "puppeteer-extra";
 export default async function hrefStealer (url){
     try {
         const browser = await puppeteer.launch({ 
-            headless: false,    
+            headless: true,    
             executablePath: '/opt/homebrew/bin/chromium',
             args: ['--no-sandbox', '--disable-setuid-sandbox']
 

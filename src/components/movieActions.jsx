@@ -2,13 +2,13 @@ import { useEffect, useState } from "react"
 
 export default function MovieActions({title,id}){
     const [showLib,setShowLib]=useState(false)
-    const [canDowloand,setCanDownload]=useState(true)
+    const [canDowloand,setCanDownload]=useState(false)
     const [loading,setLoading]=useState(true)
     const [movieTorrentLink,setMovieTorrentLink]=useState("")
     const url=`https://yts.mx/movies/${title}`
     useEffect(()=>{
         const fetchLink=async()=>{
-            const res=await fetch(`https://movies4-home.vercel.app/hrefStealer?url=${encodeURIComponent(url)}`)
+            const res=await fetch(`http://localhost:8888/.netlify/functions/hrefStealer?url=${encodeURIComponent(url)}`)
             const data=await res.json()
             console.log(data)
             setCanDownload(data.success)
@@ -23,8 +23,13 @@ export default function MovieActions({title,id}){
         <div className="smallStuff">
         <button className="like"><i className="fa-solid fa-thumbs-up"></i></button>
         <button className="dislike"><i className="fa-solid fa-thumbs-down"></i></button>
-        <a href={canDowloand ? movieTorrentLink : ""} className="downloadBtn">
-  {loading ? "Loading" : (canDowloand ? "Download Movie" : "No 1080p torrent link found")}</a>
+        {canDowloand ?
+        <a href={movieTorrentLink} className="downloadBtn">
+  {loading ? "Loading" : "Download Movie"}</a>
+         :<p className="downloadBtn">
+         {loading ? "Loading" : "No 1080p torrent link found"}
+         </p>
+         }
         <div>
         <button onClick={(e)=>setShowLib(!showLib)}>Save to Library <i className="fa-solid fa-plus"></i></button>
         {showLib?
