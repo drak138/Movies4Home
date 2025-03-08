@@ -9,7 +9,7 @@
     "routes": [
       {
         "src": "/hrefStealer",
-        "dest": "backend/server.js"
+        "dest": "server/server.js"
       }
     ]
   }
