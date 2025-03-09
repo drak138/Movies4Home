@@ -65,7 +65,7 @@ export default function TvSeasons({ details, id }) {
                                     to={`/watch/tv/${details.name}/${details.id}/season/${season}/episode/${ep.episode_number}`} 
                                     key={ep.id}
                                 >
-                                    <span>Episode {ep.episode_number}.{ep.air_date} - </span>{ep.name}
+                                    <span>Episode {ep.episode_number}.{ep.air_date} - </span>{ep.name} - {ep.runtime} min
                                 </Link>
                             ) : (
                                 <p className="episode" key={ep.id}>

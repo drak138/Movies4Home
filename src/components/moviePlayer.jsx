@@ -15,7 +15,7 @@ export default function MoviePlayer({mediaType,id,details,season,episode}){
         <>
         <img onClick={e=>setWatching(true)} className="loadingImg" src={`https://image.tmdb.org/t/p/original${details?.backdrop_path}`} alt="" />
         <i onClick={e=>setWatching(true)} className="fa-solid fa-play onHover"></i>
-        <p className="runtime">{details?.runtime}min</p>
+        {mediaType=="tv"?null:<p className="runtime">{details?.runtime}min</p>}
         </>:
          <iframe
   src={`https://vidsrc.me/embed/${mediaType}?imdb=${mediaType==="tv"?details?.external_ids.imdb_id:details?.imdb_id}${mediaType==="tv"?`&season=${season}&episode=${episode}`:""}`}
