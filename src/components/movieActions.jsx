@@ -10,11 +10,9 @@ export default function MovieActions({title,id}){
         const fetchLink=async()=>{
             const res=await fetch(`https://movies4home.netlify.app/.netlify/functions/hrefStealer?url=${encodeURIComponent(url)}`)
             const data=await res.json()
-            console.log(data)
             setCanDownload(data.success)
             setMovieTorrentLink(data.torrentLink)
             setLoading(false)
-            console.log(movieTorrentLink)
         }
         fetchLink()
     },[])
