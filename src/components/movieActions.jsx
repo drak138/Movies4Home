@@ -8,7 +8,7 @@ export default function MovieActions({title,id}){
     const url=`https://yts.mx/movies/${title}`
     useEffect(()=>{
         const fetchLink=async()=>{
-            const res=await fetch(`http://localhost:8888/.netlify/functions/hrefStealer?url=${encodeURIComponent(url)}`)
+            const res=await fetch(`https://movies4home.netlify.app/.netlify/functions/hrefStealer?url=${encodeURIComponent(url)}`)
             const data=await res.json()
             console.log(data)
             setCanDownload(data.success)

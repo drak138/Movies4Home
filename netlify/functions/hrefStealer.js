@@ -1,47 +1,65 @@
-import puppeteer from "puppeteer-extra";
-import { setCorsHeaders } from "./corsMiddleware.js";
+import axios from 'axios';
+import * as cheerio from 'cheerio';
+import { setCorsHeaders } from './corsMiddleware.js';
 
 export async function handler(event, context) {
-    let success=Boolean(true)
     const { url } = event.queryStringParameters;
     if (!url) {
-        return { statusCode: 400, body: JSON.stringify({ error: "Missing URL parameter" }), headers: setCorsHeaders() };
+        return { 
+            statusCode: 400, 
+            body: JSON.stringify({ error: "Missing URL parameter" }), 
+            headers: setCorsHeaders() 
+        };
     }
 
     try {
-        const browser = await puppeteer.launch({
-            headless: true,
-            args: ['--no-sandbox', '--disable-setuid-sandbox'],
-        });
-        const page = await browser.newPage();
-        await page.goto(url, { waitUntil: "networkidle2" });
+        // Fetch the HTML from the URL
+        console.log(`Fetching URL: ${url}`);
+        const response = await axios.get(url);
 
-        const torrentHref = await page.evaluate(() => {
-            const modalTorrents = Array.from(document.querySelectorAll('.modal-torrent'));
-            for (const modalTorrent of modalTorrents) {
-                if (modalTorrent.querySelector('#modal-quality-1080p')) {
-                    const link = modalTorrent.querySelector('a');
-                    if (link) {
-                        return { success: true, href: link.href }; 
+        // Load the HTML into Cheerio
+        const $ = cheerio.load(response.data);
 
-                    }
+        // Now, find the torrent link
+        const modalTorrents = $('.modal-torrent');
+        let torrentHref = null;
+
+        modalTorrents.each((index, element) => {
+            // Check if this modal contains the specific quality you're looking for
+            if ($(element).find('#modal-quality-1080p').length > 0) {
+                // Get the <a> tag inside the modal
+                const link = $(element).find('a');
+                if (link.length > 0) {
+                    torrentHref = link.attr('href');
+                    return false; // Exit loop once we find the link
                 }
             }
-            return { success: false };
-
         });
 
-        await browser.close();
+        // Return the result
+        if (torrentHref) {
+            return {
+                statusCode: 200,
+                body: JSON.stringify({ success: true, torrentLink: torrentHref }),
+                headers: setCorsHeaders(),
+            };
+        } else {
+            return {
+                statusCode: 404,
+                body: JSON.stringify({ success: false, error: 'Torrent link not found' }),
+                headers: setCorsHeaders(),
+            };
+        }
+    } catch (error) {
+        console.error('Error fetching URL:', error);
 
         return {
-            statusCode: 200,
-            body: JSON.stringify({ success:torrentHref.success, torrentLink: torrentHref.href }), headers: setCorsHeaders()
-        };
-    } catch (error) {
-        return {
             statusCode: 500,
-            body: JSON.stringify({ error: error}), headers: setCorsHeaders()
+            body: JSON.stringify({ error: error.message }),
+            headers: setCorsHeaders(),
         };
     }
 }
+
+
 
