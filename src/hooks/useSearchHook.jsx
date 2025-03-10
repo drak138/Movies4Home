@@ -35,7 +35,7 @@ export default function UseSearchHook({ query, page }) {
             } else if (item.media_type === "person") {
               return false;
             }
-            return item.popularity >= 5;
+            return item.popularity >= 0.3;
           }) || [];
           allResults = [...allResults, ...filteredResults];
         });
