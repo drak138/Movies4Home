@@ -1,11 +1,15 @@
 import { useEffect, useState } from "react"
 
-export default function MovieActions({title,id}){
+export default function MovieActions({title,mediaType,details,season,seasonsCount}){
     const [showLib,setShowLib]=useState(false)
     const [canDowloand,setCanDownload]=useState(false)
     const [loading,setLoading]=useState(true)
     const [movieTorrentLink,setMovieTorrentLink]=useState("")
     const url=`https://yts.mx/movies/${title}`
+    function encodeMovieName(movieName) {
+        return encodeURIComponent(movieName?.replace(':', '').toLowerCase().replace(/\s+/g, '-'));
+      }
+    const originName= `${details?.release_date?details?.release_date.split("-")[0]:details?.first_air_date.split("-")[0]}-`+encodeMovieName(details?.title||details?.name)+`/${seasonsCount==1||seasonsCount==undefined?"":`seasons/${season||1}`}`
     useEffect(()=>{
         const fetchLink=async()=>{
             const res=await fetch(`https://movies4home.netlify.app/.netlify/functions/hrefStealer?url=${encodeURIComponent(url)}`)
@@ -14,7 +18,13 @@ export default function MovieActions({title,id}){
             setMovieTorrentLink(data.torrentLink)
             setLoading(false)
         }
+        if(mediaType=="tv"){
+            setCanDownload(false)
+            setLoading(false)
+        }
+        else{
         fetchLink()
+        }
     },[])
     return(
         <section className="movieInteraction">
@@ -28,6 +38,7 @@ export default function MovieActions({title,id}){
          {loading ? "Loading" : "No 1080p torrent link found"}
          </p>
          }
+         <a className="downloadBtn" href={`https://www.opensubtitles.com/en/${mediaType=="movie"?"movies":"tvshows"}/${originName}`} target="_blank">Donwload Subtitles</a>
         <div>
         <button onClick={(e)=>setShowLib(!showLib)}>Save to Library <i className="fa-solid fa-plus"></i></button>
         {showLib?

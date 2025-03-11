@@ -45,11 +45,9 @@ export async function handler(event, context) {
             };
         }
     } catch (error) {
-        console.error('Error fetching URL:', error);
-
         return {
             statusCode: 500,
-            body: JSON.stringify({ error: error.message }),
+            body: JSON.stringify({success:false}),
             headers: setCorsHeaders(),
         };
     }

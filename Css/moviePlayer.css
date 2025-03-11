@@ -1,3 +1,6 @@
+.playerWrapper{
+    display: flex;
+}
 .playerContainer{
     position: relative;
     margin-left: 20px;
@@ -101,5 +104,23 @@
     animation: pulsateShadow 1.5s infinite ease-in-out;
     transform: translate(50%, -50%);  /* To center the element */
   }
-  
+  .similarSection{
+    justify-content: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+  }
+  .similarSection .movieCard{
+    display: block;
+    width: fit-content;
+  }
+  .similarSection .movieCard .posterHolder{
+    height: 30vh;
+  }
+  .similarSection .movieCard .posterHolder,.similarSection .movieCard .title{
+    width: 10vw;
+  }
+  .similarSection .movieCard .year,.similarSection .movieCard .rating,.similarSection .movieCard .title{
+    font-size: 1rem;
+  }
   

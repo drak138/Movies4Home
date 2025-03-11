@@ -5,7 +5,6 @@ export default function MoviePlayer({mediaType,id,details,season,episode}){
     useEffect(()=>{
         setWatching(false)
     },[season,episode])
-    console.log(watching)
     return(
         // <div className="movieWrapper">
         //     <img src={`https://image.tmdb.org/t/p/original${details.backdrop_path}`} alt="" />

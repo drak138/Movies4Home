@@ -31,7 +31,7 @@ export default function UseSearchHook({ query, page }) {
         allData.forEach(data => {
           const filteredResults = data.results?.filter(item => {
             if (item.media_type === "tv") {
-              return item.popularity >= 25;
+              return item.popularity >= 10;
             } else if (item.media_type === "person") {
               return false;
             }
@@ -53,7 +53,6 @@ export default function UseSearchHook({ query, page }) {
         setLoading(false);
 
       } catch (error) {
-        console.log(error);
         setLoading(false);
       }
     };

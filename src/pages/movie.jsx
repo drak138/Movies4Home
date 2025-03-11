@@ -4,6 +4,7 @@ import UseDetailsHook from "../hooks/useDetailsHook";
 import MovieActions from "../components/movieActions";
 import MovieInfo from "../components/movieInfo";
 import TvSeasons from "../components/tvSeasons";
+import Similar from "../components/similar";
 
 export default function Movie(){
     const {mediaType,id,title,season,episode} = useParams()
@@ -13,12 +14,14 @@ export default function Movie(){
         <div className="playerWrapper">
         <section className="movieDetails">
             <MoviePlayer mediaType={mediaType} id={id} details={details} season={season} episode={episode}/>
-            <MovieActions title={title} id={id}/>
+            <MovieActions title={title} mediaType={mediaType} details={details} season={season} seasonsCount={details?.seasons?.length}/>
             <MovieInfo details={details} id={id} title={title} mediaType={mediaType}/>
 
             {mediaType=="tv"?<TvSeasons details={details} id={id}/>:null}
         </section>
-        {/* <SimilarMovies/> */}
+        <section className="similarSection">
+            <Similar details={details} mediaType={mediaType}/>
+        </section>
         </div>
     )
 }

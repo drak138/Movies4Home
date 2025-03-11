@@ -11,7 +11,6 @@ export default function MovieInfo({details,id,title,mediaType}){
             setGenres(prev => [...prev, ...newGenres]);
         }
     }, [details?.genres]); // Add `details` as the dependency array
-    console.log(images);
     
     return(
         <section className="infoContainer">
