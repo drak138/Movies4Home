@@ -55,17 +55,20 @@
     font-size: 2.1rem;
 }
 .episodes {
+    /* overflow: overlay; */
     max-height: 0;
     overflow: hidden;
     opacity: 0;
     transition: max-height 0.5s ease-out, opacity 0.5s ease-out;
 }
 .episodes.show {
+    /* overflow: overlay; */
     max-height: 500px; /* Adjust based on content */
     opacity: 1;
     transition: max-height 0.5s ease-in, opacity 0.5s ease-in;
 }
 .show,.episodes{
+    overflow: overlay;
     margin: 0px;
     display: flex;
     flex-direction: column;
