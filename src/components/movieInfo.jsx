@@ -8,9 +8,9 @@ export default function MovieInfo({details,id,title,mediaType}){
     useEffect(() => {
         if (details?.genres) {
             const newGenres = details.genres.flatMap(genre => genre.name.split("&"));
-            setGenres(prev => [...prev, ...newGenres]);
+            setGenres(newGenres);
         }
-    }, [details?.genres]); // Add `details` as the dependency array
+    }, [details?.genres]); 
     
     return(
         <section className="infoContainer">

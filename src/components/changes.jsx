@@ -1,5 +1,4 @@
 export default function Changes({type}){
-    console.log(type)
     return(
         <div className="change">
             <form action="" className="changeForm">

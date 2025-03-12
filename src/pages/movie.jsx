@@ -21,13 +21,10 @@ export default function Movie(){
                 ? prev.filter((s) => s !== season)
                 : [...prev, season]
         );
-        console.log(openSeasons)
     };
-    const handleScrollAndOpen = (e) => {
+    const handleScrollAndOpen = () => {
         if (sectionRef.current) {
-          // Scroll to ChildTwo
           sectionRef.current.scrollIntoView({ behavior: "smooth" });
-    
           toggleSeason(Number(season))
         }
       };
