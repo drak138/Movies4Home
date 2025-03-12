@@ -3,10 +3,9 @@ import { Link } from "react-router-dom";
 
 const TMDB_KEY = import.meta.env.VITE_TMDB_API_KEY;
 
-export default function TvSeasons({ details, id }) {
+export default function TvSeasons({ details, id,sectionRef,openSeasons,toggleSeason }) {
     const seasons = details?.number_of_seasons;
     const [episodes, setEpisodes] = useState([]);
-    const [openSeasons, setOpenSeasons] = useState([]);
 
     useEffect(() => {
         if (!details?.id || !seasons) return;
@@ -36,18 +35,11 @@ export default function TvSeasons({ details, id }) {
         fetchEpisodes();
     }, [details, seasons]);
 
-    const toggleSeason = (season) => {
-        setOpenSeasons((prev) =>
-            prev.includes(season)
-                ? prev.filter((s) => s !== season)
-                : [...prev, season]
-        );
-    };
 
     const today = new Date().toISOString().split("T")[0]; // Get current date in YYYY-MM-DD format
 
     return (
-        <div className="seasonsContainer">
+        <div ref={sectionRef} className="seasonsContainer">
             {episodes.map(({ season, episodes }) => (
                 <div key={season}>
                     <h3 className="seasonNumber" onClick={() => toggleSeason(season)}>

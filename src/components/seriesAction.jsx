@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import UseSeasonHook from "../hooks/useSeasonHook";
 
-export default function SeriesActions({ season, episode, lastEpisode, title }) {
+export default function SeriesActions({ season, episode, lastEpisode, title, handleScrollAndOpen }) {
     const { episode_number, season_number, show_id } = lastEpisode;
     
     const { seasonDetails } = UseSeasonHook({ show_id, season: Number(season) });
@@ -51,7 +51,7 @@ export default function SeriesActions({ season, episode, lastEpisode, title }) {
             >
                 Prev
             </Link>
-            <button className="seriesAction" >Episodes</button>
+            <button onClick={handleScrollAndOpen} className="seriesAction">Episodes</button>
             <Link className="seriesAction" to={`/watch/tv/${title}/${show_id}/season/${nextSeason}/episode/${nextEpisode}`}
             style={{ pointerEvents: !(season == season_number && episode == episode_number) ? "auto" : "none", opacity: !(season == season_number && episode == episode_number) ? 1 : 0.5 }}
 
