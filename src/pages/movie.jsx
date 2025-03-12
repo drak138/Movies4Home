@@ -5,6 +5,7 @@ import MovieActions from "../components/movieActions";
 import MovieInfo from "../components/movieInfo";
 import TvSeasons from "../components/tvSeasons";
 import Similar from "../components/similar";
+import SeriesActions from "../components/seriesAction";
 
 export default function Movie(){
     const {mediaType,id,title,season,episode} = useParams()
@@ -14,7 +15,10 @@ export default function Movie(){
         <div className="playerWrapper">
         <section className="movieDetails">
             <MoviePlayer mediaType={mediaType} id={id} details={details} season={season} episode={episode}/>
-            <MovieActions title={title} mediaType={mediaType} details={details} season={season} seasonsCount={details?.seasons?.length}/>
+            <div className="actionsHolder">
+            {episode?<SeriesActions season={season} episode={episode} lastEpisode={details?.last_episode_to_air||{}} title={title}/>:null}
+            <MovieActions title={title} mediaType={mediaType} details={details} season={season} seasonsCount={details?.number_of_seasons}/>
+            </div>
             <MovieInfo details={details} id={id} title={title} mediaType={mediaType}/>
 
             {mediaType=="tv"?<TvSeasons details={details} id={id}/>:null}

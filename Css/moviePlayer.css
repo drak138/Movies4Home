@@ -9,6 +9,17 @@
     height: 70vh;
     width: 60vw;
 }
+.seriesActionsHolder{
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-around;
+
+}
+.seriesAction{
+  padding: 3px 20px;
+    background-color: orange;
+    border-radius: 6px
+}
 .smallStuff{
     margin-top: 10px;
     justify-content: space-around;

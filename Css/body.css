@@ -4,6 +4,9 @@
     padding: 0px;
     height: 100vh;
 }
+a{
+    color: inherit;
+}
 ul{
     list-style: none;
     padding: 0px;
