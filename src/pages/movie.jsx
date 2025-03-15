@@ -25,7 +25,8 @@ export default function Movie(){
     const handleScrollAndOpen = () => {
         if (sectionRef.current) {
           sectionRef.current.scrollIntoView({ behavior: "smooth" });
-          toggleSeason(Number(season))
+          setOpenSeasons((prev) => [...prev, Number(season)]
+        );
         }
       };
 
