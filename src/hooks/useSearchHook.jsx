@@ -31,7 +31,7 @@ export default function UseSearchHook({ query, page }) {
         allData.forEach(data => {
           const filteredResults = data.results?.filter(item => {
             if (item.media_type === "tv") {
-              return item.popularity >= 10;
+              return item.popularity >= 6;
             } else if (item.media_type === "person") {
               return false;
             }
@@ -43,6 +43,7 @@ export default function UseSearchHook({ query, page }) {
         allResults = Array.from(
           new Map(allResults.map(item => [item.id, item])).values()
         );
+        allResults=allResults.sort((a,b)=>b.popularity - a.popularity)
 
         const groupedResults = [];
         for (let i = 0; i < allResults.length; i += 20) {

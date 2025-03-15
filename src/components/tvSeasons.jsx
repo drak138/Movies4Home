@@ -39,9 +39,9 @@ export default function TvSeasons({ details, id,sectionRef,openSeasons,toggleSea
     const today = new Date().toISOString().split("T")[0]; // Get current date in YYYY-MM-DD format
 
     return (
-        <div ref={sectionRef} className="seasonsContainer">
+        <div className="seasonsContainer">
             {episodes.map(({ season, episodes }) => (
-                <div key={season}>
+                <div key={season} ref={(el) => (sectionRef.current[season] = el)}>
                     <h3 className="seasonNumber" onClick={() => toggleSeason(season)}>
                         Season {season} {openSeasons.includes(season) 
                             ? <i className="fa-solid fa-sort-up"></i> 

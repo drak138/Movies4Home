@@ -11,7 +11,7 @@ import { useRef, useState } from "react";
 export default function Movie(){
     const {mediaType,id,title,season,episode} = useParams()
     const [openSeasons,setOpenSeasons]=useState([])
-    const sectionRef=useRef(null)
+    const sectionRef=useRef({})
     const res=UseDetailsHook({type:mediaType,movieId:id})
     const details=res.movieDetails
 
@@ -24,7 +24,7 @@ export default function Movie(){
     };
     const handleScrollAndOpen = () => {
         if (sectionRef.current) {
-          sectionRef.current.scrollIntoView({ behavior: "smooth" });
+          sectionRef.current[season].scrollIntoView({ behavior: "smooth" });
           setOpenSeasons((prev) => [...prev, Number(season)]
         );
         }
