@@ -31,11 +31,11 @@ export default function UseSearchHook({ query, page }) {
         allData.forEach(data => {
           const filteredResults = data.results?.filter(item => {
             if (item.media_type === "tv") {
-              return item.popularity >= 5;
+              return item.vote_count >= 300;
             } else if (item.media_type === "person") {
               return false;
             }
-            return item.popularity >= 0.3;
+            return item.vote_count >= 300;
           }) || [];
           allResults = [...allResults, ...filteredResults];
         });
