@@ -6,9 +6,6 @@ export default function MoviePlayer({mediaType,id,details,season,episode}){
         setWatching(false)
     },[season,episode])
     return(
-        // <div className="movieWrapper">
-        //     <img src={`https://image.tmdb.org/t/p/original${details.backdrop_path}`} alt="" />
-        // </div>
         <div className="playerContainer">
         {!watching?
         <>

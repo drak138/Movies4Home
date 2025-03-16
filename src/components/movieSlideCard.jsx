@@ -22,7 +22,7 @@ export default function MovieSlideCard({ movie }) {
       <div className="movieSlideContainer">
         <div className="details">
           <img
-            src={`https://image.tmdb.org/t/p/w300/${images?.logos.filter(iso=>iso.iso_639_1=="en")[0].file_path}`}
+            src={`https://image.tmdb.org/t/p/w300/${images?.logos.filter(iso=>iso.iso_639_1=="en")[0]?images?.logos.filter(iso=>iso.iso_639_1=="en")[0].file_path:""}`}
             alt={title}
           />
           <div className="flex-row">
