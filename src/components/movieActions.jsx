@@ -12,7 +12,7 @@ export default function MovieActions({title,mediaType,details,season,seasonsCoun
     const originName= `${details?.release_date?details?.release_date.split("-")[0]:details?.first_air_date.split("-")[0]}-`+encodeMovieName(details?.title||details?.name)+`/${seasonsCount==1||seasonsCount==undefined?"":`seasons/${season||1}`}`
     useEffect(()=>{
         const fetchLink=async()=>{
-            const res=await fetch(`https://movies4home.netlify.app/.netlify/functions/hrefStealer?url=${encodeURIComponent(url)}`)
+            const res=await fetch(`https://movies4home.onrender.com/api/hrefStealer?url=${encodeURIComponent(url)}`)
             const data=await res.json()
             setCanDownload(data.success)
             setMovieTorrentLink(data.torrentLink)

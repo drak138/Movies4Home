@@ -14,7 +14,7 @@ export async function handler(event, context) {
 
     try {
         console.log(`Fetching URL: ${url}`);
-        const response = await axios.get(url);
+        const response = await axios.get(url,{timeout:5000});
 
         const htmlEl = cheerio.load(response.data);
 

@@ -1,20 +1,39 @@
 import express from "express";
 import cors from "cors";
-import hrefStealer from "./hrefStealer.js";
+import dotenv from "dotenv";
+import hrefStealer from "./hrefStealer.js";  // Import hrefStealer function
+
+dotenv.config();
 
 const app = express();
-app.use(cors()); // Enable CORS for frontend requests
-app.get("/",(req,res)=>{
-    res.json("hello")
-})
 
-app.get("/hrefStealer", async (req, res) => {
-    const url = req.query.url;
-    if (!url) return res.status(400).json({ error: "Missing URL parameter" });
-    const data=await hrefStealer(url)
-    res.json(data)
+// Middleware
+app.use(cors());
+app.use(express.json());
+
+// Define the /api/hrefStealer route in server.js
+app.get("/api/hrefStealer", async (req, res) => {
+  const { url } = req.query;  // Get URL parameter from query string
+  if (!url) {
+    return res.status(400).json({ success: false, error: "Missing URL parameter" });
+  }
+
+  try {
+    // Call the hrefStealer function to get the torrent link
+    const torrentLink = await hrefStealer(url);
+    
+    if (torrentLink) {
+      return res.json({ success: true, torrentLink });
+    } else {
+      return res.status(404).json({ success: false, error: "Torrent link not found" });
+    }
+  } catch (error) {
+    return res.status(500).json({ success: false, error: "Server error" });
+  }
 });
 
-// Start server
-const port = 3001;
-app.listen(port, () => console.log(`Server running on http://localhost:${port}`));
+// Set the port
+const PORT = process.env.PORT || 5001;
+
+// Start the server
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

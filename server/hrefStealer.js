@@ -1,27 +1,29 @@
-import puppeteer from "puppeteer";
-export default async function hrefStealer (url){
-    try {
-        const browser = await puppeteer.launch({ 
-            headless: true,   
-        });
-        const page = await browser.newPage();
-        await page.goto(url, { waitUntil: "networkidle2" });
+import axios from "axios";
+import * as cheerio from "cheerio";
 
-        const torrentHref = await page.evaluate(() => {
-            const modalTorrent = Array.from(document.querySelectorAll('.modal-torrent')).find(modal =>
-                modal.querySelector('#modal-quality-1080p')
-            );
-            return modalTorrent ? modalTorrent.querySelector('a')?.href : null;
-        });
+const hrefStealer = async (url) => {
+  try {
+    console.log(`Fetching URL: ${url}`);
+    const response = await axios.get(url);
+    const htmlEl = cheerio.load(response.data);
 
-        await browser.close();
+    const modalTorrents = htmlEl(".modal-torrent");
+    let torrentHref = null;
 
-        if (torrentHref) {
-            return({ success: true, torrentLink: torrentHref });
-        } else {
-            return({ success: false, message: "No 1080p torrent link found" });
+    modalTorrents.each((index, element) => {
+      if (htmlEl(element).find("#modal-quality-1080p").length > 0) {
+        const link = htmlEl(element).find("a");
+        if (link.length > 0) {
+          torrentHref = link.attr("href");
+          return false;
         }
-    } catch (error) {
-        return({ error: error.message });
-    }
-}
+      }
+    });
+
+    return torrentHref;
+  } catch (error) {
+    throw new Error("Error fetching or processing the URL.");
+  }
+};
+
+export default hrefStealer;
