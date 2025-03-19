@@ -1,4 +1,4 @@
-import { Router,Route,Routes } from 'react-router-dom';
+import {Route,Routes } from 'react-router-dom';
 import './App.css'
 import Header from './components/header';
 import Home from './pages/home';
@@ -8,8 +8,10 @@ import LogIn from './pages/login';
 import Profile from './pages/profile';
 import Movie from './pages/movie';
 import Search from './pages/search';
+import useAuthExpiration from './utils/authExparation.js';
 
 function App() {
+    useAuthExpiration()
 
     return (
         <>

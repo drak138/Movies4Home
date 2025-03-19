@@ -8,16 +8,19 @@ h2{
     height: 85vh;
 }
 .authForm{
-    gap: 6px;
     width: 70vw;
     background-color: black;
     display: flex
 ;
     flex-direction: column;
-    padding: 60px 50px;
+    padding: 40px 50px;
 
 }
+.form-type{
+    margin-bottom: 10px;
+}
 .authForm input{
+    width: -webkit-fill-available;
     height: 25px;
 }
 .registerBtn{
@@ -30,4 +33,7 @@ h2{
 .authForm a{
     color: white;
     text-decoration: none;
+}
+.input-contianer{
+    min-height: 54px;
 }

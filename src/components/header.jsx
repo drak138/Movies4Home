@@ -1,12 +1,13 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/authContext";
 
 export default function Header() {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const profileRef = useRef(null); // Reference for detecting clicks outside
   const [query,setQuery]=useState("")
   const navigate= useNavigate()
-
+  const {user,logout}=useContext(AuthContext)
 
   const toggleProfileMenu = () => {
     setIsProfileOpen(!isProfileOpen);
@@ -35,6 +36,10 @@ export default function Header() {
       navigate(`/search/${query}/1`);
     }
   }
+  const logoutHanlder=(e)=>{
+  closeProfileMenu(e)
+  logout()
+  }
 
   return (
     <header>
@@ -62,13 +67,17 @@ export default function Header() {
 
         {/* Show/Hide Profile Menu */}
         <ul className={`profileAcord ${isProfileOpen ? "active" : ""}`}>
+          {user?
+          <>
           <Link to="/profile" onClick={closeProfileMenu}>Profile</Link>
           <Link to="/library" onClick={closeProfileMenu}>Library</Link>
-          <a href="" onClick={closeProfileMenu}>Logout</a>
-
-          {/* Guest */}
+          <Link to="/" onClick={logoutHanlder}>Logout</Link>
+          </>:
+          <>
           <Link to="/register" onClick={closeProfileMenu}>Register</Link>
           <Link to="/signup" onClick={closeProfileMenu}>Log in</Link>
+          </>
+          }
         </ul>
       </div>
     </header>
