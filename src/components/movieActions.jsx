@@ -1,10 +1,13 @@
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
+import { DownloadContext } from "../context/donwloadContext"
 
 export default function MovieActions({title,mediaType,details,season,seasonsCount}){
     const [showLib,setShowLib]=useState(false)
     const [canDowloand,setCanDownload]=useState(false)
     const [loading,setLoading]=useState(true)
     const [movieTorrentLink,setMovieTorrentLink]=useState("")
+    const {count,downloadMovie}=useContext(DownloadContext)
+
     const url=`https://yts.mx/movies/${title}`
     function encodeMovieName(movieName) {
         return encodeURIComponent(movieName?.replace(':', '').toLowerCase().replace(/\s+/g, '-'));
@@ -26,18 +29,28 @@ export default function MovieActions({title,mediaType,details,season,seasonsCoun
         fetchLink()
         }
     },[])
+    const downloadHandler=()=>{
+        // window.location.href=movieTorrentLink
+        downloadMovie()
+    }
     return(
         <section className="movieInteraction">
         <div className="smallStuff">
         <button className="like"><i className="fa-solid fa-thumbs-up"></i></button>
         <button className="dislike"><i className="fa-solid fa-thumbs-down"></i></button>
         {canDowloand ?
-        <a href={movieTorrentLink} className="downloadBtn">
-  {loading ? "Loading" : "Download Movie"}</a>
-         :<p className="downloadBtn">
-         {loading ? "Loading" : "No 1080p torrent link found"}
-         </p>
-         }
+        (
+        count!==0?
+        (
+        <button onClick={downloadHandler} href={movieTorrentLink} className="downloadBtn">Download Movie</button>
+        )
+        :
+        <p className="downloadBtn">You have ran out of Donwloads</p>
+        )
+        :
+        (
+        <p className="downloadBtn">{loading ? "Loading" : "No 1080p torrent link found"}</p>
+         )}
          <a className="downloadBtn" href={`https://www.opensubtitles.com/en/${mediaType=="movie"?"movies":"tvshows"}/${originName}`} target="_blank">Donwload Subtitles</a>
         <div>
         <button onClick={(e)=>setShowLib(!showLib)}>Save to Library <i className="fa-solid fa-plus"></i></button>

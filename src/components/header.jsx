@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/authContext";
+import { DownloadContext } from "../context/donwloadContext";
 
 export default function Header() {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
@@ -8,6 +9,8 @@ export default function Header() {
   const [query,setQuery]=useState("")
   const navigate= useNavigate()
   const {user,logout}=useContext(AuthContext)
+  const {count}=useContext(DownloadContext)
+  
 
   const toggleProfileMenu = () => {
     setIsProfileOpen(!isProfileOpen);
@@ -62,7 +65,7 @@ export default function Header() {
         <img className="profilePic" src="/Movies4Home/guest.png" alt="" onClick={toggleProfileMenu} />
 
         <div className="downloadsLimit">
-          <p className="downloadsLeft">3</p>
+          <p className="downloadsLeft">{count}</p>
         </div>
 
         {/* Show/Hide Profile Menu */}
@@ -71,7 +74,7 @@ export default function Header() {
           <>
           <Link to="/profile" onClick={closeProfileMenu}>Profile</Link>
           <Link to="/library" onClick={closeProfileMenu}>Library</Link>
-          <Link to="/" onClick={logoutHanlder}>Logout</Link>
+          <button onClick={logoutHanlder}>Logout</button>
           </>:
           <>
           <Link to="/register" onClick={closeProfileMenu}>Register</Link>

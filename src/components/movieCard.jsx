@@ -5,7 +5,10 @@ export default function MovieCard({movie}){
     function encodeMovieName(movieName) {
       //insert special cases
       if(movieName=="X2"){
-        movieName="X2:X-Men United"
+        movieName="X2: X-Men United"
+      }
+      if(movieName=="Dark Phoenix"){
+        movieName="X-Men: Dark Phoenix"
       }
         return encodeURIComponent(movieName.replace(':', '').toLowerCase().replace(/\s+/g, '-'));
       }
