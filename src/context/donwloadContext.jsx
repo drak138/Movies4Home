@@ -33,20 +33,18 @@ export function DownloadCount({children,user}){
     };
 
     useEffect(() => {
-        const now = Date.now();
-        const fiveMinutes = 5 * 60 * 1000;
-        const lastReset = parseInt(localStorage.getItem("lastReset")) || 0;
-
-        if (now - lastReset > fiveMinutes) {
-            localStorage.setItem("lastReset", now);
-            setUsedDownloads(0);
-            setCount(user ? 10 : 4);
-        } else {
-            if (!user) {
-                setCount(Math.max(4 - usedDownloads, 0));
+        if (!user) {
+            if (usedDownloads >= 4) {
+                setCount(0);
+                localStorage.setItem("count", 0);
             } else {
-                setCount(10 - usedDownloads);
+                setCount(4 - usedDownloads);
+                localStorage.setItem("count", 4 - usedDownloads);
             }
+        } else {
+            const remainingDownloads = 10 - usedDownloads;
+            setCount(remainingDownloads);
+            localStorage.setItem("count", remainingDownloads);
         }
     }, [user]);
 
