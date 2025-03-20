@@ -9,17 +9,12 @@ import Profile from './pages/profile';
 import Movie from './pages/movie';
 import Search from './pages/search';
 import useAuthExpiration from './utils/authExparation.js';
-import { DownloadCount } from './context/donwloadContext.jsx';
-import { useContext } from 'react';
-import { AuthContext } from './context/authContext.jsx';
-
 
 function App() {
-    const { user } = useContext(AuthContext);
     useAuthExpiration()
 
     return (
-        <DownloadCount user={user}>
+        <>
         <Header/>
         <Routes>
         <Route path='/' element={<Home/>}/>
@@ -31,7 +26,7 @@ function App() {
         <Route path='/register' element={<Register/>}></Route>
         <Route path='/signup' element={<LogIn/>}></Route>
         </Routes>
-        </DownloadCount>
+        </>
     );
 }
 

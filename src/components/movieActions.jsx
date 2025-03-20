@@ -42,7 +42,7 @@ export default function MovieActions({title,mediaType,details,season,seasonsCoun
         <button className="dislike"><i className="fa-solid fa-thumbs-down"></i></button>
         {canDowloand ?
         (
-        count!==0?
+        count>0?
         (
         <button onClick={downloadHandler} className="downloadBtn">Download Movie</button>
         )

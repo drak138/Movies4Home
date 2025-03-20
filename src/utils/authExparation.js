@@ -18,13 +18,13 @@ function useAuthExpiration() {
     const currentTime = Date.now();
     if (expirationTime < currentTime) {
       Cookies.remove("token");
-      setUser(null)
+      setUser(false)
 
     } else {
       const timeRemaining = expirationTime - currentTime;
       setTimeout(() => {
         Cookies.remove("token");
-        setUser(null)
+        setUser(false)
       }, timeRemaining);
     }
   }, [user]);

@@ -15,13 +15,13 @@ export function AuthProvider({ children }) {
           headers: { Authorization: `Bearer ${token}` },
         })
         .then((res) => setUser(res.data.user))
-        .catch(() => setUser(null));
+        .catch(() => setUser(false));
     }
   }, []);
 
   const logout = () => {
     Cookies.remove("token");
-    setUser(null);
+    setUser(false);
   };
 
   return (
