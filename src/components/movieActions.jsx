@@ -14,6 +14,8 @@ export default function MovieActions({title,mediaType,details,season,seasonsCoun
       }
     const originName= `${details?.release_date?details?.release_date.split("-")[0]:details?.first_air_date.split("-")[0]}-`+encodeMovieName(details?.title||details?.name)+`/${seasonsCount==1||seasonsCount==undefined?"":`seasons/${season||1}`}`
     useEffect(()=>{
+        setLoading(true)
+        setCanDownload(false)
         const fetchLink=async()=>{
             const res=await fetch(`https://movies4home.onrender.com/api/hrefStealer?url=${encodeURIComponent(url)}`)
             const data=await res.json()
@@ -28,7 +30,7 @@ export default function MovieActions({title,mediaType,details,season,seasonsCoun
         else{
         fetchLink()
         }
-    },[])
+    },[title])
     const downloadHandler=()=>{
         // window.location.href=movieTorrentLink
         downloadMovie()
@@ -42,7 +44,7 @@ export default function MovieActions({title,mediaType,details,season,seasonsCoun
         (
         count!==0?
         (
-        <button onClick={downloadHandler} href={movieTorrentLink} className="downloadBtn">Download Movie</button>
+        <button onClick={downloadHandler} className="downloadBtn">Download Movie</button>
         )
         :
         <p className="downloadBtn">You have ran out of Donwloads</p>
