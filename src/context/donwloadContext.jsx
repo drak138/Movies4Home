@@ -11,7 +11,6 @@ export function DownloadCount({children}){
         const localDate = today.getFullYear() + "-" + 
                           String(today.getMonth() + 1).padStart(2, "0") + "-" + 
                           String(today.getDate()).padStart(2, "0");
-        console.log(localDate)
         if (lastReset !== localDate) {
             const newCount = user ? 10 : 4;
             localStorage.setItem("count", newCount);
@@ -44,7 +43,6 @@ export function DownloadCount({children}){
                 setCount(0);
                 localStorage.setItem("count", 0);
             } else {
-                console.log(count)
                 setCount(4 - usedDownloads);
                 localStorage.setItem("count", 4 - usedDownloads);
             }

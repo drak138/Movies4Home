@@ -3,7 +3,6 @@ import * as cheerio from "cheerio";
 
 const hrefStealer = async (url) => {
   try {
-    console.log(`Fetching URL: ${url}`);
     const response = await axios.get(url);
     const htmlEl = cheerio.load(response.data);
 

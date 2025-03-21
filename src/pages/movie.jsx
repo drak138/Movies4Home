@@ -7,6 +7,7 @@ import TvSeasons from "../components/tvSeasons";
 import Similar from "../components/similar";
 import SeriesActions from "../components/seriesAction";
 import { useRef, useState } from "react";
+import Comments from "../components/comments";
 
 export default function Movie(){
     const {mediaType,id,title,season,episode} = useParams()
@@ -41,6 +42,7 @@ export default function Movie(){
             <MovieInfo details={details} id={id} title={title} mediaType={mediaType}/>
 
             {mediaType=="tv"?<TvSeasons details={details} id={id} sectionRef={sectionRef} openSeasons={openSeasons} toggleSeason={toggleSeason}/>:null}
+            <Comments movieId={id}/>
         </section>
         <section className="similarSection">
             <Similar details={details} mediaType={mediaType}/>

@@ -13,7 +13,6 @@ export default function useImagesHook({ movieId ,mediaType}) {
         const movieImages = await res.json();
         setImages(movieImages); // Set the images
       } catch (error) {
-        console.log(error);
       }
     };
 

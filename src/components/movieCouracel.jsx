@@ -21,14 +21,12 @@ export default function MovieCarousel() {
           }
         });
         const nowPlayingData = res.data;
-        console.log(res.data)
         const filteredMovies = nowPlayingData.results
           .filter((movie) => movie.original_language === "en")
           .slice(0, 7);
         setNowPlaying(filteredMovies); 
 
       } catch (error) {
-        console.log(error);
       }
     };
     fetchNowPlaying();

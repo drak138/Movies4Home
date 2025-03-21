@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie"
 import { AuthContext } from "../context/authContext";
 import { useContext } from "react";
+import { jwtDecode } from "jwt-decode";
 export default function AuthForm({ type }) {
   const {
     register,
@@ -16,7 +17,6 @@ export default function AuthForm({ type }) {
     const navigate=useNavigate()
     const { setUser } = useContext(AuthContext);
     const submitAction=async(data)=>{
-    console.log(data)
     
     if (data.confirmPassword?data.password !== data.confirmPassword:null) {
       resetField("confirmPassword")
@@ -29,12 +29,11 @@ export default function AuthForm({ type }) {
       username,email,password
     }).then((res)=>{
       Cookies.set("token", res.data.token, { expires: 2 / 1440}); // Expires in 10 min
-
-      setUser({ username });
+      const decoded=jwtDecode(res.data.token)
+      setUser({email:decoded.email,userId:decoded.userId,username:decoded.username});
        navigate("/")})
   }
   catch(error){
-    console.log(error)
     const{input,message}=JSON.parse(error.response.data.message)
     return setError(input,{type:"validate",message})
 

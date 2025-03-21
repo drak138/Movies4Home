@@ -26,7 +26,6 @@ export default function UseDetailsHook({type, movieId }) {
         }
       } catch (err) {
         setError("Failed to fetch movie details");
-        console.log(err);
       }
     };
 

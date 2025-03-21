@@ -5,7 +5,7 @@ import { DownloadContext } from "../context/donwloadContext";
 
 export default function Header() {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
-  const profileRef = useRef(null); // Reference for detecting clicks outside
+  const profileRef = useRef(null);
   const [query,setQuery]=useState("")
   const navigate= useNavigate()
   const {user,logout}=useContext(AuthContext)

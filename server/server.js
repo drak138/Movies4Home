@@ -3,17 +3,23 @@ import cors from "cors";
 import dotenv from "dotenv";
 import hrefStealer from "./hrefStealer.js";
 import dbConnect from "./connection.js";
-import User from "./models/users.js";
-import jwt from "jsonwebtoken"
 import {registerUser,loginUser} from "./auth.js";
+import verifyToken from "./middleware/auth.js";
+import commentsRouter from "./routes/comments.js";
 
 
 dotenv.config();
+const corsOptions = {
+  origin: 'http://localhost:5173', 
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true, 
+};
 
 const app = express();
 dbConnect()
 // Middleware
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.json());
 
 app.get("/api/hrefStealer", async (req, res) => {
@@ -52,22 +58,11 @@ app.post("/api/auth/register",async(req,res)=>{
         res.status(400).json({message: error.message });
     }
 })
-app.get("/api/verifyToken", async (req, res) => {
-    try {
-      const token = req.headers.authorization.split(' ')[1];
-      if (!token) return res.status(401).json({ message: "No token provided" });
-      const decoded = jwt.verify(token,process.env.JWT_SECRET);
-      console.log(decoded)
-
-      const user = await User.findById(decoded.userId).select("-password");
-  
-      if (!user) return res.status(404).json({ message: "User not found" });
-  
-      res.json({ user });
-    } catch (error) {
-      res.status(401).json({ message: "Invalid token" });
-    }
+app.get("/api/verifyToken",verifyToken, async (req, res) => {
+  const user = req.user;
+  res.json({ message: "Token is valid", user });
   });
+app.use("/api/comments",commentsRouter)
   
 
 const PORT = process.env.PORT || 5001;
