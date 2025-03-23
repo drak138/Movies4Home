@@ -109,6 +109,7 @@ export default function Comments({ movieId }) {
       await axios.delete(`http://localhost:5001/api/comments/delete/${commentId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
+      setShowMsg(false)
       fetchComments();
     } catch (error) {
       console.error("Error deleting comment:", error);
@@ -137,7 +138,7 @@ export default function Comments({ movieId }) {
                               <button onClick={() => startEditing(reply._id, reply.text)}>Edit</button>
                               <button onClick={() => setShowMsg(!showMsg)}>Delete</button>
                               {showMsg&&(
-          <Message message="Are you sure you want to delete you Comment" func={()=>deleteComment(comment._id)} show={showMsg} setShow={setShowMsg}/>
+          <Message message="Are you sure you want to delete you Comment" func={()=>deleteComment(reply._id)} show={showMsg} setShow={setShowMsg}/>
           )}
                             </div>
                           )}
@@ -156,7 +157,7 @@ export default function Comments({ movieId }) {
       {comments.length > 0 ? (
         <div className="commentsContianer">
           {comments.map((comment) => (
-            <div key={comment._id} style={{ marginBottom: "10px", padding: "5px", border: "1px solid #ddd" }}>
+            <div key={comment._id} style={{ padding: "5px", border: "1px solid #ddd" }}>
               <div className="comment">
                 {editCommentId == comment._id ? (
               <div>

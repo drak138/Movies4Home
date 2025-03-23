@@ -64,6 +64,34 @@ commentsRouter.post("/add", verifyToken, async (req, res) => {
       res.status(500).json({ error: "Error fetching comments" });
     }
   });
+
+  commentsRouter.delete("/delete/:commentId",verifyToken,async(req,res)=>{
+    try {
+      const { commentId } = req.params;
+      const comment = await Comment.findById(commentId);
+      if (!comment) {
+        return res.status(404).json({ error: "Comment not found" });
+      }
+      if (req.user._id.toString() !== comment.userId.toString()){return}
+
+      const deleteCommentAndReplies = async (commentId) => {
+        const comment = await Comment.findById(commentId);
+        if (!comment) return;
+      
+        for (const replyId of comment.replies) {
+          await deleteCommentAndReplies(replyId);
+        }
+      
+        await Comment.findByIdAndDelete(commentId);
+      };
+  
+      await deleteCommentAndReplies(commentId);
+  
+      res.json({ message: "Comment and all replies deleted successfully" });
+    } catch (error) {
+      res.status(500).json({ error: error });
+    }
+  });
   
   
 
