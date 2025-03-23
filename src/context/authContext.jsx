@@ -6,9 +6,9 @@ export const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(false);
+  const token = Cookies.get("token");
 
   useEffect(() => {
-    const token = Cookies.get("token");
     if (token) {
       axios
         .get("http://localhost:5001/api/verifyToken", {
@@ -25,7 +25,7 @@ export function AuthProvider({ children }) {
   };
 
   return (
-    <AuthContext.Provider value={{ user, setUser, logout }}>
+    <AuthContext.Provider value={{ user, setUser, logout, token }}>
       {children}
     </AuthContext.Provider>
   );

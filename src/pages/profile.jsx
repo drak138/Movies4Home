@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import ProfileOverview from "../components/profileOverview";
 import ProfileSettings from "../components/profileSettings";
+import { AuthContext } from "../context/authContext";
 
 export default function Profile(){
     const [view,setView]=useState("overview")
+    const {user,token}=useContext(AuthContext)
     return(
         <div className="profileWrapper">
         <section className="profileContainer">
@@ -22,9 +24,9 @@ export default function Profile(){
                 </button>
             </section>
             {view==="overview"?
-            <ProfileOverview/>
+            <ProfileOverview user={user} token={token}/>
             :
-            <ProfileSettings/>
+            <ProfileSettings />
             }
         </section>
         </div>

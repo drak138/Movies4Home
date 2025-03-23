@@ -4,11 +4,9 @@ import {jwtDecode} from "jwt-decode";
 import { AuthContext } from "../context/authContext";
 
 function useAuthExpiration() {
-    const{user,setUser}=useContext(AuthContext)
+    const{user,setUser,token}=useContext(AuthContext)
 
   useEffect(() => {
-    const token = Cookies.get("token");
-
     if (!token) {
       return;
     }

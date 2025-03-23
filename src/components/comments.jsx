@@ -1,11 +1,10 @@
 import { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../context/authContext";
 import axios from "axios";
-import Cookies from "js-cookie";
 import Message from "./messageBox";
 
 export default function Comments({ movieId }) {
-  const { user } = useContext(AuthContext);
+  const { user,token } = useContext(AuthContext);
   const [comments, setComments] = useState([]);
   const [replyText, setReplyText] = useState("");
   const [commentText,setCommentText]=useState("")
@@ -45,8 +44,6 @@ export default function Comments({ movieId }) {
       return;
     }
     try {
-      console.log(commentText)
-      const token = Cookies.get("token");
       const data = {
         movieId,
         userId: user._id,
@@ -87,7 +84,6 @@ export default function Comments({ movieId }) {
 
   const submitEdit = async (commentId) => {
     try {
-      const token = Cookies.get("token");
       await axios.put(
         `http://localhost:5001/api/comments/edit/${commentId}`,
         { text: editText },
@@ -105,7 +101,6 @@ export default function Comments({ movieId }) {
   };
   const deleteComment = async (commentId) => {
     try {
-      const token = Cookies.get("token");
       await axios.delete(`http://localhost:5001/api/comments/delete/${commentId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -125,7 +120,7 @@ export default function Comments({ movieId }) {
             <div>
               <input autoFocus className="commentEditInput" value={editText} onChange={(e) => setEditText(e.target.value)} />
               {editText==""&&(<p className="error">There must be text</p>)}
-              <button color={editText==""?"orange":"orange"} disabled={editText==""?true:false} onClick={() => submitEdit(reply._id)}>Save Edit</button>
+              <button style={{color:editText==""?"gray":"orange"}} disabled={editText==""?true:false} onClick={() => submitEdit(reply._id)}>Save Edit</button>
               <button onClick={cancelEdit}>Cancel</button>
             </div>
           ):<div className="commentWrapper"><span className="commentator">{reply.userId.username}: </span>

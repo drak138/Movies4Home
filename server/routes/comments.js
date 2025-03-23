@@ -109,6 +109,15 @@ commentsRouter.post("/add", verifyToken, async (req, res) => {
       res.status(500).json({ error: error });
     }
   });
+commentsRouter.get("/getUserComments/:userId",verifyToken,async(req,res)=>{
+  const {userId}=req.params
+  try{
+    const commentCount=(await Comment.find()).filter((comment)=>{return comment.userId.toString()==userId.toString()})
+    res.json({commentsCount:commentCount.length})
+  }catch(error){
+    res.json({error:error})
+  }
+})
   
   
 
