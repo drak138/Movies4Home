@@ -36,32 +36,27 @@ commentsRouter.post("/add", verifyToken, async (req, res) => {
   
   
 
+  async function populateReplies(comment) {
+    await comment.populate({
+      path: "replies",
+      populate: { path: "userId", select: "username" }
+    });
+  
+    for (let reply of comment.replies) {
+      await populateReplies(reply);
+    }
+  }
+  
   commentsRouter.get("/:movieId", async (req, res) => {
     try {
       const { movieId } = req.params;
   
       const comments = await Comment.find({ movieId, parentId: null })
         .populate("userId", "username")
-        .populate({
-          path: "replies",
-          populate: { 
-            path: "userId",
-            select: "username"
-          }
-        })
         .sort({ timestamp: -1 });
+  
       for (let comment of comments) {
-        if (comment.replies && comment.replies.length > 0) {
-          for (let reply of comment.replies) {
-            await reply.populate({
-              path: "replies",
-              populate: { 
-                path: "userId",
-                select: "username"
-              }
-            });
-          }
-        }
+        await populateReplies(comment);
       }
   
       res.json(comments);
@@ -69,6 +64,7 @@ commentsRouter.post("/add", verifyToken, async (req, res) => {
       res.status(500).json({ error: "Error fetching comments" });
     }
   });
+  
   
 
 

@@ -21,6 +21,10 @@ body{
     overflow-x: hidden;
     background-color: black;
 }
+textarea{
+    resize: none;
+    width: 100%;
+}
 button{
     background-color: transparent;
     color: white;

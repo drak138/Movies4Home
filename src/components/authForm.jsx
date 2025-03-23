@@ -30,8 +30,9 @@ export default function AuthForm({ type }) {
     }).then((res)=>{
       Cookies.set("token", res.data.token, { expires: 2 / 1440}); // Expires in 10 min
       const decoded=jwtDecode(res.data.token)
-      setUser({email:decoded.email,userId:decoded.userId,username:decoded.username});
-       navigate("/")})
+      setUser({email:decoded.email,_id:decoded._id,username:decoded.username});
+       navigate(-1)
+      })
   }
   catch(error){
     const{input,message}=JSON.parse(error.response.data.message)

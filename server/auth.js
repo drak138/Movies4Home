@@ -42,7 +42,7 @@ export async function loginUser({username,email,password}){
 function createToken(user){
     const payload={
          email:user.email,
-         userId: user._id, 
+         _id: user._id, 
          username: user.username 
     }
     const token = jwt.sign(payload,process.env.JWT_SECRET,{ expiresIn: "2m"});

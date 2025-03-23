@@ -133,4 +133,39 @@
   .similarSection .movieCard .year,.similarSection .movieCard .rating,.similarSection .movieCard .title{
     font-size: 1rem;
   }
+  .commentsContianer{
+    height: 90vh;
+    overflow-y: auto;
+    width: 60vw;
+    padding-right: 5px;
+  }
+  .reply,.comment{
+    display: flex;
+    position: relative;
+    justify-content: space-between;
+  }
+  .commentator{
+    color: orange;
+  }
+  .commentWrapper{
+    display: flex;
+  }
+  .reply p, .comment p{
+    word-break: break-word;
+  }
+  .replyForm div{
+    display:  flex;
+    justify-content: space-around;
+  }
+  .submitCommentBtn,.cancelReplyBtn,.submitReplyBtn{
+    font-size: 24px;
+    color: orange;
+  }
+.commentEditInput{
+  width: 100%;
+    border: none;
+    background: transparent;
+    color: orange;
+    outline: none;
+}
   
