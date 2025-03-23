@@ -1,0 +1,9 @@
+.messageBox{
+    display: flex;
+    position: absolute;
+    width: 400px;
+    right: 130%;
+    top: 140%;
+    background-color: orange;
+    z-index: 3;
+}

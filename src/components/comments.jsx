@@ -2,6 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../context/authContext";
 import axios from "axios";
 import Cookies from "js-cookie";
+import Message from "./messageBox";
 
 export default function Comments({ movieId }) {
   const { user } = useContext(AuthContext);
@@ -13,6 +14,7 @@ export default function Comments({ movieId }) {
   const [editText, setEditText] = useState("");
   const [editCommentId, setEditCommentId] = useState(null);
   const [menuOpen, setMenuOpen] = useState(null);
+  const [showMsg,setShowMsg]=useState(false)
 
   useEffect(() => {
     fetchComments();
@@ -74,6 +76,7 @@ export default function Comments({ movieId }) {
 
   const toggleMenu = (commentId) => {
     setMenuOpen(menuOpen === commentId ? null : commentId);
+    setShowMsg(false)
   };
 
   const startEditing = (commentId, text) => {
@@ -100,6 +103,17 @@ export default function Comments({ movieId }) {
   const cancelEdit = () => {
     setEditCommentId(null);
   };
+  const deleteComment = async (commentId) => {
+    try {
+      const token = Cookies.get("token");
+      await axios.delete(`http://localhost:5001/api/comments/delete/${commentId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      fetchComments();
+    } catch (error) {
+      console.error("Error deleting comment:", error);
+    }
+  };
 
   const renderReplies = (replies) => {
     return replies.map((reply) => (
@@ -119,9 +133,12 @@ export default function Comments({ movieId }) {
                           <div style={{position:"relative"}}>
                           <button onClick={() => toggleMenu(reply._id)}>...</button>
                           {menuOpen === reply._id && (
-                            <div style={{ background: "orange", border: "1px solid #ccc", position: "absolute", right:"-5px" }}>
+                            <div style={{ background: "orange", border: "1px solid #ccc", position: "absolute", right:"-5px",zIndex:"3" }}>
                               <button onClick={() => startEditing(reply._id, reply.text)}>Edit</button>
-                              <button onClick={() => deleteComment(reply._id)}>Delete</button>
+                              <button onClick={() => setShowMsg(!showMsg)}>Delete</button>
+                              {showMsg&&(
+          <Message message="Are you sure you want to delete you Comment" func={()=>deleteComment(comment._id)} show={showMsg} setShow={setShowMsg}/>
+          )}
                             </div>
                           )}
                         </div>
@@ -157,9 +174,12 @@ export default function Comments({ movieId }) {
               <div style={{position:"relative"}}>
                 <button onClick={() => toggleMenu(comment._id)}>...</button>
                 {menuOpen === comment._id && (
-                  <div style={{ background: "orange", border: "1px solid #ccc", position: "absolute",right:"-5px" }}>
+                  <div style={{ background: "orange", border: "1px solid #ccc", position: "absolute",right:"-5px",zIndex:"3" }}>
                     <button onClick={() => startEditing(comment._id, comment.text)}>Edit</button>
-                    <button onClick={() => deleteComment(comment._id)}>Delete</button>
+                    <button onClick={() => {setShowMsg(!showMsg)}}>Delete</button>
+                    {showMsg&&(
+          <Message message="Are you sure you want to delete you Comment" func={()=>deleteComment(comment._id)} show={showMsg} setShow={setShowMsg}/>
+          )}
                   </div>
                 )}
               </div>
