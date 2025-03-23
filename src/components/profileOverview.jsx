@@ -4,15 +4,19 @@ import Message from "./messageBox"
 
 export default function ProfileOverview({user,token}){
     const [commentsCount,setCommentsCount]=useState(0)
-    useEffect(()=>{
-        try{
-            axios.get(`http://localhost:5001/api/comments/getUserComments/${user._id}`,{
-                headers: { Authorization: `Bearer ${token}` }
-            }).then((res)=>{setCommentsCount(res.data.commentsCount)})
-        }catch(error){
-            console.log(error.response.data.message)
-        }
-    },[user])
+    useEffect(() => {
+        const fetchCommentsCount = async () => {
+            try {
+                await axios.get(`http://localhost:5001/api/comments/getUserComments/${user._id}`, {
+                    headers: { Authorization: `Bearer ${token}` }
+                }).then((res)=>setCommentsCount(res.data.commentsCount))
+            } catch (error) {
+                console.log(error.response.data.message);
+            }
+        };
+    
+        fetchCommentsCount();
+    }, [user]);
     return(
         <div className="overviewContainer">
             <div className="overview">

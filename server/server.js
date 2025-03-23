@@ -6,6 +6,8 @@ import dbConnect from "./connection.js";
 import {registerUser,loginUser} from "./auth.js";
 import verifyToken from "./middleware/auth.js";
 import commentsRouter from "./routes/comments.js";
+import User from "./models/users.js";
+import bcrypt from "bcrypt"
 
 
 dotenv.config();
@@ -63,6 +65,35 @@ app.get("/api/verifyToken",verifyToken, async (req, res) => {
   res.json({ message: "Token is valid", user });
   });
 app.use("/api/comments",commentsRouter)
+app.put("/api/profile/:userId",verifyToken,async(req,res)=>{
+  const senderId=req.user._id
+  const {userId}=req.params
+  const {username,password,oldPass}=req.body
+  if(userId!=senderId.toString()){
+    return res.json({error:"Not owner"})
+  }
+  const user=await User.findById(userId)
+  if(oldPass){
+  const isPasswordCorrect = await bcrypt.compare(oldPass, user.password);
+  if (!isPasswordCorrect) {
+    return res.status(400).json({ message: "Old password is incorrect" });
+  }
+}
+  try{
+    const updates = {};
+
+if (username) {
+    updates.username = username;
+}
+if (password) {
+    updates.password = await bcrypt.hash(password,10);
+}
+  await User.findByIdAndUpdate(userId,updates)
+  res.json({message:"Changes made"})
+  }catch(error){
+    res.json({error:error})
+  }
+})
   
 
 const PORT = process.env.PORT || 5001;

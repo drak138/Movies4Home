@@ -1,7 +1,7 @@
 import { useState } from "react"
 import Changes from "./changes"
 
-export default function ProfileSettings(){
+export default function ProfileSettings({user,token}){
     const [change,setChange]=useState("")
     return(
         <div className="settingsContainer">

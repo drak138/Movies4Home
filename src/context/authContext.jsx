@@ -9,14 +9,16 @@ export function AuthProvider({ children }) {
   const token = Cookies.get("token");
 
   useEffect(() => {
+    const verify=async()=>{
     if (token) {
-      axios
-        .get("http://localhost:5001/api/verifyToken", {
+      await axios.get("http://localhost:5001/api/verifyToken", {
           headers: { Authorization: `Bearer ${token}` },
         })
         .then((res) => setUser(res.data.user))
         .catch(() => setUser(false));
     }
+  }
+  verify()
   }, []);
 
   const logout = () => {

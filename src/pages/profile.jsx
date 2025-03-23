@@ -26,7 +26,7 @@ export default function Profile(){
             {view==="overview"?
             <ProfileOverview user={user} token={token}/>
             :
-            <ProfileSettings />
+            <ProfileSettings user={user} token={token}/>
             }
         </section>
         </div>
