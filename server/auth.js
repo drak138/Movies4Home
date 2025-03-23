@@ -45,6 +45,6 @@ function createToken(user){
          _id: user._id, 
          username: user.username 
     }
-    const token = jwt.sign(payload,process.env.JWT_SECRET,{ expiresIn: "2m"});
+    const token = jwt.sign(payload,process.env.JWT_SECRET,{ expiresIn: "1h"});
       return token
 }

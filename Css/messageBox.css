@@ -2,8 +2,8 @@
     display: flex;
     position: absolute;
     width: 400px;
-    right: 130%;
-    top: 140%;
+    right: 150%;
+    bottom: 0;
     background-color: orange;
     z-index: 3;
 }

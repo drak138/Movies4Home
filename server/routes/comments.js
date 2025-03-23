@@ -65,6 +65,23 @@ commentsRouter.post("/add", verifyToken, async (req, res) => {
     }
   });
 
+  commentsRouter.put("/edit/:commentId",verifyToken,async(req,res)=>{
+    try{
+      const {commentId}=req.params
+      const {text}=req.body
+      const comment=await Comment.findById(commentId)
+      if(!comment){
+        return res.status(404).json({ error: "Comment not found" });
+      }
+      if (req.user._id.toString() != comment.userId.toString()){return}
+      await Comment.findByIdAndUpdate(commentId,{text})
+      res.json({ message: "Comment has been updated successfuly" })
+    }
+    catch(error){
+      res.status(500).json({error:error})
+    }
+  })
+
   commentsRouter.delete("/delete/:commentId",verifyToken,async(req,res)=>{
     try {
       const { commentId } = req.params;

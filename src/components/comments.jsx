@@ -118,13 +118,14 @@ export default function Comments({ movieId }) {
 
   const renderReplies = (replies) => {
     return replies.map((reply) => (
-      <div key={reply._id} style={{ position: "relative", marginLeft: "20px", padding: "5px 0px 5px 5px", borderLeft: "2px solid #ddd" }}>
+      <div key={reply._id} style={{ position: "relative", marginLeft: "20px", padding: "5px 0px 14px 5px", borderLeft: "2px solid #ddd" }}>
         <div className="reply">
           {editCommentId==reply._id
           ? (
             <div>
-              <input className="commentEditInput" value={editText} onChange={(e) => setEditText(e.target.value)} />
-              <button onClick={() => submitEdit(reply._id)}>Save Edit</button>
+              <input autoFocus className="commentEditInput" value={editText} onChange={(e) => setEditText(e.target.value)} />
+              {editText==""&&(<p className="error">There must be text</p>)}
+              <button color={editText==""?"orange":"orange"} disabled={editText==""?true:false} onClick={() => submitEdit(reply._id)}>Save Edit</button>
               <button onClick={cancelEdit}>Cancel</button>
             </div>
           ):<div className="commentWrapper"><span className="commentator">{reply.userId.username}: </span>
@@ -157,12 +158,13 @@ export default function Comments({ movieId }) {
       {comments.length > 0 ? (
         <div className="commentsContianer">
           {comments.map((comment) => (
-            <div key={comment._id} style={{ padding: "5px", border: "1px solid #ddd" }}>
+            <div key={comment._id} style={{ padding: "5px 5px 12px", border: "1px solid #ddd" }}>
               <div className="comment">
                 {editCommentId == comment._id ? (
               <div>
-                <input className="commentEditInput" value={editText} onChange={(e) => setEditText(e.target.value)} />
-                <button onClick={() => submitEdit(comment._id)}>Save Edit</button>
+                <input autoFocus className="commentEditInput" value={editText} onChange={(e) => setEditText(e.target.value)} />
+                {editText==""&&(<p className="error">There must be text</p>)}
+                <button style={{color:editText==""?"gray":"orange"}} disabled={editText==""?true:false} onClick={() => submitEdit(comment._id)}>Save Edit</button>
                 <button onClick={cancelEdit}>Cancel</button>
               </div>
             ):

@@ -28,7 +28,7 @@ export default function AuthForm({ type }) {
     await axios.post(`http://localhost:5001/api/auth/${type=="Log in"?"login":"register"}`,{
       username,email,password
     }).then((res)=>{
-      Cookies.set("token", res.data.token, { expires: 2 / 1440}); // Expires in 10 min
+      Cookies.set("token", res.data.token, { expires: 60 / 1440});
       const decoded=jwtDecode(res.data.token)
       setUser({email:decoded.email,_id:decoded._id,username:decoded.username});
        navigate(-1)
