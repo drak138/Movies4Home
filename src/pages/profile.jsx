@@ -5,7 +5,7 @@ import { AuthContext } from "../context/authContext";
 
 export default function Profile(){
     const [view,setView]=useState("overview")
-    const {user,token}=useContext(AuthContext)
+    const {user,token,logout}=useContext(AuthContext)
     return(
         <div className="profileWrapper">
         <section className="profileContainer">
@@ -26,7 +26,7 @@ export default function Profile(){
             {view==="overview"?
             <ProfileOverview user={user} token={token}/>
             :
-            <ProfileSettings user={user} token={token}/>
+            <ProfileSettings user={user} token={token} logout={logout}/>
             }
         </section>
         </div>

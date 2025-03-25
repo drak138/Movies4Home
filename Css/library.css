@@ -10,7 +10,7 @@ height: 64vh;
     flex-direction: column;
     display: flex
 ;
-    width: fit-content;
+    max-width: 20vw;
     border: 2px solid orange;
     padding: 20px;
 }
@@ -20,7 +20,17 @@ height: 64vh;
     flex-direction: column;
     gap: 10px;
 }
+.library:hover{
+cursor: pointer;
+}
+.addLibraryForm{
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
 .libActions{
+    flex-wrap: wrap;
+    justify-content: center;
     display: flex;
     gap: 10px;
 margin-top:auto;
@@ -44,15 +54,22 @@ margin-top:auto;
     padding: 30px;
 ;
 }
+
+.movieWithRemove .title {
+    width: 13vw !important;
+}
 .savedMovies .movieWithRemove{
     display: flex;
-    width: 11vw;
+    width: 13vw;
     gap: 10px;
     flex-direction: column;
+    height: 360px;
 }
-.savedMovies .movieWithRemove .movieCard{
-    height: 340px;
-    width: 190px;
+.movieCard{
+    height: 360px;
+}
+.savedMovies.posterHolder{
+    width: 13vw;
 }
 .removeButton{
     background-color: orange;
@@ -70,5 +87,8 @@ margin-top:auto;
     .movieWithRemove {
       width: 11vw; /* Adjust width for desktop */
       max-width: 350px;
+    }
+    .movieWithRemove .posterHolder {
+        width: 13vw !important;
     }
   }

@@ -47,6 +47,7 @@ main{
     flex-direction: row;
 }
 input, textarea, select,button { font-family:inherit; 
+    outline: none;
 font-size: large;}
 
 /* Style the scrollbar track */

@@ -8,6 +8,8 @@ import verifyToken from "./middleware/auth.js";
 import commentsRouter from "./routes/comments.js";
 import User from "./models/users.js";
 import bcrypt from "bcrypt"
+import Comment from "./models/comments.js";
+import libraryRouter from "./routes/libraries.js";
 
 
 dotenv.config();
@@ -65,6 +67,7 @@ app.get("/api/verifyToken",verifyToken, async (req, res) => {
   res.json({ message: "Token is valid", user });
   });
 app.use("/api/comments",commentsRouter)
+
 app.put("/api/profile/:userId",verifyToken,async(req,res)=>{
   const senderId=req.user._id
   const {userId}=req.params
@@ -94,6 +97,47 @@ if (password) {
     res.json({error:error})
   }
 })
+app.delete("/api/profile/:userId",verifyToken,async(req,res)=>{
+  const {userId}=req.params
+
+  try{
+  const user= await User.findById(userId)
+  if(!user){
+    return
+  }
+  const deleteCommentAndReplies = async ({userId,commentId}) => {
+    const contian={}
+    if(userId){
+      contian.userId=userId
+    }
+    else{
+      contian._id=commentId
+    }
+    const comments = await Comment.find(contian);
+    if(!comments){
+      return
+    }
+
+    for(const comment of comments){
+    for (const replyId of comment.replies) {
+      
+      await deleteCommentAndReplies({commentId:replyId});
+    }
+  }
+  
+    await Comment.deleteMany(contian);
+  };
+
+  await deleteCommentAndReplies({userId});
+  await User.findByIdAndDelete(userId)
+  res.json({message:"Deleted successfuly"})
+  }catch(error){
+    res.json(error)
+  }
+  
+
+})
+app.use("/api/library",libraryRouter)
   
 
 const PORT = process.env.PORT || 5001;

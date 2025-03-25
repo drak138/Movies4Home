@@ -46,6 +46,9 @@
     font-size: 1.5rem;
     margin-bottom: 10px;
 }
+.settingWrapper{
+    position: relative;
+}
 .settings:hover{
     cursor: pointer;
 }

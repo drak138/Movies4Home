@@ -11,7 +11,6 @@ export default function ProfileOverview({user,token}){
                     headers: { Authorization: `Bearer ${token}` }
                 }).then((res)=>setCommentsCount(res.data.commentsCount))
             } catch (error) {
-                console.log(error.response.data.message);
             }
         };
     
