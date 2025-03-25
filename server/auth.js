@@ -1,6 +1,7 @@
 import User from "./models/users.js";
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
+import { createLibrary } from "./routes/libraries.js";
 
 async function checkIfTaken(checkData,symbol){
     const existing=await User.findOne(checkData)
@@ -26,6 +27,7 @@ export async function registerUser({username,email,password}){
     const newUser = new User({ username, email, password});
     await newUser.save();
     const token=createToken(newUser)
+    await createLibrary({userId:newUser._id,type:"liked"})
     return token
 }
 export async function loginUser({username,email,password}){
