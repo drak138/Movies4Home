@@ -6,4 +6,5 @@
     bottom: 0;
     background-color: orange;
     z-index: 3;
+    height: fit-content;
 }

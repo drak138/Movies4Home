@@ -1,14 +1,29 @@
 import { useContext, useEffect, useState } from "react"
 import { DownloadContext } from "../context/donwloadContext"
 import axios from "axios"
+import UseLibrariesHook from "../hooks/useLibrariesHook"
+import { AuthContext } from "../context/authContext"
+import Message from "./messageBox"
+import { submitHandler } from "../pages/library"
 
 export default function MovieActions({title,mediaType,details,season,seasonsCount}){
+    const{token,user}=useContext(AuthContext)
     const [showLib,setShowLib]=useState(false)
     const [canDowloand,setCanDownload]=useState(false)
     const [loading,setLoading]=useState(true)
     const [movieTorrentLink,setMovieTorrentLink]=useState("")
+    const [refetchTrigger, setRefetchTrigger] = useState(false);
+    const [showMsg,setShowMsg]=useState(false)
+    const [addForm,setAddForm]=useState(false)
+    const [message,setMessage]=useState("")
+    const [name,setName]=useState("")
     const {count,downloadMovie}=useContext(DownloadContext)
-
+    const { libraries } = UseLibrariesHook({
+        token,
+        userId: user?._id,
+        username: user?.username,
+        refetchTrigger
+      });
     const url=`https://yts.mx/movies/${title}`
     function encodeMovieName(movieName) {
         return encodeURIComponent(movieName?.replace(':', '').toLowerCase().replace(/\s+/g, '-'));
@@ -35,8 +50,14 @@ export default function MovieActions({title,mediaType,details,season,seasonsCoun
         fetchLink()
         }
     },[title])
+
+    const showMsgHandler=({set,message})=>{
+        setMessage(message)
+        setShowMsg(set)
+    }
+
     const downloadHandler=()=>{
-        // window.location.href=movieTorrentLink
+        window.location.href=movieTorrentLink
         downloadMovie()
     }
     return(
@@ -59,20 +80,33 @@ export default function MovieActions({title,mediaType,details,season,seasonsCoun
          )}
          <a className="downloadBtn" href={`https://www.opensubtitles.com/en/${mediaType=="movie"?"movies":"tvshows"}/${originName}`} target="_blank">Donwload Subtitles</a>
         <div>
-        <button onClick={(e)=>setShowLib(!showLib)}>Save to Library <i className="fa-solid fa-plus"></i></button>
+        <button onClick={(e)=>{user?setShowLib(!showLib):showMsgHandler({set:true,message:"You have to be logged in to have a Library!"})}}>Save to Library <i className="fa-solid fa-plus"></i></button>
+        {showMsg&&(<Message message={message} show={showMsg} setShow={setShowMsg}/>)}
         {showLib?
             <div className="addToLibrary">
+                {!addForm?
+                <>
                 <h3>Add Movie</h3>
-                <button className="addLibraryBtn"><i className="fa-solid fa-plus"></i></button>
+                <button onClick={()=>setAddForm(true)} className="addLibraryBtn"><i className="fa-solid fa-plus"></i></button>
                 <form className="libraryForm" action="" method="POST">
-                    <label htmlFor="library1Id"><input type="checkbox" id="library1Id" value="library1Id"/>library1Name</label>
-                    <label htmlFor="library2Id"><input type="checkbox" id="library2Id" value="library2Id"/>library2Name</label>
-                    <label htmlFor="library3Id"><input type="checkbox" id="library3Id" value="library3Id"/>library3Name</label>
+                   {libraries.map((library)=>
+                    <label key={library._id} htmlFor={library._id}><input type="checkbox" id={library._id} value={library.id}/>{library.name}</label>
+                   )
+                   }
                 </form>
                 <div className="flex-row">
                 <button className="saveBtn">Save</button>
                 <button onClick={(e)=>setShowLib(!showLib)} className="cancelBtn">Cancel</button>
                 </div>
+                </>:
+                <form className="addLibrary" onSubmit={(e)=>{submitHandler({e,type:"Add Library",name,token,setName,setRefetchTrigger});setAddForm(false)}}>
+                <label style={{marginLeft:"5px"}} htmlFor="name">Name: <input value={name} onChange={(e)=>setName(e.target.value)} style={{width:"70%"}} type="text" /></label>
+                <div className="flex-row">
+                <button>Add Library</button>
+                <button onClick={(e)=>setAddForm(false)} className="cancelBtn">Cancel</button>
+                </div>
+                </form>
+                }
             </div>:null
         }
         </div>

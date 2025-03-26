@@ -5,6 +5,28 @@ import axios from "axios";
 import { AuthContext } from "../context/authContext";
 import UseLibrariesHook from "../hooks/useLibrariesHook";
 
+export async function submitHandler({e, name, selected, token, setName, setRefetchTrigger, type}) {
+    e.preventDefault();
+    try {
+        const body={name}
+        if(selected){
+            body.libraryId=selected[0]._id
+        }
+        const command = type === "Add Library" ? axios.post : axios.put;
+        await command("http://localhost:5001/api/library",
+            body,
+            { headers: { Authorization: `Bearer ${token}` } }
+        ).then(() => {
+            setName("");
+            setRefetchTrigger((prev) => !prev);
+        });
+    } catch (error) {
+        const err = error.response?.data?.message;
+        console.log(error)
+        alert(err || "Failed to create library");
+    }
+}
+
 export default function Library(){
     const{token,user}=useContext(AuthContext)
     const { list } = useListHook({ type: "tv", listModel: "Latest" });
@@ -24,23 +46,6 @@ export default function Library(){
         }
       }, [libraries]);
 
-    async function submitHandler(e){
-        e.preventDefault()
-        try{
-            const command=type==="Add Library"?axios.post:axios.put
-            await command("http://localhost:5001/api/library",
-            {name,libraryId:selected[0]._id},
-            {headers:{Authorization: `Bearer ${token}`}}).then(()=>{
-                setName("");
-                setRefetchTrigger((prev)=>!prev)
-                
-            })
-        }catch(error){
-            const err=error.response?.data?.message
-            alert(err || "Failed to create library");
-            return
-        }
-    }
     async function deleteLibrary() {
         try{
             await axios.delete("http://localhost:5001/api/library",{
@@ -66,13 +71,13 @@ export default function Library(){
                 <ul>
                 {libraries && libraries.length > 0 ? (
             libraries.map((library) => (
-              <li onClick={()=>{
+              <li key={library._id} 
+                onClick={()=>{
                 setType("Add Library");
                 setName("");
                 setSelected([library])
               }} 
-              className={`library ${selected[0]?._id==library._id?"selected":""}`}  
-              key={library._id}>
+              className={`library ${selected[0]?._id==library._id?"selected":""}`}  >
               {library.name}</li>
             ))
           ) : (
@@ -80,7 +85,7 @@ export default function Library(){
           )}
                 </ul>
                 <div className="libActions">
-                <form className="addLibraryForm" onSubmit={submitHandler}>
+                <form className="addLibraryForm" onSubmit={(e)=>submitHandler({e,type,name,selected,token,setName,setRefetchTrigger})}>
                 <label htmlFor="name">Name</label>
                 <input value={name} onChange={(e)=>setName(e.target.value)} type="text"  id="name" name="name"/>
                 <button>{type}</button>
@@ -103,3 +108,4 @@ export default function Library(){
         </section>
     );
 }
+
