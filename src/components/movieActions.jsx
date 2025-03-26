@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from "react"
 import { DownloadContext } from "../context/donwloadContext"
+import axios from "axios"
 
 export default function MovieActions({title,mediaType,details,season,seasonsCount}){
     const [showLib,setShowLib]=useState(false)
@@ -17,10 +18,13 @@ export default function MovieActions({title,mediaType,details,season,seasonsCoun
         setLoading(true)
         setCanDownload(false)
         const fetchLink=async()=>{
-            const res=await fetch(`https://movies4home.onrender.com/api/hrefStealer?url=${encodeURIComponent(url)}`)
-            const data=await res.json()
-            setCanDownload(data.success)
-            setMovieTorrentLink(data.torrentLink)
+            try{
+            const res=await axios.get(`https://movies4home.onrender.com/api/hrefStealer?url=${encodeURIComponent(url)}`)
+            setCanDownload(res.data.success)
+            setMovieTorrentLink(res.data.torrentLink)
+        }catch(error){
+                
+        }
             setLoading(false)
         }
         if(mediaType=="tv"){

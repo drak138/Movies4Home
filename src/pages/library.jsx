@@ -10,6 +10,7 @@ export default function Library(){
     const { list } = useListHook({ type: "tv", listModel: "Latest" });
     const [name,setName]=useState("")
     const [refetchTrigger, setRefetchTrigger] = useState(false);
+    const [type,setType]=useState("Add Library")
     const { libraries } = UseLibrariesHook({
         token,
         userId: user?._id,
@@ -18,19 +19,21 @@ export default function Library(){
       });
       const [selected, setSelected] = useState([]);
       useEffect(() => {
-        if (libraries.length > 0) {
-          setSelected(libraries.filter((library) => library.type === "liked")[0]._id);
+        if (libraries.length > 0 && selected.length==0) {
+          setSelected(libraries.filter((library) => library.type === "liked"));
         }
       }, [libraries]);
-      console.log(selected)
-    async function addLibrary(e){
+
+    async function submitHandler(e){
         e.preventDefault()
         try{
-            await axios.post("http://localhost:5001/api/library",
-            {name},
+            const command=type==="Add Library"?axios.post:axios.put
+            await command("http://localhost:5001/api/library",
+            {name,libraryId:selected[0]._id},
             {headers:{Authorization: `Bearer ${token}`}}).then(()=>{
                 setName("");
                 setRefetchTrigger((prev)=>!prev)
+                
             })
         }catch(error){
             const err=error.response?.data?.message
@@ -38,26 +41,53 @@ export default function Library(){
             return
         }
     }
+    async function deleteLibrary() {
+        try{
+            await axios.delete("http://localhost:5001/api/library",{
+            data: { libraryId: selected[0]._id },
+            headers:{Authorization: `Bearer ${token}`}
+        }
+        ).then(()=>{
+                setName("");
+                setType("Add Library")
+                setSelected([])
+                setRefetchTrigger((prev)=>!prev)
+            })
+        }catch(error){
+            const err=error.response?.data?.message
+            alert(err || "Failed to Delete Library");
+            return
+        }
+    }
+
     return (
         <section className="libContainer">
             <div className="libraries">
                 <ul>
                 {libraries && libraries.length > 0 ? (
             libraries.map((library) => (
-              <li onClick={()=>setSelected(library._id)} className={`library ${selected.includes(library._id)?"selected":""}`}  key={library._id}>{library.name}</li>
+              <li onClick={()=>{
+                setType("Add Library");
+                setName("");
+                setSelected([library])
+              }} 
+              className={`library ${selected[0]?._id==library._id?"selected":""}`}  
+              key={library._id}>
+              {library.name}</li>
             ))
           ) : (
             <p>No libraries found.</p>
           )}
                 </ul>
                 <div className="libActions">
-                <form className="addLibraryForm" onSubmit={addLibrary}>
+                <form className="addLibraryForm" onSubmit={submitHandler}>
                 <label htmlFor="name">Name</label>
                 <input value={name} onChange={(e)=>setName(e.target.value)} type="text"  id="name" name="name"/>
-                <button>Add Library</button>
+                <button>{type}</button>
                 </form>
-                    <button>Rename</button>
-                    <button>Remove Library</button>
+                    {type!=="Add Library"?<button onClick={()=>{setType("Add Library")}}>Add Library</button>:null}
+                    {type!=="Rename"?<button onClick={()=>{setName(selected[0].name);setType("Rename")}}>Rename</button>:null}
+                    <button onClick={()=>deleteLibrary()}>Remove Library</button>
                     <button>Share</button>
                     <button>Members</button>
                 </div>

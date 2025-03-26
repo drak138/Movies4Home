@@ -11,10 +11,8 @@ export default function UseLibrariesHook({userId, username, token,refetchTrigger
           params: { userId,username},
           headers: { Authorization: `Bearer ${token}` },
         });
-        console.log(response);
         setLibraries(response.data);
       } catch (error) {
-        console.log(error);
       }
     };
 
