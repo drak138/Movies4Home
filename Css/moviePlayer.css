@@ -23,7 +23,9 @@
   position: relative;
 } */
 .movieInteraction .messageBox{
-  right: 36% !important;
+  right: 50% !important;
+  bottom: 50% !important;
+  position: fixed !important;
 
 }
 .smallStuff{

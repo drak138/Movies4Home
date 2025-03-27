@@ -97,7 +97,7 @@ export default function MovieActions({title,mediaType,details,season,seasonsCoun
     return(
         <section className="movieInteraction">
         <div className="smallStuff">
-        <button style={{color:libraries[0]?.movies.includes(id)?"orange":"white"}} onClick={()=>addToLibrary({type:"liked"})} className="like"><i className="fa-solid fa-thumbs-up"></i></button>
+        <button style={{color:libraries[0]?.movies.includes(id)?"orange":"white"}} onClick={()=>{user?addToLibrary({type:"liked"}):showMsgHandler({set:true,message:"You have to be logged in to Give a Like!"})}} className="like"><i className="fa-solid fa-thumbs-up"></i></button>
         <button className="dislike"><i className="fa-solid fa-thumbs-down"></i></button>
         {canDowloand ?
         (

@@ -6,7 +6,7 @@ import MovieInfo from "../components/movieInfo";
 import TvSeasons from "../components/tvSeasons";
 import Similar from "../components/similar";
 import SeriesActions from "../components/seriesAction";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Comments from "../components/comments";
 
 export default function Movie(){
@@ -15,6 +15,9 @@ export default function Movie(){
     const sectionRef=useRef({})
     const res=UseDetailsHook({type:mediaType,movieId:id})
     const details=res.movieDetails
+    useEffect(()=>{
+        setOpenSeasons([])
+    },[id])
 
     const toggleSeason = (season) => {
         setOpenSeasons((prev) =>

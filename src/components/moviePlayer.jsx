@@ -4,7 +4,7 @@ export default function MoviePlayer({mediaType,id,details,season,episode}){
     const [watching,setWatching]=useState(false)
     useEffect(()=>{
         setWatching(false)
-    },[season,episode])
+    },[season,episode,id])
     return(
         <div className="playerContainer">
         {!watching?
@@ -16,7 +16,7 @@ export default function MoviePlayer({mediaType,id,details,season,episode}){
          <iframe
   src={`https://vidsrc.me/embed/${mediaType}?imdb=${mediaType==="tv"?details?.external_ids.imdb_id:details?.imdb_id}${mediaType==="tv"?`&season=${season}&episode=${episode}`:""}`}
   style={{ width: "100%", height: "100%" }}
-  frameBorder="0"
+  frameborder="0"
   referrerPolicy="origin"
   allowFullScreen
 ></iframe>}

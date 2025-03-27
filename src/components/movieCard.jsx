@@ -10,7 +10,7 @@ export default function MovieCard({movie}){
       if(movieName=="Dark Phoenix"){
         movieName="X-Men: Dark Phoenix"
       }
-        return encodeURIComponent(movieName.replace(':', '').toLowerCase().replace(/\s+/g, '-'));
+        return encodeURIComponent(movieName.replace(':', '').replace("&","").toLowerCase().replace(/\s+/g, '-'));
       }
       const encodedName = encodeMovieName(title?title:name)+`-${release_date?release_date?.split("-")[0]:first_air_date?.split("-")[0]}`;
     return(
