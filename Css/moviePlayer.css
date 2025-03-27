@@ -41,6 +41,10 @@
     color: white;
     background-color: orange;
 }
+.smallStuff .like,.smallStuff .dislike{
+  padding: 0px;
+  background-color: transparent;
+}
 .downloadBtn{
     font-size: 1.5rem;
     padding: 5px 20px;
@@ -138,6 +142,7 @@
   .similarSection .movieCard{
     display: block;
     width: fit-content;
+    height: 220px;
   }
   .similarSection .movieCard .posterHolder{
     height: 30vh;

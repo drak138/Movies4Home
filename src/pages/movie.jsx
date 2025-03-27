@@ -37,7 +37,7 @@ export default function Movie(){
             <MoviePlayer mediaType={mediaType} id={id} details={details} season={season} episode={episode}/>
             <div className="actionsHolder">
             {episode?<SeriesActions season={season} episode={episode} lastEpisode={details?.last_episode_to_air||{}} title={title} handleScrollAndOpen={handleScrollAndOpen}/>:null}
-            <MovieActions title={title} mediaType={mediaType} details={details} season={season} seasonsCount={details?.number_of_seasons}/>
+            <MovieActions title={title} mediaType={mediaType} details={details} season={season} seasonsCount={details?.number_of_seasons} id={id}/>
             </div>
             <MovieInfo details={details} id={id} title={title} mediaType={mediaType}/>
 

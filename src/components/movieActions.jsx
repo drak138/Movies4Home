@@ -6,7 +6,7 @@ import { AuthContext } from "../context/authContext"
 import Message from "./messageBox"
 import { submitHandler } from "../pages/library"
 
-export default function MovieActions({title,mediaType,details,season,seasonsCount}){
+export default function MovieActions({title,mediaType,details,season,seasonsCount,id}){
     const{token,user}=useContext(AuthContext)
     const [showLib,setShowLib]=useState(false)
     const [canDowloand,setCanDownload]=useState(false)
@@ -50,20 +50,54 @@ export default function MovieActions({title,mediaType,details,season,seasonsCoun
         fetchLink()
         }
     },[title])
-
     const showMsgHandler=({set,message})=>{
         setMessage(message)
         setShowMsg(set)
     }
-
     const downloadHandler=()=>{
         window.location.href=movieTorrentLink
         downloadMovie()
     }
+    async function addToLibrary({type,librariesId}){
+        const body={movieId:id}
+        if(type){
+            body.type=type
+        }
+        if(librariesId){
+            body.librariesId=librariesId
+        }
+
+        try{
+       await axios.put("http://localhost:5001/api/library/add",
+       body,
+       {headers:{Authorization: `Bearer ${token}`}}).then((res)=>{
+        const response=res
+        setRefetchTrigger((prev)=>!prev)
+       })
+        }catch(error){
+            return error
+        }
+    }
+    const addHandler=async(e)=>{
+        e.preventDefault()
+        const formData = new FormData(e.target);
+        const selectedLibraries = formData.getAll("library");
+        if(selectedLibraries.length<1){
+            return
+        }
+        try{
+            await addToLibrary({ librariesId: selectedLibraries });
+            setShowLib(false);
+        }
+        catch(error){
+            console.log(error)
+        }
+
+    }
     return(
         <section className="movieInteraction">
         <div className="smallStuff">
-        <button className="like"><i className="fa-solid fa-thumbs-up"></i></button>
+        <button style={{color:libraries[0]?.movies.includes(id)?"orange":"white"}} onClick={()=>addToLibrary({type:"liked"})} className="like"><i className="fa-solid fa-thumbs-up"></i></button>
         <button className="dislike"><i className="fa-solid fa-thumbs-down"></i></button>
         {canDowloand ?
         (
@@ -88,16 +122,16 @@ export default function MovieActions({title,mediaType,details,season,seasonsCoun
                 <>
                 <h3>Add Movie</h3>
                 <button onClick={()=>setAddForm(true)} className="addLibraryBtn"><i className="fa-solid fa-plus"></i></button>
-                <form className="libraryForm" action="" method="POST">
+                <form className="libraryForm" onSubmit={addHandler}>
                    {libraries.map((library)=>
-                    <label key={library._id} htmlFor={library._id}><input type="checkbox" id={library._id} value={library.id}/>{library.name}</label>
+                    <label key={library._id} htmlFor={library._id}><input type="checkbox" disabled={library.movies.includes(id)} defaultChecked={library.movies.includes(id)} name="library" id={library._id} value={library._id}/>{library.name}</label>
                    )
                    }
-                </form>
                 <div className="flex-row">
                 <button className="saveBtn">Save</button>
                 <button onClick={(e)=>setShowLib(!showLib)} className="cancelBtn">Cancel</button>
                 </div>
+                </form>
                 </>:
                 <form className="addLibrary" onSubmit={(e)=>{submitHandler({e,type:"Add Library",name,token,setName,setRefetchTrigger});setAddForm(false)}}>
                 <label style={{marginLeft:"5px"}} htmlFor="name">Name: <input value={name} onChange={(e)=>setName(e.target.value)} style={{width:"70%"}} type="text" /></label>

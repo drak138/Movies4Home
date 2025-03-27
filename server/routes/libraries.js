@@ -68,5 +68,28 @@ libraryRouter.delete("/",verifyToken,async(req,res)=>{
         res.status(500).json({message:error})
     }
 })
+libraryRouter.put("/add",verifyToken,async(req,res)=>{
+    const {type,movieId,librariesId}=req.body
+
+    try{
+        if(!type){
+        await Library.updateMany({_id:{$in:librariesId}},{$push:{movies:movieId}})
+        res.json("added successfuly")
+        }
+        else{
+            const userId=req.user._id
+            const library = await Library.findOne({ userId, type });
+            if (library) {
+            const update = library.movies.includes(movieId)
+            ? { $pull: { movies: movieId } }
+            : { $push: { movies: movieId } };
+            await Library.findOneAndUpdate({ userId, type }, update);
+            res.json("Added/removed successfuly")
+}
+        }
+    }catch(error){
+        res.status(500).json(error)
+    }
+})
 
 export default libraryRouter
