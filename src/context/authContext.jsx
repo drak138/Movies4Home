@@ -5,7 +5,7 @@ import axios from "axios";
 export const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState(false);
+  const [user, setUser] = useState(null);
   const token = Cookies.get("token");
 
   useEffect(() => {
