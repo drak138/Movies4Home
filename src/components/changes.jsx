@@ -13,10 +13,16 @@ export default function Changes({type}){
     async function submitHandler(e){
         e.preventDefault()
         if(type=="Change user name"){
+            try{
             await axios.put(`http://localhost:5001/api/profile/${user._id}`,
             {username:username},
             {headers:{ Authorization: `Bearer ${token}` }
         }).then(()=>{window.location.reload()})
+        }catch(error){
+            if (error.response && error.response.data.message) {
+                setError(error.response.data.message);
+            }
+        }
         }
         else{
             try{
@@ -60,11 +66,14 @@ export default function Changes({type}){
             <form onSubmit={submitHandler} className="changeForm">
                 {
                 type=="Change user name"?
+                <>
                 <label htmlFor="userName">New User name
                     <input value={username} onChange={(e)=>setUsername(e.target.value)} type="text" id="userName" name="username"/>
-                    {username==user.username&&(<p className="error">Username must be different</p>)}
-                    {username.trim().length<5&&(<p className="error">Username must be at least 5 Characters</p>)}
-                </label>:
+                </label>
+                {username==user.username&&(<p className="error">Username must be different</p>)}
+                {error&&(<p className="error">{error}</p>)}
+                {username.trim().length<5&&(<p className="error">Username must be at least 5 Characters</p>)}
+                </>:
                 <>
                 <label htmlFor="oldPass">Old Password
                 <input value={oldPass} onChange={(e)=>setOldPass(e.target.value)} type="password" id="oldPass" name="oldPass"/>
@@ -72,8 +81,8 @@ export default function Changes({type}){
                 {error&&(<p className="error">{error}</p>)}
                 <label htmlFor="newPass">New Password
                 <input value={password} onChange={(e)=>setPassword(e.target.value)} type="password" id="newPass" name="password"/>
-                {password.trim().length<8&&(<p className="error">Password must be at least 8 Characters</p>)}
                 </label>
+                {password.trim().length<8&&(<p className="error">Password must be at least 8 Characters</p>)}
                 </>
                 }
                 <button style={{color:error?"gray":"orange"}} disabled={error}>{type}</button>

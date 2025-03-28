@@ -15,7 +15,13 @@ const librarySchema=new Schema({
     enum: ["liked", "custom"], default: "custom" 
     },
     movies: [{ 
-    type: String 
+        id:{
+            type:String
+        },
+        mediaType:{
+            type:String,
+            enum:["tv","movie"]
+        }
     }],  
     members: [
         {

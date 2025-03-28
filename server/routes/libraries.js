@@ -69,23 +69,42 @@ libraryRouter.delete("/",verifyToken,async(req,res)=>{
     }
 })
 libraryRouter.put("/add",verifyToken,async(req,res)=>{
-    const {type,movieId,librariesId}=req.body
+    const {type,movieId,librariesId,mediaType}=req.body
 
     try{
         if(!type){
-        await Library.updateMany({_id:{$in:librariesId}},{$push:{movies:movieId}})
+        await Library.updateMany({_id:{$in:librariesId}},{$push: { movies: {id: movieId, mediaType: mediaType } } })
         res.json("added successfuly")
         }
-        else{
-            const userId=req.user._id
+        else {
+            const userId = req.user._id;
             const library = await Library.findOne({ userId, type });
             if (library) {
-            const update = library.movies.includes(movieId)
-            ? { $pull: { movies: movieId } }
-            : { $push: { movies: movieId } };
-            await Library.findOneAndUpdate({ userId, type }, update);
-            res.json("Added/removed successfuly")
-}
+                const movieExists = library.movies.some(
+                    (movie) => movie.id === movieId && movie.mediaType === mediaType
+                );
+                const update = movieExists
+                    ? { $pull: { movies: { id: movieId, mediaType: mediaType } } }
+                    : { $push: { movies: {id: movieId, mediaType: mediaType } } };
+        
+                await Library.findOneAndUpdate({ userId, type }, update);
+                res.json("Added/removed successfully");
+            }
+        }
+    }catch(error){
+        res.status(500).json(error)
+    }
+})
+libraryRouter.put("/remove",verifyToken,async(req,res)=>{
+    const{savedId,libraryId}=req.body
+    try{
+        const library=await Library.findById(libraryId)
+        if(library){
+            const savedExists=library.movies.some((movie)=>movie.id==savedId)
+            if(savedExists){
+                await Library.findByIdAndUpdate(libraryId,{$pull:{ movies:{id:savedId}}});
+                res.json("Deleted successfully");
+            }
         }
     }catch(error){
         res.status(500).json(error)

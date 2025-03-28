@@ -86,6 +86,10 @@ app.put("/api/profile/:userId",verifyToken,async(req,res)=>{
     const updates = {};
 
 if (username) {
+    const userExists =User.find({username})
+    if(userExists){
+      return res.status(400).json({ message: "Username already exists" });
+    }
     updates.username = username;
 }
 if (password) {

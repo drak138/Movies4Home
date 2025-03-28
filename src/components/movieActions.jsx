@@ -59,7 +59,7 @@ export default function MovieActions({title,mediaType,details,season,seasonsCoun
         downloadMovie()
     }
     async function addToLibrary({type,librariesId}){
-        const body={movieId:id}
+        const body={movieId:id,mediaType}
         if(type){
             body.type=type
         }
@@ -75,7 +75,6 @@ export default function MovieActions({title,mediaType,details,season,seasonsCoun
         setRefetchTrigger((prev)=>!prev)
        })
         }catch(error){
-            return error
         }
     }
     const addHandler=async(e)=>{
@@ -90,14 +89,13 @@ export default function MovieActions({title,mediaType,details,season,seasonsCoun
             setShowLib(false);
         }
         catch(error){
-            console.log(error)
         }
 
     }
     return(
         <section className="movieInteraction">
         <div className="smallStuff">
-        <button style={{color:libraries[0]?.movies.includes(id)?"orange":"white"}} onClick={()=>{user?addToLibrary({type:"liked"}):showMsgHandler({set:true,message:"You have to be logged in to Give a Like!"})}} className="like"><i className="fa-solid fa-thumbs-up"></i></button>
+        <button style={{color:libraries[0]?.movies.some(saved=>saved.id==id)?"orange":"white"}} onClick={()=>{user?addToLibrary({type:"liked"}):showMsgHandler({set:true,message:"You have to be logged in to Give a Like!"})}} className="like"><i className="fa-solid fa-thumbs-up"></i></button>
         <button className="dislike"><i className="fa-solid fa-thumbs-down"></i></button>
         {canDowloand ?
         (
@@ -124,7 +122,7 @@ export default function MovieActions({title,mediaType,details,season,seasonsCoun
                 <button onClick={()=>setAddForm(true)} className="addLibraryBtn"><i className="fa-solid fa-plus"></i></button>
                 <form className="libraryForm" onSubmit={addHandler}>
                    {libraries.map((library)=>
-                    <label key={library._id} htmlFor={library._id}><input type="checkbox" disabled={library.movies.includes(id)} defaultChecked={library.movies.includes(id)} name="library" id={library._id} value={library._id}/>{library.name}</label>
+                    <label key={library._id} htmlFor={library._id}><input type="checkbox" disabled={library.movies.some(saved=>saved.id==id)} defaultChecked={library.movies.some(saved=>saved.id==id)} name="library" id={library._id} value={library._id}/>{library.name}</label>
                    )
                    }
                 <div className="flex-row">

@@ -1,9 +1,9 @@
-import { useContext,useEffect, useState } from "react"
+import { useContext,useEffect, useState} from "react"
 import MovieCard from "../components/movieCard"
-import useListHook from "../hooks/useListHook"
 import axios from "axios";
 import { AuthContext } from "../context/authContext";
 import UseLibrariesHook from "../hooks/useLibrariesHook";
+const TMDB_KEY = import.meta.env.VITE_TMDB_API_KEY;
 
 export async function submitHandler({e, name, selected, token, setName, setRefetchTrigger, type}) {
     e.preventDefault();
@@ -22,17 +22,16 @@ export async function submitHandler({e, name, selected, token, setName, setRefet
         });
     } catch (error) {
         const err = error.response?.data?.message;
-        console.log(error)
         alert(err || "Failed to create library");
     }
 }
 
 export default function Library(){
     const{token,user}=useContext(AuthContext)
-    const { list } = useListHook({ type: "tv", listModel: "Latest" });
     const [name,setName]=useState("")
     const [refetchTrigger, setRefetchTrigger] = useState(false);
     const [type,setType]=useState("Add Library")
+    const [saved,setSaved]=useState([])
     const { libraries } = UseLibrariesHook({
         token,
         userId: user?._id,
@@ -41,10 +40,38 @@ export default function Library(){
       });
       const [selected, setSelected] = useState([]);
       useEffect(() => {
-        if (libraries.length > 0 && selected.length==0) {
+        if (libraries.length > 0) {
+            if(selected.length==0){
           setSelected(libraries.filter((library) => library.type === "liked"));
+            }
+            else{
+                setSelected((prev)=>{
+                const matchedLibrary = libraries.find((library) => library._id === prev._id);
+                return matchedLibrary || prev;
+                })
+            }
         }
-      }, [libraries]);
+      }, [libraries,selected]);
+
+      useEffect(() => {
+        const fetchSavedMovies = async () => {
+            if (!selected[0]?.movies) return [];
+    
+            const movieDetailsPromises = selected[0]?.movies.map(async (movie) => {
+                const url = `https://api.themoviedb.org/3/${movie.mediaType}/${movie.id}?api_key=${TMDB_KEY}`;
+                const response = await axios.get(url)
+                return response.data
+            });
+    
+            const movieDetails = await Promise.all(movieDetailsPromises);
+    
+            setSaved(movieDetails.reverse())
+        };
+    
+        fetchSavedMovies()
+    
+    }, [selected]);
+
 
     async function deleteLibrary() {
         try{
@@ -62,6 +89,16 @@ export default function Library(){
             const err=error.response?.data?.message
             alert(err || "Failed to Delete Library");
             return
+        }
+    }
+    async function removeSaved({libraryId,savedId}){
+        try{
+        await axios.put("http://localhost:5001/api/library/remove",
+        {savedId,libraryId},
+        {headers:{Authorization: `Bearer ${token}`}})
+        setSaved((prev) => prev.filter((movie) => movie.id !== savedId));
+        setRefetchTrigger((prev) => !prev);
+        }catch(error){
         }
     }
 
@@ -98,10 +135,10 @@ export default function Library(){
                 </div>
             </div>
             <div className="savedMovies">
-                {list?.results?.map((item) => (
+                {saved.map((item) => (
                     <div className="movieWithRemove" key={item.id}>
                         <MovieCard movie={item} />
-                        <button className="removeButton">Remove</button>
+                        <button onClick={()=>removeSaved({libraryId:selected[0]?._id,savedId:item.id})} className="removeButton">Remove</button>
                     </div>
                 ))}
             </div>

@@ -47,7 +47,7 @@ margin-top:auto;
     width: 880px;
     border: 2px solid orange;
     gap: 40px;
-    overflow-y: scroll;
+    overflow-y: auto;
     flex-wrap: wrap;
     display: flex
 ;
