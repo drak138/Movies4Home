@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
 
 const TMDB_KEY = import.meta.env.VITE_TMDB_API_KEY;
@@ -19,9 +20,9 @@ export default function UseSearchHook({ query, page }) {
         const pageRequests = [];
         for (let i = 1; i <= maxPages; i++) {
           pageRequests.push(
-            fetch(
+            await axios.get(
               `https://api.themoviedb.org/3/search/multi?api_key=${TMDB_KEY}&page=${i}&query=${query}`
-            ).then(res => res.json())
+            ).then(res => res.data)
           );
         }
 

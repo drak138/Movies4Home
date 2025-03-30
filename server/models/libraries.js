@@ -16,11 +16,13 @@ const librarySchema=new Schema({
     },
     movies: [{ 
         id:{
-            type:String
+            type:String,
+            required:true
         },
         mediaType:{
             type:String,
-            enum:["tv","movie"]
+            enum:["tv","movie"],
+            required:true
         }
     }],  
     members: [

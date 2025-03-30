@@ -5,10 +5,10 @@ import { AuthContext } from "../context/authContext";
 import UseLibrariesHook from "../hooks/useLibrariesHook";
 const TMDB_KEY = import.meta.env.VITE_TMDB_API_KEY;
 
-export async function submitHandler({e, name, selected, token, setName, setRefetchTrigger, type}) {
+export async function submitHandler({e, name, selected, token, setName, setRefetchTrigger, type,action}) {
     e.preventDefault();
     try {
-        const body={name}
+        const body={name,action}
         if(selected){
             body.libraryId=selected[0]._id
         }
@@ -72,11 +72,23 @@ export default function Library(){
     
     }, [selected]);
 
+    async function shareLibrary(){
+        try{
+            await axios.post("http://localhost:5001/api/library/invite",
+            {libraryId:selected[0]?._id,userId:user._id,action:"share"},
+            {headers:{Authorization: `Bearer ${token}`}}).then((res)=>{
+                navigator.clipboard.writeText(res.data);
+            })
+        }
+        catch(error){
+        }
+    }
+
 
     async function deleteLibrary() {
         try{
             await axios.delete("http://localhost:5001/api/library",{
-            data: { libraryId: selected[0]._id },
+            data: { libraryId: selected[0]._id,action:"delete" },
             headers:{Authorization: `Bearer ${token}`}
         }
         ).then(()=>{
@@ -91,10 +103,10 @@ export default function Library(){
             return
         }
     }
-    async function removeSaved({libraryId,savedId}){
+    async function removeSaved({libraryId,savedId,action}){
         try{
         await axios.put("http://localhost:5001/api/library/remove",
-        {savedId,libraryId},
+        {savedId,libraryId,action},
         {headers:{Authorization: `Bearer ${token}`}})
         setSaved((prev) => prev.filter((movie) => movie.id !== savedId));
         setRefetchTrigger((prev) => !prev);
@@ -122,15 +134,15 @@ export default function Library(){
           )}
                 </ul>
                 <div className="libActions">
-                <form className="addLibraryForm" onSubmit={(e)=>submitHandler({e,type,name,selected,token,setName,setRefetchTrigger})}>
+                <form className="addLibraryForm" onSubmit={(e)=>submitHandler({e,type,name,selected,token,setName,setRefetchTrigger,action:type=="Add Library"?"add library":"rename"})}>
                 <label htmlFor="name">Name</label>
                 <input value={name} onChange={(e)=>setName(e.target.value)} type="text"  id="name" name="name"/>
                 <button>{type}</button>
                 </form>
-                    {type!=="Add Library"?<button onClick={()=>{setType("Add Library")}}>Add Library</button>:null}
+                    {type!=="Add Library"?<button onClick={()=>{setType("Add Library");setName("")}}>Add Library</button>:null}
                     {type!=="Rename"?<button onClick={()=>{setName(selected[0].name);setType("Rename")}}>Rename</button>:null}
                     <button onClick={()=>deleteLibrary()}>Remove Library</button>
-                    <button>Share</button>
+                    <button onClick={shareLibrary}>Share</button>
                     <button>Members</button>
                 </div>
             </div>
@@ -138,7 +150,7 @@ export default function Library(){
                 {saved.map((item) => (
                     <div className="movieWithRemove" key={item.id}>
                         <MovieCard movie={item} />
-                        <button onClick={()=>removeSaved({libraryId:selected[0]?._id,savedId:item.id})} className="removeButton">Remove</button>
+                        <button onClick={()=>removeSaved({libraryId:selected[0]?._id,savedId:item.id,action:"remove"})} className="removeButton">Remove</button>
                     </div>
                 ))}
             </div>

@@ -4,15 +4,11 @@ import { Link } from "react-router-dom";
 
 export default function MovieSlideCard({ movie }) {
   const { backdrop_path, vote_average, id, release_date, overview, title } = movie;
-  // Get movie details using the hook
   const {images}=useImagesHook({ movieId:id ,mediaType:"movie"})
   function encodeMovieName(movieName) {
     return encodeURIComponent(movieName.replace(':', '').toLowerCase().replace(/\s+/g, '-'));
   }
   const encodedName = encodeMovieName(title?title+`-${release_date.split("-")[0]}`:name);
-
-
-
 
   const backdropUrl = `https://image.tmdb.org/t/p/original${backdrop_path}`;  // Full size image
 

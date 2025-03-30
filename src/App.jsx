@@ -9,7 +9,8 @@ import Profile from './pages/profile';
 import Movie from './pages/movie';
 import Search from './pages/search';
 import useAuthExpiration from './utils/authExparation.js';
-import { GuestRoute, ProtectedRoute } from './utils/protectedRoute.jsx';
+import { GuestRoute, InviteGuard, ProtectedRoute } from './utils/protectedRoute.jsx';
+import InviteMember from './utils/inviteMember.jsx';
 
 function App() {
     useAuthExpiration()
@@ -35,6 +36,11 @@ function App() {
         <Route path='/watch/:mediaType/:title/:id' element={<Movie/>}/>
         <Route path="/watch/:mediaType/:title/:id/season/:season/episode/:episode" element={<Movie/>}/>
         <Route path="*" element={<Navigate to="/" replace />}/>
+
+        {/* specifically for invites */}
+        <Route element={<InviteGuard/>}>
+        <Route path="/library/invite/:inviteToken" element={<InviteMember/>}/>
+        </Route>
         </Routes>
         </>
     );

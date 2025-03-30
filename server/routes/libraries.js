@@ -1,6 +1,8 @@
 import express from "express";
 import Library from "../models/libraries.js";
+import jwt from "jsonwebtoken"
 import verifyToken from "../middleware/auth.js";
+import verifyRole from "../middleware/role.js";
 
 const libraryRouter = express.Router();
 
@@ -50,7 +52,7 @@ libraryRouter.get("/",verifyToken,async(req,res)=>{
         res.status(500).json(err)
     }
 })
-libraryRouter.put("/",verifyToken,async(req,res)=>{
+libraryRouter.put("/",verifyToken,verifyRole,async(req,res)=>{
     const {name,libraryId}=req.body
     try{
         await Library.findByIdAndUpdate(libraryId,{name})
@@ -59,7 +61,7 @@ libraryRouter.put("/",verifyToken,async(req,res)=>{
         res.status(500).json({message:error})
     }
 })
-libraryRouter.delete("/",verifyToken,async(req,res)=>{
+libraryRouter.delete("/",verifyToken,verifyRole,async(req,res)=>{
     const {libraryId}=req.body
     try{
         await Library.findByIdAndDelete(libraryId)
@@ -68,12 +70,13 @@ libraryRouter.delete("/",verifyToken,async(req,res)=>{
         res.status(500).json({message:error})
     }
 })
-libraryRouter.put("/add",verifyToken,async(req,res)=>{
-    const {type,movieId,librariesId,mediaType}=req.body
+libraryRouter.put("/add",verifyToken,verifyRole,async(req,res)=>{
+    const {type,movieId,mediaType}=req.body
 
     try{
         if(!type){
-        await Library.updateMany({_id:{$in:librariesId}},{$push: { movies: {id: movieId, mediaType: mediaType } } })
+        const allowedLibraries=req.allowedLibraries
+        await Library.updateMany({_id:{$in:allowedLibraries}},{$push: { movies: {id: movieId, mediaType: mediaType } } })
         res.json("added successfuly")
         }
         else {
@@ -95,7 +98,7 @@ libraryRouter.put("/add",verifyToken,async(req,res)=>{
         res.status(500).json(error)
     }
 })
-libraryRouter.put("/remove",verifyToken,async(req,res)=>{
+libraryRouter.put("/remove",verifyToken,verifyRole,async(req,res)=>{
     const{savedId,libraryId}=req.body
     try{
         const library=await Library.findById(libraryId)
@@ -109,6 +112,42 @@ libraryRouter.put("/remove",verifyToken,async(req,res)=>{
     }catch(error){
         res.status(500).json(error)
     }
+})
+libraryRouter.post("/invite",verifyToken,verifyRole,async(req,res)=>{
+    const {libraryId,userId}=req.body
+    const token = jwt.sign({libraryId},process.env.JWT_SECRET,{ expiresIn: "2m"})
+
+    const inviteLink = `http://localhost:5173/Movies4Home#/library/invite/${token}`;
+    res.json(inviteLink)
+})
+libraryRouter.put("/invite",verifyToken,async(req,res)=>{
+    const{inviteToken,user}=req.body
+    try{
+    const decode=jwt.verify(inviteToken,process.env.JWT_SECRET)
+    const library=await Library.findById(decode.libraryId)
+
+    if(library){
+        const isOwner=library.userId==user._id
+        if(isOwner){
+            throw new Error("You can't join your own library"); 
+        }
+        const alreadyIn=library.members.some((member)=>member.username==user.username)
+        if(alreadyIn){
+            throw new Error("You are already a Member")
+        }
+        await Library.findByIdAndUpdate(decode.libraryId,{$push:{members:{username:user.username}}})
+        res.json("Added to library succesfuly")
+    }
+    }
+    catch(error){
+        if(error.message=="jwt expires"){
+            res.status(400).json("Link has expired")
+        }
+        if(error.message){
+            res.status(400).json(error.message)
+        }
+    }
+
 })
 
 export default libraryRouter

@@ -59,7 +59,7 @@ export default function MovieActions({title,mediaType,details,season,seasonsCoun
         downloadMovie()
     }
     async function addToLibrary({type,librariesId}){
-        const body={movieId:id,mediaType}
+        const body={movieId:id,mediaType,action:"add Movie"}
         if(type){
             body.type=type
         }
