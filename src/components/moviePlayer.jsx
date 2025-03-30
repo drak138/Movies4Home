@@ -16,7 +16,7 @@ export default function MoviePlayer({mediaType,id,details,season,episode}){
          <iframe
   src={`https://vidsrc.me/embed/${mediaType}?imdb=${mediaType==="tv"?details?.external_ids.imdb_id:details?.imdb_id}${mediaType==="tv"?`&season=${season}&episode=${episode}`:""}`}
   style={{ width: "100%", height: "100%" }}
-  frameborder="0"
+  frameBorder="0"
   referrerPolicy="origin"
   allowFullScreen
 ></iframe>}

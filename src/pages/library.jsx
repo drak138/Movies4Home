@@ -1,4 +1,4 @@
-import { useContext,useEffect, useState} from "react"
+import { useContext,useEffect, useMemo, useState} from "react"
 import MovieCard from "../components/movieCard"
 import axios from "axios";
 import { AuthContext } from "../context/authContext";
@@ -32,6 +32,8 @@ export default function Library(){
     const [refetchTrigger, setRefetchTrigger] = useState(false);
     const [type,setType]=useState("Add Library")
     const [saved,setSaved]=useState([])
+    const [showLib,setShowLib]=useState(true)
+    const [selectedMember,setSelectedMember]=useState([])
     const { libraries } = UseLibrariesHook({
         token,
         userId: user?._id,
@@ -72,6 +74,32 @@ export default function Library(){
     
     }, [selected]);
 
+    const [members,setMembers]=useState(useEffect(()=>
+        setMembers(selected[0]?.members),[selected]))
+    async function leaveLibrary({memberId,user,action}) {
+        try{
+            await axios.put("http://localhost:5001/api/library/leave",
+                {libraryId:selected[0]?._id,memberId,user,action},
+                {headers:{Authorization: `Bearer ${token}`}}
+            ).then((res)=>{
+                if(action=="remove Member"){
+                    console.log(members)
+                setSelectedMember([])
+                setMembers((prev) => prev.filter((member) => member._id !== memberId));
+            }
+            else{
+                setName("")
+                setType("Add Library")
+                setSelected([])
+            }
+                setRefetchTrigger((prev)=>!prev)
+            })
+        }catch(error){
+            const err=error.response?.data?.message
+            alert(err || "Failed to Delete Library");
+            return
+        }
+    }
     async function shareLibrary(){
         try{
             await axios.post("http://localhost:5001/api/library/invite",
@@ -81,6 +109,9 @@ export default function Library(){
             })
         }
         catch(error){
+            const err=error.response?.data?.message
+            alert(err || "Failed to Delete Library");
+            return
         }
     }
 
@@ -111,6 +142,9 @@ export default function Library(){
         setSaved((prev) => prev.filter((movie) => movie.id !== savedId));
         setRefetchTrigger((prev) => !prev);
         }catch(error){
+            const err=error.response?.data?.message
+            alert(err || "Failed to Delete Library");
+            return
         }
     }
 
@@ -118,6 +152,8 @@ export default function Library(){
         <section className="libContainer">
             <div className="libraries">
                 <ul>
+                {showLib?
+                <>
                 {libraries && libraries.length > 0 ? (
             libraries.map((library) => (
               <li key={library._id} 
@@ -131,9 +167,26 @@ export default function Library(){
             ))
           ) : (
             <p>No libraries found.</p>
-          )}
+          )}</>
+          :<>
+          {members && members.length>0?(
+            members.map((member)=>(
+                <li key={member._id}
+                disabled={member.username==user.username}
+                onClick={()=>{
+                if(member.username!==user.username){
+                setSelectedMember([member])
+                }
+              }} 
+              className={`library ${selectedMember? selectedMember[0]?._id==member._id?"selected":"":""}`}  >
+              {member.username}-{member.role}</li>
+            ))
+        ):
+          (<p>No Members found.</p>)}</>}
                 </ul>
                 <div className="libActions">
+                {showLib?
+                <>
                 <form className="addLibraryForm" onSubmit={(e)=>submitHandler({e,type,name,selected,token,setName,setRefetchTrigger,action:type=="Add Library"?"add library":"rename"})}>
                 <label htmlFor="name">Name</label>
                 <input value={name} onChange={(e)=>setName(e.target.value)} type="text"  id="name" name="name"/>
@@ -142,8 +195,22 @@ export default function Library(){
                     {type!=="Add Library"?<button onClick={()=>{setType("Add Library");setName("")}}>Add Library</button>:null}
                     {type!=="Rename"?<button onClick={()=>{setName(selected[0].name);setType("Rename")}}>Rename</button>:null}
                     <button onClick={()=>deleteLibrary()}>Remove Library</button>
+                    <button onClick={()=>leaveLibrary({user:user,action:"leave"})}>Leave library</button>
                     <button onClick={shareLibrary}>Share</button>
-                    <button>Members</button>
+                    <button onClick={()=>setShowLib(false)}>Members</button>
+                </>
+                :<>
+                {selectedMember.length>0?
+                <>
+                <button onClick={()=>leaveLibrary({memberId:selectedMember[0]._id,action:"remove Member"})}>Remove Member</button>
+                <button>Change Role</button>
+                </>
+                :
+                <p>Need to select a Member</p>
+                }
+                <button onClick={()=>setShowLib(true)}>Library</button>
+                </>
+                }
                 </div>
             </div>
             <div className="savedMovies">

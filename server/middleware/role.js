@@ -25,14 +25,21 @@ const verifyRole = async (req, res, next) => {
             req.allowedLibraries = allowedLibraries.map((lib)=>lib._id);
             return next();
         } catch (error) {
+            console.log(error)
             return res.status(500).json({ message: "Server error", error: error.message });
         }
     }
     }else{
+    try{
     const library=await Library.findById(libraryId)
     if (!library) return res.status(404).json({ message: "Library not found" });
 
     if(library.type=="liked")return res.status(404).json({ message: "This library can't be edited by anybody" });
+
+    if(library.userId.toString()==user._id.toString()){
+        next()
+        return
+    }
 
     const member=library.members.filter((member)=>member.username==user.username)
     if (!member) return res.status(404).json({ message: "Member doesn't exist" });
@@ -41,7 +48,8 @@ const verifyRole = async (req, res, next) => {
     const memberRole=member.role
 
     if(action=="rename"||action=="share"||action=="remove"){
-        if(memberRole=="co-owner"||memberRole=="editor"||library.userId.toString()==user._id.toString()){
+        console.log(library.userId.toString()==user._id.toString())
+        if(memberRole=="co-owner"||memberRole=="editor"){
             next();
         }
         else{
@@ -49,13 +57,19 @@ const verifyRole = async (req, res, next) => {
         }
 
     }
-    if(action=="delete"){
-        if(memberRole=="co-owner"||library.userId.toString()==user._id.toString()){
+    if(action=="delete"||action=="remove Member"){
+        if(memberRole=="co-owner"){
             next()
         }else{
             return res.status(404).json({ message: "Member doesn't have the rights to make these changes" });
         }
     }
+    else{
+        next()
+    }
+}catch(error){
+    console.log(error)
+}
     }
 }
 export default verifyRole

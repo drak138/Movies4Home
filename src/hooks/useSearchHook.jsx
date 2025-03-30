@@ -4,6 +4,10 @@ import { useEffect, useState } from "react";
 const TMDB_KEY = import.meta.env.VITE_TMDB_API_KEY;
 
 export default function UseSearchHook({ query, page }) {
+
+  const controller = new AbortController();
+  const signal = controller.signal;
+
   const [search, setSearch] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -21,7 +25,8 @@ export default function UseSearchHook({ query, page }) {
         for (let i = 1; i <= maxPages; i++) {
           pageRequests.push(
             await axios.get(
-              `https://api.themoviedb.org/3/search/multi?api_key=${TMDB_KEY}&page=${i}&query=${query}`
+              `https://api.themoviedb.org/3/search/multi?api_key=${TMDB_KEY}&page=${i}&query=${query}`,
+              { signal }
             ).then(res => res.data)
           );
         }
@@ -55,12 +60,20 @@ export default function UseSearchHook({ query, page }) {
         setLoading(false);
 
       } catch (error) {
+        if (error.name === "CanceledError") {
+          return;
+        }
+        console.error(error);
         setLoading(false);
       }
     };
 
     fetchData();
-  }, [page, query]);
+
+    return () => {
+      controller.abort();
+    };
+  }, [query]);
 
   return { search, loading };
 }

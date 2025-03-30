@@ -115,7 +115,7 @@ libraryRouter.put("/remove",verifyToken,verifyRole,async(req,res)=>{
 })
 libraryRouter.post("/invite",verifyToken,verifyRole,async(req,res)=>{
     const {libraryId,userId}=req.body
-    const token = jwt.sign({libraryId},process.env.JWT_SECRET,{ expiresIn: "2m"})
+    const token = jwt.sign({libraryId},process.env.JWT_SECRET,{ expiresIn: "1h"})
 
     const inviteLink = `http://localhost:5173/Movies4Home#/library/invite/${token}`;
     res.json(inviteLink)
@@ -148,6 +148,36 @@ libraryRouter.put("/invite",verifyToken,async(req,res)=>{
         }
     }
 
+})
+libraryRouter.put("/leave",verifyToken,verifyRole,async(req,res)=>{
+    const {user,memberId,libraryId}=req.body
+    try{
+
+        const library=await Library.findById(libraryId)
+        if(!library){
+            throw new Error("Library not found")
+        }
+        if(memberId){
+            await Library.findByIdAndUpdate(libraryId,{$pull:{members:{_id:memberId}}})
+            res.json("Member removed")
+        }
+        else{
+            if(library.userId.toString()==user._id.toString()){
+            await Library.findByIdAndUpdate(libraryId,{userId:""})
+            res.json("Left successfuly")
+            }
+            await Library.findByIdAndUpdate(libraryId,{$pull:{members:{username:user.username}}})
+            res.json("Member removed") 
+        }
+
+    }catch(error){
+
+        if(error.message){
+            res.status(400).json(error.message)
+        }
+
+        res.status(500).json(error)
+    }
 })
 
 export default libraryRouter

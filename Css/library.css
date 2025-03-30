@@ -10,7 +10,7 @@ height: 64vh;
     flex-direction: column;
     display: flex
 ;
-    max-width: 20vw;
+    width: 20vw;
     border: 2px solid orange;
     padding: 20px;
 }
