@@ -1,19 +1,11 @@
 import express from "express";
 import Library from "../models/libraries.js";
-import cors from "cors";
 import jwt from "jsonwebtoken"
 import verifyToken from "../middleware/auth.js";
 import verifyRole from "../middleware/role.js";
 
-const corsOptions = {
-    origin: ['http://localhost:5173', 'https://drak138.github.io'], 
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
-    credentials: true, 
-  };
 
 const libraryRouter = express.Router();
-libraryRouter.use(cors(corsOptions))
 
 libraryRouter.post("/",verifyToken,async(req,res)=>{
     const {name}=req.body
