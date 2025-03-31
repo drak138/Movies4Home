@@ -32,6 +32,7 @@ export default function InviteMember(){
         if(user){
         addUser()
         }
+        console.log(user)
     },[user])
 
     return(
