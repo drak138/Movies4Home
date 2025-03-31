@@ -12,7 +12,7 @@ const corsOptions = {
   };
 
 const libraryRouter = express.Router();
-libraryRouter.use(corsOptions())
+libraryRouter.use(cors(corsOptions))
 
 libraryRouter.post("/",verifyToken,async(req,res)=>{
     const {name}=req.body

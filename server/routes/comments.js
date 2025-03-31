@@ -10,7 +10,7 @@ const corsOptions = {
 };
 
 const commentsRouter = express.Router();
-commentsRouter.use(corsOptions())
+commentsRouter.use(cors(corsOptions))
 
 commentsRouter.post("/add", verifyToken, async (req, res) => {
     try {
