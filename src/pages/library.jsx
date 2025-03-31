@@ -1,4 +1,4 @@
-import { useContext,useEffect, useMemo, useState} from "react"
+import { useContext,useEffect,useMemo, useState} from "react"
 import MovieCard from "../components/movieCard"
 import axios from "axios";
 import { AuthContext } from "../context/authContext";
@@ -34,6 +34,11 @@ export default function Library(){
     const [saved,setSaved]=useState([])
     const [showLib,setShowLib]=useState(true)
     const [selectedMember,setSelectedMember]=useState([])
+    const [toggleRole,setToggleRole]=useState([])
+    const [selectedRole, setSelectedRole] = useState("");
+    const handleRoleChange = (event) => {
+    setSelectedRole(event.target.value);
+};
     const { libraries } = UseLibrariesHook({
         token,
         userId: user?._id,
@@ -48,12 +53,12 @@ export default function Library(){
             }
             else{
                 setSelected((prev)=>{
-                const matchedLibrary = libraries.find((library) => library._id === prev._id);
-                return matchedLibrary || prev;
+                const matchedLibrary = libraries.find((library) => library._id == prev[0]?._id);
+                return [matchedLibrary] || prev;
                 })
             }
         }
-      }, [libraries,selected]);
+      }, [libraries,refetchTrigger]);
 
       useEffect(() => {
         const fetchSavedMovies = async () => {
@@ -72,7 +77,15 @@ export default function Library(){
     
         fetchSavedMovies()
     
-    }, [selected]);
+    }, [selected,refetchTrigger]);
+
+    const userRole=useMemo(()=>{
+        if(selected[0]?.userId==user._id){
+            return "owner"
+        }else{
+            return selected[0]?.members.find(member => member.username === user.username)?.role;
+        }
+    },[selected,refetchTrigger])
 
     const [members,setMembers]=useState(useEffect(()=>
         setMembers(selected[0]?.members),[selected]))
@@ -83,9 +96,7 @@ export default function Library(){
                 {headers:{Authorization: `Bearer ${token}`}}
             ).then((res)=>{
                 if(action=="remove Member"){
-                    console.log(members)
                 setSelectedMember([])
-                setMembers((prev) => prev.filter((member) => member._id !== memberId));
             }
             else{
                 setName("")
@@ -147,6 +158,30 @@ export default function Library(){
             return
         }
     }
+    async function changeRole(){
+        const role=selectedRole
+        const libraryId=selected[0]._id
+        const memberId=selectedMember[0]._id
+        try{
+            await axios.put("http://localhost:5001/api/library/changeRole",
+                {role,libraryId,memberId,action:"change role"},
+                {headers: {Authorization: `Bearer: ${token}`}}
+            ).then((res)=>{
+                // setMembers(prevMembers =>
+                //     prevMembers.map(member =>
+                //         member._id === memberId ? { ...member, role } : member
+                //     )
+                // );
+                setSelectedMember([{ ...selectedMember[0], role }]);
+                setRefetchTrigger(prev=>!prev)
+            })
+        }catch(error){
+            const err=error.response?.data?.message
+            alert(err || "Failed to Delete Library");
+            return
+        }
+    }
+
 
     return (
         <section className="libContainer">
@@ -171,15 +206,31 @@ export default function Library(){
           :<>
           {members && members.length>0?(
             members.map((member)=>(
-                <li key={member._id}
+                <div key={member._id}>
+                <li
                 disabled={member.username==user.username}
                 onClick={()=>{
                 if(member.username!==user.username){
                 setSelectedMember([member])
-                }
+                setSelectedRole(member.role)
+                };
+                setToggleRole([])
               }} 
-              className={`library ${selectedMember? selectedMember[0]?._id==member._id?"selected":"":""}`}  >
-              {member.username}-{member.role}</li>
+              className={`member ${selectedMember? selectedMember[0]?._id==member._id?"selected":"":""}`}  >
+              {member.username}-{member.role}
+              </li>
+              {toggleRole.includes(member.username)&&(
+              <div className="roleHolder ">
+              <label className="role" htmlFor="member Role"><input type="radio" disabled={selectedRole === "co-owner"} checked={selectedRole === "co-owner"} onChange={handleRoleChange} name="role" id={selectedMember[0]?._id} value="co-owner"/>co-owner</label>
+              <label className="role" htmlFor="member Role"><input type="radio" disabled={selectedRole === "editor"} checked={selectedRole === "editor"} onChange={handleRoleChange} name="role" id={selectedMember[0]?._id} value="editor"/>editor</label>
+              <label className="role" htmlFor="member Role"><input type="radio" disabled={selectedRole === "viewer"} checked={selectedRole === "viewer"} onChange={handleRoleChange} name="role" id={selectedMember[0]?._id} value="viewer"/>viewer</label>
+              <div className="flex-row">
+              {selectedRole!==selectedMember[0].role&&(<button onClick={()=>changeRole()}>Confirm change</button>)}
+              <button onClick={()=>setToggleRole([])}>Cancel</button>
+              </div>
+              </div>
+              )}
+              </div>
             ))
         ):
           (<p>No Members found.</p>)}</>}
@@ -200,15 +251,19 @@ export default function Library(){
                     <button onClick={()=>setShowLib(false)}>Members</button>
                 </>
                 :<>
-                {selectedMember.length>0?
+                {selectedMember.length > 0 ? (
+                (userRole === "co-owner" && userRole !== selectedMember[0]?.role) || userRole === "owner" ? (
                 <>
-                <button onClick={()=>leaveLibrary({memberId:selectedMember[0]._id,action:"remove Member"})}>Remove Member</button>
-                <button>Change Role</button>
+                <button onClick={() =>leaveLibrary({ memberId: selectedMember[0]._id, action: "remove Member" })}>Remove Member</button>
+                <button onClick={() =>setToggleRole(selectedMember[0].username)}>Change Role</button>
                 </>
-                :
+                ) : (
+                <p>Can't edit users with higher or the same role as you</p>
+                )) : 
+                (
                 <p>Need to select a Member</p>
-                }
-                <button onClick={()=>setShowLib(true)}>Library</button>
+                )}
+                <button onClick={()=>{setShowLib(true);setSelectedMember([]);setToggleRole([])}}>Library</button>
                 </>
                 }
                 </div>

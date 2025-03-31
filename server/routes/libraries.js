@@ -179,5 +179,20 @@ libraryRouter.put("/leave",verifyToken,verifyRole,async(req,res)=>{
         res.status(500).json(error)
     }
 })
+libraryRouter.put("/changeRole",verifyToken,verifyRole,async(req,res)=>{
+    const {role,libraryId,memberId}=req.body
+    try{
+        const library=await Library.findById(libraryId)
+        if(!library){throw new Error("Library not found")}
+        await Library.findByIdAndUpdate(libraryId,{ $set:{ "members.$[elem].role": role } },{ arrayFilters: [{ "elem._id": memberId }], new: true });        
+        res.json("Role Updated")
+    }
+    catch(error){
+        if(error.message){
+            res.status(400).json({message:error.message})
+        }
+        res.status(500).json(error)
+    }
+})
 
 export default libraryRouter

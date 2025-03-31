@@ -20,8 +20,13 @@ height: 64vh;
     flex-direction: column;
     gap: 10px;
 }
-.library:hover{
+.library:hover,.member:hover{
 cursor: pointer;
+}
+.member{
+    display: flex;
+    justify-content: center;
+    position: relative;
 }
 .addLibraryForm{
     display: flex;
@@ -75,6 +80,30 @@ margin-top:auto;
     background-color: orange;
     border: none;
     border-radius: 6px;
+}
+
+.roleHolder{
+    border: solid #9e6703 2px;
+    margin-left: 5px;
+    padding: 5px;
+    border-radius: 0px 0px 5px 5px;
+    width: fit-content;
+    display: flex;
+    background-image: linear-gradient(#9e6703, #005c5c);
+    flex-direction: column;
+}
+.roleHolder input[disabled]:before{
+    color: orange;
+    content: "\25C9";
+    position: relative;
+    z-index: 100;
+    top: -3.6px;
+    left: -2.4px;
+
+}
+.role{
+    display: flex;
+    align-content: center;
 }
 @media (min-width: 768px) {
     .movieWithRemove {

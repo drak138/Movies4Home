@@ -25,7 +25,6 @@ const verifyRole = async (req, res, next) => {
             req.allowedLibraries = allowedLibraries.map((lib)=>lib._id);
             return next();
         } catch (error) {
-            console.log(error)
             return res.status(500).json({ message: "Server error", error: error.message });
         }
     }
@@ -40,15 +39,12 @@ const verifyRole = async (req, res, next) => {
         next()
         return
     }
-
-    const member=library.members.filter((member)=>member.username==user.username)
+    const member=library.members.find((member)=>member.username==user.username)
     if (!member) return res.status(404).json({ message: "Member doesn't exist" });
-
 
     const memberRole=member.role
 
     if(action=="rename"||action=="share"||action=="remove"){
-        console.log(library.userId.toString()==user._id.toString())
         if(memberRole=="co-owner"||memberRole=="editor"){
             next();
         }
@@ -57,7 +53,7 @@ const verifyRole = async (req, res, next) => {
         }
 
     }
-    if(action=="delete"||action=="remove Member"){
+    if(action=="delete"||action=="remove Member"||action=="change role"){
         if(memberRole=="co-owner"){
             next()
         }else{
@@ -68,7 +64,6 @@ const verifyRole = async (req, res, next) => {
         next()
     }
 }catch(error){
-    console.log(error)
 }
     }
 }

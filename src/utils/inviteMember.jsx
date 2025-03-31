@@ -11,7 +11,6 @@ export default function InviteMember(){
     const [error,setError]=useState(false)
     const navigate = useNavigate();
     useEffect(()=>{
-        console.log(user)
         const addUser=async()=>{
             try{
                 await axios.put("http://localhost:5001/api/library/invite",
@@ -21,7 +20,6 @@ export default function InviteMember(){
                     navigate("/library")
                 })
             }catch(error){
-                console.log(error)
                 if(error.response.data){
                 setMessage(error.response.data)
                 setError(true)
