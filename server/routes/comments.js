@@ -2,7 +2,15 @@ import express from "express";
 import Comment from "../models/comments.js";
 import verifyToken from "../middleware/auth.js";
 
+const corsOptions = {
+  origin: ['http://localhost:5173', 'https://drak138.github.io'], 
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true, 
+};
+
 const commentsRouter = express.Router();
+commentsRouter.use(corsOptions())
 
 commentsRouter.post("/add", verifyToken, async (req, res) => {
     try {
