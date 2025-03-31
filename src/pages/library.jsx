@@ -111,7 +111,7 @@ export default function Library(){
             return
         }
     }
-    async function shareLibrary(){
+    async function shareLibrary(e){
         try{
             await axios.post("https://movies4home.onrender.com/api/library/invite",
             {libraryId:selected[0]?._id,userId:user._id,action:"share"},
@@ -121,7 +121,7 @@ export default function Library(){
         }
         catch(error){
             const err=error.response?.data?.message
-            alert(err || "Failed to Delete Library");
+            alert(err || "Failed to Create Link");
             return
         }
     }

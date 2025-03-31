@@ -1,5 +1,6 @@
 import express from "express";
 import Library from "../models/libraries.js";
+import cors from "cors";
 import jwt from "jsonwebtoken"
 import verifyToken from "../middleware/auth.js";
 import verifyRole from "../middleware/role.js";
