@@ -7,7 +7,7 @@ export default function ProfileOverview({user,token}){
     useEffect(() => {
         const fetchCommentsCount = async () => {
             try {
-                await axios.get(`http://localhost:5001/api/comments/getUserComments/${user._id}`, {
+                await axios.get(`https://movies4home.onrender.com/api/comments/getUserComments/${user._id}`, {
                     headers: { Authorization: `Bearer ${token}` }
                 }).then((res)=>setCommentsCount(res.data.commentsCount))
             } catch (error) {

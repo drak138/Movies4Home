@@ -68,7 +68,7 @@ export default function MovieActions({title,mediaType,details,season,seasonsCoun
         }
 
         try{
-       await axios.put("http://localhost:5001/api/library/add",
+       await axios.put("https://movies4home.onrender.com/api/library/add",
        body,
        {headers:{Authorization: `Bearer ${token}`}}).then((res)=>{
         const response=res

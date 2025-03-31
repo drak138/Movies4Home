@@ -49,7 +49,7 @@ const verifyRole = async (req, res, next) => {
             next();
         }
         else{
-            return res.status(404).json({ message: "Member doesn't have the rights to make these changes" });
+            return res.status(404).json({ message: "You don't have the rights to make these changes" });
         }
 
     }
@@ -57,7 +57,7 @@ const verifyRole = async (req, res, next) => {
         if(memberRole=="co-owner"){
             next()
         }else{
-            return res.status(404).json({ message: "Member doesn't have the rights to make these changes" });
+            return res.status(404).json({ message: "You don't have the rights to make these changes" });
         }
     }
     else{
