@@ -11,16 +11,14 @@ export function AuthProvider({ children }) {
 
   useEffect(() => {
     const verify=async()=>{
-    if (token) {
       await axios.get("https://movies4home.onrender.com/api/verifyToken", {
           headers: { Authorization: `Bearer ${token}` },
         })
         .then((res) => setUser(res.data.user))
         .catch(() => setUser(false))
-        .finally(()=>{
-          setLoading(false);
-        })
-    }
+        .finally(()=>
+          setLoading(false)
+        )
   }
   verify()
   }, []);
