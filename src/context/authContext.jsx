@@ -6,6 +6,7 @@ export const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
   const token = Cookies.get("token");
 
   useEffect(() => {
@@ -15,7 +16,10 @@ export function AuthProvider({ children }) {
           headers: { Authorization: `Bearer ${token}` },
         })
         .then((res) => setUser(res.data.user))
-        .catch(() => setUser(false));
+        .catch(() => setUser(false))
+        .finally(()=>{
+          setLoading(false);
+        })
     }
   }
   verify()
@@ -27,7 +31,7 @@ export function AuthProvider({ children }) {
   };
 
   return (
-    <AuthContext.Provider value={{ user, setUser, logout, token }}>
+    <AuthContext.Provider value={{ user, setUser, logout, token,loading }}>
       {children}
     </AuthContext.Provider>
   );
