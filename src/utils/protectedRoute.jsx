@@ -10,8 +10,11 @@ export function ProtectedRoute() {
 }
 
 export function InviteGuard(){
+    setTimeout(()=>{
+    console.log("in")
     const { user } = useContext(AuthContext);
     return user ? <Outlet /> : <Navigate to="/signup"/>;
+    },1000)
 }
 
 export function GuestRoute() {
