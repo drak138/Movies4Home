@@ -36,6 +36,7 @@ export default function Library(){
     const [selectedMember,setSelectedMember]=useState([])
     const [toggleRole,setToggleRole]=useState([])
     const [selectedRole, setSelectedRole] = useState("");
+    const [copyText, setCopyText] = useState(null);
     const handleRoleChange = (event) => {
     setSelectedRole(event.target.value);
 };
@@ -113,10 +114,13 @@ export default function Library(){
     }
     async function shareLibrary(e){
         try{
+            const { clientX, clientY } = e
             await axios.post("https://movies4home.onrender.com/api/library/invite",
             {libraryId:selected[0]?._id,userId:user._id,action:"share"},
             {headers:{Authorization: `Bearer ${token}`}}).then((res)=>{
                 navigator.clipboard.writeText(res.data);
+                setCopyText({ text: "Link created and copied!", x: clientX, y: clientY });
+                setTimeout(() => setCopyText(null), 2500);
             })
         }
         catch(error){
@@ -167,11 +171,6 @@ export default function Library(){
                 {role,libraryId,memberId,action:"change role"},
                 {headers: {Authorization: `Bearer: ${token}`}}
             ).then((res)=>{
-                // setMembers(prevMembers =>
-                //     prevMembers.map(member =>
-                //         member._id === memberId ? { ...member, role } : member
-                //     )
-                // );
                 setSelectedMember([{ ...selectedMember[0], role }]);
                 setRefetchTrigger(prev=>!prev)
             })
@@ -247,8 +246,15 @@ export default function Library(){
                     {type!=="Rename"?<button onClick={()=>{setName(selected[0].name);setType("Rename")}}>Rename</button>:null}
                     <button onClick={()=>deleteLibrary()}>Remove Library</button>
                     <button onClick={()=>leaveLibrary({user:user,action:"leave"})}>Leave library</button>
-                    <button onClick={shareLibrary}>Share</button>
                     <button onClick={()=>setShowLib(false)}>Members</button>
+                    <button onClick={shareLibrary}>Share</button>
+                    {copyText && (
+                    <div
+                    className="tooltip"
+                    >
+                    {copyText.text}
+                    </div>
+                )}
                 </>
                 :<>
                 {selectedMember.length > 0 ? (

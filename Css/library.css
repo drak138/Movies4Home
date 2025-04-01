@@ -20,6 +20,33 @@ height: 64vh;
     flex-direction: column;
     gap: 10px;
 }
+.tooltip{
+    background: orange;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    opacity: 0;
+    animation: fadeInOut 2.5s ease-out forwards;
+}
+
+@keyframes fadeInOut {
+    0% {
+        opacity: 0;
+        transform: translate(0%, -80%);
+    }
+    20% {
+        opacity: 1;
+        transform: translate(0%, 0%);
+    }
+    80% {
+        opacity: 1;
+        transform: translate(0%, 0%);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(0%, 100%);
+    }
+}
 .library:hover,.member:hover{
 cursor: pointer;
 }
