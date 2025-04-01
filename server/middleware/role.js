@@ -46,7 +46,7 @@ const verifyRole = async (req, res, next) => {
 
     if(action=="rename"||action=="share"||action=="remove"){
         if(memberRole=="co-owner"||memberRole=="editor"){
-            next();
+            return next();
         }
         else{
             return res.status(404).json({ message: "You don't have the rights to make these changes" });
@@ -55,13 +55,13 @@ const verifyRole = async (req, res, next) => {
     }
     if(action=="delete"||action=="remove Member"||action=="change role"){
         if(memberRole=="co-owner"){
-            next()
+            return next()
         }else{
             return res.status(404).json({ message: "You don't have the rights to make these changes" });
         }
     }
     else{
-        next()
+       return  next()
     }
 }catch(error){
 }

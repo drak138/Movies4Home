@@ -21,7 +21,7 @@ export default function Comments({ movieId }) {
 
   const fetchComments = async () => {
     try {
-      const res = await axios.get(`https://movies4home.onrender.com/api/comments/${movieId}`);
+      const res = await axios.get(`http://localhost:5001/api/comments/${movieId}`);
       setComments(res.data);
     } catch (error) {
       setComments([]);
@@ -52,7 +52,7 @@ export default function Comments({ movieId }) {
       };
 
       await axios.post(
-        "https://movies4home.onrender.com/api/comments/add",
+        "http://localhost:5001/api/comments/add",
         data,
         {
           withCredentials: true,
@@ -85,7 +85,7 @@ export default function Comments({ movieId }) {
   const submitEdit = async (commentId) => {
     try {
       await axios.put(
-        `https://movies4home.onrender.com/api/comments/edit/${commentId}`,
+        `http://localhost:5001/api/comments/edit/${commentId}`,
         { text: editText },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -101,7 +101,7 @@ export default function Comments({ movieId }) {
   };
   const deleteComment = async (commentId) => {
     try {
-      await axios.delete(`https://movies4home.onrender.com/api/comments/delete/${commentId}`, {
+      await axios.delete(`http://localhost:5001/api/comments/delete/${commentId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setShowMsg(false)
