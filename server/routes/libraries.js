@@ -119,11 +119,10 @@ libraryRouter.post("/invite",verifyToken,verifyRole,async(req,res)=>{
     const {libraryId,userId}=req.body
     const token = jwt.sign({libraryId},process.env.JWT_SECRET,{ expiresIn: "1h"})
 
-    // const longUrl = `https://drak138.github.io/Movies4Home/#/library/invite/${token}`;
-    const longUrl = `http://localhost:5173/Movies4Home/library/invite/${token}`
-    // const response=await axios.get(`https://is.gd/create.php?format=json&url=${encodeURIComponent(longUrl)}`)
-    // const inviteLink=response.data.shorturl;
-    res.json(longUrl)
+    const longUrl = `https://drak138.github.io/Movies4Home/#/library/invite/${token}`;
+    const response=await axios.get(`https://is.gd/create.php?format=json&url=${encodeURIComponent(longUrl)}`)
+    const inviteLink=response.data.shorturl;
+    res.json(inviteLink)
 })
 libraryRouter.put("/invite",verifyToken,async(req,res)=>{
     const{inviteToken,user}=req.body
