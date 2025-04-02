@@ -1,4 +1,5 @@
 .playerWrapper{
+    margin-bottom: 20px;
     display: flex;
 }
 .playerContainer{

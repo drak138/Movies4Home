@@ -11,6 +11,7 @@ import Search from './pages/search';
 import useAuthExpiration from './utils/authExparation.js';
 import { GuestRoute, InviteGuard, ProtectedRoute } from './utils/protectedRoute.jsx';
 import InviteMember from './utils/inviteMember.jsx';
+import Footer from './components/footer.jsx';
 
 function App() {
     useAuthExpiration()
@@ -42,6 +43,7 @@ function App() {
         <Route path="/library/invite/:inviteToken" element={<InviteMember/>}/>
         </Route>
         </Routes>
+        <Footer/>
         </>
     );
 }

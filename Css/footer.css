@@ -1,0 +1,16 @@
+.footerContianer{
+    border-top: solid white 5px;
+    display: flex;
+    justify-content: center;
+}
+.footerContianer ul{
+    display: flex;
+    font-size: 1.3rem;
+    text-align: center;
+    flex-direction: column;
+    gap: 5px;
+    margin: 5px 0px;
+}
+.footerContianer ul h1{
+    margin: 5px;
+}

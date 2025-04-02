@@ -7,10 +7,12 @@ export function DownloadCount({children}){
     const [count, setCount] = useState(() => {
         const savedCount = localStorage.getItem("count") || (user ? 10 : 4);
         const lastReset = localStorage.getItem("lastReset") || 0;
+
         const today = new Date();
         const localDate = today.getFullYear() + "-" + 
                           String(today.getMonth() + 1).padStart(2, "0") + "-" + 
                           String(today.getDate()).padStart(2, "0");
+
         if (lastReset !== localDate) {
             const newCount = user ? 10 : 4;
             localStorage.setItem("count", newCount);
