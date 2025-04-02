@@ -183,6 +183,7 @@ export default function Library(){
 
 
     return (
+        <section className="libWrapper">
         <section className="libContainer">
             <div className="libraries">
                 <ul>
@@ -282,6 +283,7 @@ export default function Library(){
                     </div>
                 ))}
             </div>
+        </section>
         </section>
     );
 }

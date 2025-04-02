@@ -52,6 +52,10 @@
 .settings:hover{
     cursor: pointer;
 }
+.settingWrapper .messageBox{
+    right: 114% !important;
+    bottom: -15px !important;
+}
 .change{
     border: 2px solid orange;
     padding: 4px

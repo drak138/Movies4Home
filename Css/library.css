@@ -1,3 +1,6 @@
+.libWrapper{
+    height: 86vh;
+}
 .libContainer{
     justify-content: center;
     gap: 50px;
