@@ -29,7 +29,7 @@ export default function Changes({type}){
             await axios.put(`https://movies4home.onrender.com/api/profile/${user._id}`,
             {password:password,oldPass:oldPass},
             {headers:{Authorization: `Bearer ${token}`}
-        }).then(()=>{logout();navigate("/signup")})
+        }).then(()=>{logout()})
     }catch(error){
         if (error.response && error.response.data.message) {
             setError(error.response.data.message);

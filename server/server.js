@@ -87,8 +87,8 @@ app.put("/api/profile/:userId",verifyToken,async(req,res)=>{
     const updates = {};
 
 if (username) {
-    const userExists =User.find({username})
-    if(userExists){
+    const userExists =await User.find({username})
+    if(userExists.length>0){
       return res.status(400).json({ message: "Username already exists" });
     }
     updates.username = username;
@@ -133,11 +133,13 @@ app.delete("/api/profile/:userId",verifyToken,async(req,res)=>{
     await Comment.deleteMany(contian);
   };
   const removeFromLibs= async({username})=>{
-    const libraries=await Library.find({members:{username}})
+    const libraries=await Library.find({'members.username':username})
+    const likedLib = await Library.findOne({ userId, type: "liked" });
     if(!libraries){return}
     libraries.forEach(async (lib)=>{
       await Library.findByIdAndUpdate(lib._id,{$pull:{ members:{username:username}}});
     })
+    await Library.findByIdAndDelete(likedLib._id)
   }
 
   await deleteCommentAndReplies({userId});
