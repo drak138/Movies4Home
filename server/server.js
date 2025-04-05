@@ -10,7 +10,7 @@ import User from "./models/users.js";
 import bcrypt from "bcrypt"
 import Comment from "./models/comments.js";
 import libraryRouter from "./routes/libraries.js";
-import Library from "../src/pages/library.jsx";
+import Library from "./models/libraries.js";
 
 
 dotenv.config();
