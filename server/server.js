@@ -10,6 +10,7 @@ import User from "./models/users.js";
 import bcrypt from "bcrypt"
 import Comment from "./models/comments.js";
 import libraryRouter from "./routes/libraries.js";
+import Library from "../src/pages/library.jsx";
 
 
 dotenv.config();
@@ -131,8 +132,16 @@ app.delete("/api/profile/:userId",verifyToken,async(req,res)=>{
   
     await Comment.deleteMany(contian);
   };
+  const removeFromLibs= async({username})=>{
+    const libraries=await Library.find({members:{username}})
+    if(!libraries){return}
+    libraries.forEach(async (lib)=>{
+      await Library.findByIdAndUpdate(lib._id,{$pull:{ members:{username:username}}});
+    })
+  }
 
   await deleteCommentAndReplies({userId});
+  await removeFromLibs({username:user.username})
   await User.findByIdAndDelete(userId)
   res.json({message:"Deleted successfuly"})
   }catch(error){
