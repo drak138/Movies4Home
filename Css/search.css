@@ -35,8 +35,8 @@
     gap: 50px;
     flex-wrap: wrap;
     margin-top: 20px;
-    display: flex
-;
+    display: flex;
+    margin-bottom: 60px;
 }
 .results .movieCard{
     height: 47vh;
