@@ -186,7 +186,7 @@ export default function Library(){
         <section className="libWrapper">
         <section className="libContainer">
             <div className="libraries">
-                <ul>
+                <ul className="custom-scroll">
                 {showLib?
                 <>
                 {libraries && libraries.length > 0 ? (
@@ -275,7 +275,7 @@ export default function Library(){
                 }
                 </div>
             </div>
-            <div className="savedMovies">
+            <div className="savedMovies custom-scroll">
                 {saved.map((item) => (
                     <div className="movieWithRemove" key={item.id}>
                         <MovieCard movie={item} />

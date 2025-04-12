@@ -151,7 +151,7 @@ export default function Comments({ movieId }) {
   return (
     <div style={{marginTop:"20px"}}>
       {comments.length > 0 ? (
-        <div className="commentsContianer">
+        <div className="commentsContianer custom-scroll">
           {comments.map((comment) => (
             <div key={comment._id} style={{ padding: "5px 5px 12px", border: "1px solid #ddd" }}>
               <div className="comment">

@@ -206,9 +206,28 @@ width: 16vw;
         width: 101vw;
         height: 50vh;
     }
+    .listType{
+        margin-left: 10px;
+        margin-right: 10px;
+    }
     .movieList{
+
         overflow-x: scroll;
     }
+    .movieList::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+      }
+    
+      .movieList::-webkit-scrollbar-thumb {
+        background-color: orange;
+        border-radius: 10px;
+      }
+    
+      .movieList::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 10px;
+      }
     .movieList .movieCard{
         height: fit-content;
     }
