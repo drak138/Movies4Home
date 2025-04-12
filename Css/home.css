@@ -207,12 +207,18 @@ width: 16vw;
         height: 50vh;
     }
     .listType{
-        margin-left: 10px;
-        margin-right: 10px;
+        margin-left: 5px;
+        margin-right: 5px;
+    }
+    .listType h2{
+        font-size: 1.7rem;
+        margin-bottom: 12px;
     }
     .movieList{
-
         overflow-x: scroll;
+    }
+    .choiceHolder{
+        left: 30%;
     }
     .movieList::-webkit-scrollbar {
         width: 8px;

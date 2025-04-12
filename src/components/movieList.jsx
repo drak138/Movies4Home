@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect,useRef } from "react";
 import useListHook from "../hooks/useListHook";  
 import MovieCard from "./movieCard";  
 
@@ -9,8 +9,15 @@ export default function MovieList({listType}) {
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
 
   const scrollAmount = 3; // Number of movies to scroll at a time
+  const movieListRef = useRef(null);
 
   useEffect(() => {
+    if (movieListRef.current) {
+      movieListRef.current.scrollTo({
+        left: 0,
+        behavior: 'smooth',
+      });
+    }
     setCurrentIndex(0); // Reset scroll position when type changes
   }, [type]);
 
@@ -64,7 +71,7 @@ export default function MovieList({listType}) {
       </div>
 
       <div className="movieListWrapper" style={{ position: "relative"}}>
-        <div 
+        <div ref={movieListRef}
           className="movieList" 
           style={{ 
             gap:"20px",

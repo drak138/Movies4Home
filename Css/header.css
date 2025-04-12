@@ -85,6 +85,14 @@ header i{
         gap: 3px;
     }
     .downloadsLimit{
-        right: 44px;
+        width: 17px;
+        right: 33px;
+        bottom: 32px;
+    }
+    .profilePic{
+        width: 43px;
+    }
+    .downloadsLeft{
+        font-size: 14px;
     }
 }
