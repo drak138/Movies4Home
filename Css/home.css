@@ -207,11 +207,10 @@ width: 16vw;
         height: 50vh;
     }
     .movieList{
-        height: 354px;
         overflow-x: scroll;
     }
     .movieList .movieCard{
-        height: 320px;
+        height: fit-content;
     }
     .posterHolder{
         width: 37vw;
