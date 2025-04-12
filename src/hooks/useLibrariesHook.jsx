@@ -7,7 +7,7 @@ export default function UseLibrariesHook({userId, username, token,refetchTrigger
   useEffect(() => {
     const getLibraries = async () => {
       try {
-        const response = await axios.get("http://localhost:5001/api/library/", {
+        const response = await axios.get("https://movies4home.onrender.com/api/library/", {
           params: { userId,username},
           headers: { Authorization: `Bearer ${token}` },
         });

@@ -13,7 +13,7 @@ export default function InviteMember(){
     useEffect(()=>{
         const addUser=async()=>{
             try{
-                await axios.put("http://localhost:5001/api/library/invite",
+                await axios.put("https://movies4home.onrender.com/api/library/invite",
                     {user,inviteToken},
                     {headers:{Authorization: `Bearer ${token}`}}
                 ).then((res)=>{

@@ -11,7 +11,7 @@ export function AuthProvider({ children }) {
 
   useEffect(() => {
     const verify=async()=>{
-      await axios.get("http://localhost:5001/api/verifyToken", {
+      await axios.get("https://movies4home.onrender.com/api/verifyToken", {
           headers: { Authorization: `Bearer ${token}` },
         })
         .then((res) => setUser(res.data.user))
