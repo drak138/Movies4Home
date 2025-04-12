@@ -76,7 +76,7 @@ header i{
 }
 @media (max-width: 600px){
     header{
-        padding: 20px 10px;
+        padding: 10px 5px;
     }
     header .logo {
         font-size: 1em;
@@ -94,5 +94,12 @@ header i{
     }
     .downloadsLeft{
         font-size: 14px;
+    }
+    .profile .profileAcord{
+        right: -5px;
+        top: 27px;
+    }
+    .profileAcord a{
+        font-size: 17px;
     }
 }
