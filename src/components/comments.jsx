@@ -141,6 +141,7 @@ export default function Comments({ movieId }) {
                         </div>
           )}
         </div>
+        <p>{reply.formattedTimestamp}</p>
         <button onClick={() => handleReplyClick(reply._id, reply.userId.username)}>Reply</button>
 
         {reply.replies?.length > 0 && renderReplies(reply.replies)}
@@ -183,6 +184,7 @@ export default function Comments({ movieId }) {
               </div>
             )}
               </div>
+              <p>{comment.formattedTimestamp}</p>
               <button onClick={() => handleReplyClick(comment._id, comment.userId.username)}>Reply</button>
               {comment.replies?.length > 0 && renderReplies(comment.replies)}
             </div>

@@ -29,15 +29,15 @@ const commentSchema = new Schema({
   }],
 });
 
-commentSchema.pre('save', function(next) {
-    if (this.timestamp) {
-      const date = this.timestamp;
-      const formattedDate = date.toISOString().split('T')[0];
-      const formattedTime = date.toISOString().split('T')[1].substring(0, 5);
-      this.timestamp = `${formattedDate} ${formattedTime}`;
-    }
-    next();
-  });
+commentSchema.virtual('formattedTimestamp').get(function () {
+  if (!this.timestamp) return '';
+  const date = new Date(this.timestamp);
+  const formattedDate = date.toISOString().split('T')[0];
+  const formattedTime = date.toISOString().split('T')[1].substring(0, 5);
+  return `${formattedDate} ${formattedTime}`;
+});
+
+commentSchema.set('toJSON', { virtuals: true });
 
 const Comment = model("Comment", commentSchema);
 export default Comment
