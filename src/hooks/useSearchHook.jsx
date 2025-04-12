@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 const TMDB_KEY = import.meta.env.VITE_TMDB_API_KEY;
 
 export default function UseSearchHook({ query, page }) {
+
   const controller = new AbortController();
   const signal = controller.signal;
 
@@ -23,32 +24,25 @@ export default function UseSearchHook({ query, page }) {
         const pageRequests = [];
         for (let i = 1; i <= maxPages; i++) {
           pageRequests.push(
-            axios.get(
+            await axios.get(
               `https://api.themoviedb.org/3/search/multi?api_key=${TMDB_KEY}&page=${i}&query=${query}`,
               { signal }
             ).then(res => res.data)
           );
         }
 
-        const processInBatches = async () => {
-          let allResults = [];
-          for (let i = 0; i < pageRequests.length; i += 80) {  // Change batch size to 80
-            const batch = pageRequests.slice(i, i + 80);
-            const batchResults = await Promise.all(batch);
-            batchResults.forEach(data => {
-              const filteredResults = data.results?.filter(item => {
-                if (item.media_type === "person") {
-                  return false;
-                }
-                return item.vote_count >= 300 || (item.popularity >= 15 && item.rating > 0);
-              }) || [];
-              allResults = [...allResults, ...filteredResults];
-            });
-            // Wait for 1 second before sending the next batch
-            if (i + 80 < pageRequests.length) {
-              await new Promise(resolve => setTimeout(resolve, 1000));  // 1-second delay
+        const allData = await Promise.all(pageRequests);
+
+        let allResults = [];
+        allData.forEach(data => {
+          const filteredResults = data.results?.filter(item => {
+            if (item.media_type === "person") {
+              return false
             }
-          }
+            return item.vote_count >= 150 || (item.popularity >= 15 && item.rating > 0);
+          }) || [];
+          allResults = [...allResults, ...filteredResults];
+        });
 
         allResults = Array.from(
           new Map(allResults.map(item => [item.id, item])).values()
@@ -62,9 +56,7 @@ export default function UseSearchHook({ query, page }) {
 
         setSearch(groupedResults);
         setLoading(false);
-        };
 
-        await processInBatches();
       } catch (error) {
         if (error.name === "CanceledError") {
           return;
@@ -83,7 +75,6 @@ export default function UseSearchHook({ query, page }) {
 
   return { search, loading };
 }
-
 
 
 

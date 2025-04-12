@@ -1,4 +1,5 @@
 .footerContianer{
+    margin-top: 30px;
     border-top: solid white 5px;
     display: flex;
     justify-content: center;

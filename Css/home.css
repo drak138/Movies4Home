@@ -51,6 +51,7 @@
     padding: 10px 50px;
 }
 .listType{
+    position: relative;
     margin-left: 20px;
 }
 .listType h2{
@@ -63,6 +64,7 @@
         text-align: center;
     display: inline-block;
     left: 50%;
+    top: 0%;
     position: absolute;
     transform: translateX(25%);
 }
@@ -177,6 +179,49 @@ width: 16vw;
 .posterHolder:hover .onHover{
     opacity: 1;
     transform: translate(-50%, -50%) scale(1);
+}
+@media (max-width: 600px){
+    .movieSlideContainer{
+    margin-left: 20px;
+    margin-bottom: 20px;
+    }
+    .details{
+        gap: 5px;
+    }
+    .details img{
+        width: 150px;
+    }
+    .details p{
+        font-size: 1rem;
+    }
+    .shortDesc{
+        width: 70vw;
+        font-size: 1rem;
+        margin-bottom: 10px;
+    }
+    .watchNow{
+        padding: 5px 20px;
+    }
+    .playingMovies article{
+        width: 101vw;
+        height: 50vh;
+    }
+    .movieList{
+        height: 354px;
+        overflow-x: scroll;
+    }
+    .movieList .movieCard{
+        height: 320px;
+    }
+    .posterHolder{
+        width: 37vw;
+    }
+    .title {
+        width: 36vw;
+    }
+    .movieSliderBtn.right {
+        display: none;
+    }
 }
 
 @media (min-width: 768px) {

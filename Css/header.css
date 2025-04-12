@@ -34,6 +34,9 @@ header .search input{
 header i{
     color: white;
 }
+.profile{
+    position: relative;
+}
 
 .profilePic{
     width: 55px;
@@ -44,9 +47,9 @@ header i{
 .downloadsLimit{
     border-radius: 50%;
     justify-items: center;
-    right: 112px;
+    right: 43px;
     background: orange;
-    top: 13px;
+    bottom: 40px;
     width: 22px;
     position: absolute;
 }
@@ -59,8 +62,8 @@ header i{
     gap: 3px;
     align-items: center;
     width: 90px;
-    right: 51px;
-    top: 55px;
+    right: -16px;
+    top: 37px;
     background: black;
     border: orange 2px solid;
     position: absolute;
@@ -70,4 +73,18 @@ header i{
 }
 .profileAcord.active {
     display: flex;
-  }
+}
+@media (max-width: 600px){
+    header{
+        padding: 20px 10px;
+    }
+    header .logo {
+        font-size: 1em;
+    }
+    header .search{
+        gap: 3px;
+    }
+    .downloadsLimit{
+        right: 44px;
+    }
+}
