@@ -86,14 +86,18 @@
     display: flex
 ;
 }
-.libraryForm{
-    height: 65%;
+.libraryForm,.libraryList{
+    height: 75%;
     gap: 10px;
     display: flex;
     flex-direction: column;
     margin-bottom: 10px;
+    overflow-y: auto;
 }
-.libraryForm label{
+.libraryList{
+  margin-top: 0px;
+}
+.libraryList label{
     font-size: 1.2rem;
 }
 .addToLibrary .flex-row{
@@ -188,11 +192,85 @@
     font-size: 24px;
     color: orange;
   }
+  .replyWrapper{
+    position: relative;
+    margin-left: 20px;
+    padding: 5px 0px 14px 5px;
+    border-left: 2px solid rgb(221, 221, 221);
+  }
 .commentEditInput{
   width: 100%;
     border: none;
     background: transparent;
     color: orange;
     outline: none;
+}
+@media (max-width: 600px){
+  .movieDetails{
+  padding: 0px 5px;
+  }
+  .playerContainer{
+    margin-left: 0px;
+    height: 50vh;
+    width: 65vw;
+  }
+  .onHover{
+    font-size: 2rem;
+  }
+  .playerContainer .onHover{
+    padding: 10px 14px 9px 18px;
+  }
+  .seriesAction{
+    font-size: 0.9rem;
+    padding: 3px 13px;
+  }
+
+  .smallStuff{
+    gap: 10px;
+    margin-left: 0px;
+    width: 65vw;
+  }
+  .smallStuff button{
+    font-size: 0.7rem;
+    padding: 5px 4px;
+  }
+  .downloadBtn{
+    font-size: 0.7rem;
+    padding: 5px 4px;
+  }
+  .addToLibrary{
+    z-index: 3;
+    width: 150px;
+    right: 33%;
+    height: 280px;
+    top: 19%;
+  }
+  .addToLibrary h3{
+    margin: 10px ;
+  }
+  .libraryForm,.libraryList{
+    height: 80%;
+  }
+  .libraryList label{
+    font-size: 1rem;
+}
+.submitCommentBtn, .cancelReplyBtn, .submitReplyBtn{
+  font-size: 18px;
+}
+.reply p, .comment p{
+  word-break: normal;
+}
+.similarSection{
+  gap: 5px;
+}
+.similarSection .movieCard {
+  height: fit-content;
+}
+.similarSection .movieCard .posterHolder, .similarSection .movieCard .title {
+  width: 28vw;
+}
+.similarSection .movieCard .posterHolder {
+  height: 27vh;
+}
 }
   

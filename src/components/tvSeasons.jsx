@@ -47,7 +47,7 @@ export default function TvSeasons({ details, id,sectionRef,openSeasons,toggleSea
                             ? <i className="fa-solid fa-sort-up"></i> 
                             : <i className="fa-solid fa-sort-down"></i>}
                     </h3>
-                    <ul className={`episodes ${openSeasons.includes(season) ? "show" : ""}`}>
+                    <ul className={`episodes custom-scroll ${openSeasons.includes(season) ? "show" : ""}`}>
                         {episodes.map(ep => {
                             const isReleased = ep.air_date && ep.air_date <= today;
 

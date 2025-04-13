@@ -3,8 +3,9 @@ import Cookies from "js-cookie";
 import {jwtDecode} from "jwt-decode";
 import { AuthContext } from "../context/authContext";
 
+
 function useAuthExpiration() {
-    const{user,setUser,token}=useContext(AuthContext)
+    const{setUser,token,user}=useContext(AuthContext)
 
   useEffect(() => {
     if (!token) {
@@ -17,7 +18,6 @@ function useAuthExpiration() {
     if (expirationTime < currentTime) {
       Cookies.remove("token");
       setUser(false)
-
     } else {
       const timeRemaining = expirationTime - currentTime;
       setTimeout(() => {

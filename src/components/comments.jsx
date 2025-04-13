@@ -21,7 +21,7 @@ export default function Comments({ movieId }) {
 
   const fetchComments = async () => {
     try {
-      const res = await axios.get(`https://movies4home.onrender.com/api/comments/${movieId}`);
+      const res = await axios.get(`http://localhost:5001/api/comments/${movieId}`);
       setComments(res.data);
     } catch (error) {
       setComments([]);
@@ -52,7 +52,7 @@ export default function Comments({ movieId }) {
       };
 
       await axios.post(
-        "https://movies4home.onrender.com/api/comments/add",
+        "http://localhost:5001/api/comments/add",
         data,
         {
           withCredentials: true,
@@ -85,7 +85,7 @@ export default function Comments({ movieId }) {
   const submitEdit = async (commentId) => {
     try {
       await axios.put(
-        `https://movies4home.onrender.com/api/comments/edit/${commentId}`,
+        `http://localhost:5001/api/comments/edit/${commentId}`,
         { text: editText },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -101,7 +101,7 @@ export default function Comments({ movieId }) {
   };
   const deleteComment = async (commentId) => {
     try {
-      await axios.delete(`https://movies4home.onrender.com/api/comments/delete/${commentId}`, {
+      await axios.delete(`http://localhost:5001/api/comments/delete/${commentId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setShowMsg(false)
@@ -113,7 +113,7 @@ export default function Comments({ movieId }) {
 
   const renderReplies = (replies) => {
     return replies.map((reply) => (
-      <div key={reply._id} style={{ position: "relative", marginLeft: "20px", padding: "5px 0px 14px 5px", borderLeft: "2px solid #ddd" }}>
+      <div className="replyWrapper" key={reply._id}>
         <div className="reply">
           {editCommentId==reply._id
           ? (
@@ -141,7 +141,7 @@ export default function Comments({ movieId }) {
                         </div>
           )}
         </div>
-        <p>{reply.formattedTimestamp}</p>
+        <p style={{color:"orange", marginTop:"-9px",marginBottom:"-5px"}}>{reply.formattedTimestamp}</p>
         <button onClick={() => handleReplyClick(reply._id, reply.userId.username)}>Reply</button>
 
         {reply.replies?.length > 0 && renderReplies(reply.replies)}
@@ -154,7 +154,7 @@ export default function Comments({ movieId }) {
       {comments.length > 0 ? (
         <div className="commentsContianer custom-scroll">
           {comments.map((comment) => (
-            <div key={comment._id} style={{ padding: "5px 5px 12px", border: "1px solid #ddd" }}>
+            <div key={comment._id} style={{  minWidth: "56.8vw",width: "fit-content", padding: "5px 5px 12px", border: "1px solid #ddd" }}>
               <div className="comment">
                 {editCommentId == comment._id ? (
               <div>
@@ -184,7 +184,7 @@ export default function Comments({ movieId }) {
               </div>
             )}
               </div>
-              <p>{comment.formattedTimestamp}</p>
+              <p style={{color:"orange",marginTop:"-9px",marginBottom:"-5px"}}>{comment.formattedTimestamp}</p>
               <button onClick={() => handleReplyClick(comment._id, comment.userId.username)}>Reply</button>
               {comment.replies?.length > 0 && renderReplies(comment.replies)}
             </div>

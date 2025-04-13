@@ -1,4 +1,5 @@
 .playingMovies{
+    overflow-x: hidden;
     width: max-content;
     display: flex
 }

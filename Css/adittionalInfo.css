@@ -6,6 +6,9 @@
     margin-left: 20px;
     margin-top: 30px;
 }
+.infoContainer img{
+    width: 20rem;
+  }
 .infoWrapper{
     display: flex;
     gap: 30px;
@@ -79,4 +82,35 @@
 }
 .episode span{
     font-size: 1.3rem;
+}
+@media (max-width: 600px){
+    .infoContainer{
+        margin-left: 10px
+    }
+    .infoContainer img{
+        width: 12rem;
+    }
+    .infoWrapper{
+        gap: 0px;
+        margin-top: 20px;
+        flex-direction: column;
+    }
+    .seasonsContainer{
+        margin-left: 5px;
+    }
+    .seasonNumber{
+        font-size: 1.3rem;
+    }
+    .seasonNumber .fa-sort-up{
+        font-size: 1.7rem;
+    }
+    .fa-sort-down{
+        font-size: 1.7rem;
+    }
+    .episodes{
+        font-size: 0.9rem;
+    }
+    .episodes span{
+        font-size: 1.1rem;
+    }
 }

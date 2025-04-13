@@ -34,7 +34,7 @@ export default function MovieActions({title,mediaType,details,season,seasonsCoun
         setCanDownload(false)
         const fetchLink=async()=>{
             try{
-            const res=await axios.get(`https://movies4home.onrender.com/api/hrefStealer?url=${encodeURIComponent(url)}`)
+            const res=await axios.get(`http://localhost:5001/api/hrefStealer?url=${encodeURIComponent(url)}`)
             setCanDownload(res.data.success)
             setMovieTorrentLink(res.data.torrentLink)
         }catch(error){
@@ -68,7 +68,7 @@ export default function MovieActions({title,mediaType,details,season,seasonsCoun
         }
 
         try{
-       await axios.put("https://movies4home.onrender.com/api/library/add",
+       await axios.put("http://localhost:5001/api/library/add",
        body,
        {headers:{Authorization: `Bearer ${token}`}}).then((res)=>{
         const response=res
@@ -121,10 +121,12 @@ export default function MovieActions({title,mediaType,details,season,seasonsCoun
                 <h3>Add Movie</h3>
                 <button onClick={()=>setAddForm(true)} className="addLibraryBtn"><i className="fa-solid fa-plus"></i></button>
                 <form className="libraryForm" onSubmit={addHandler}>
+                    <ul className="libraryList custom-scroll">
                    {libraries.map((library)=>
                     <label key={library._id} htmlFor={library._id}><input type="checkbox" disabled={library.movies.some(saved=>saved.id==id)} defaultChecked={library.movies.some(saved=>saved.id==id)} name="library" id={library._id} value={library._id}/>{library.name}</label>
                    )
                    }
+                   </ul>
                 <div className="flex-row">
                 <button className="saveBtn">Save</button>
                 <button onClick={(e)=>setShowLib(!showLib)} className="cancelBtn">Cancel</button>

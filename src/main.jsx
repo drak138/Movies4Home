@@ -11,9 +11,9 @@ import { DownloadCount } from './context/donwloadContext.jsx';
 
 createRoot(document.getElementById('root')).render(
 <HashRouter>
-<UseScrollToTop/>
 <AuthProvider>
 <DownloadCount>
+<UseScrollToTop/>
     <App />
 </DownloadCount>
 </AuthProvider>

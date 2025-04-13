@@ -9,3 +9,19 @@
     height: fit-content;
     justify-content: center;
 }
+@media (max-width:600px){
+    .messageBox{
+        flex-wrap: wrap;
+        width: 223px;
+        right: -2px;
+        bottom: -1px;
+        justify-content: space-around;
+        height: 75px;
+    }
+    .messageBox h3{
+        font-size: 0.9rem;
+    }
+    .messageBox button{
+        font-size: 0.9rem;
+    }
+}

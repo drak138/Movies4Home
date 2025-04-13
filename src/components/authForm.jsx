@@ -25,10 +25,10 @@ export default function AuthForm({ type }) {
 
   const {username,email,password}=data
    try{
-    await axios.post(`https://movies4home.onrender.com/api/auth/${type=="Log in"?"login":"register"}`,{
+    await axios.post(`http://localhost:5001/api/auth/${type=="Log in"?"login":"register"}`,{
       username,email,password
     }).then((res)=>{
-      Cookies.set("token", res.data.token, { expires: 30});
+      Cookies.set("token", res.data.token, { expires: 24});
       const decoded=jwtDecode(res.data.token)
       setUser({email:decoded.email,_id:decoded._id,username:decoded.username});
        navigate(-1)

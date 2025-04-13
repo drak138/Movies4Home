@@ -13,7 +13,7 @@ export async function submitHandler({e, name, selected, token, setName, setRefet
             body.libraryId=selected[0]._id
         }
         const command = type === "Add Library" ? axios.post : axios.put;
-        await command("https://movies4home.onrender.com/api/library",
+        await command("http://localhost:5001/api/library",
             body,
             { headers: { Authorization: `Bearer ${token}` } }
         ).then(() => {
@@ -92,7 +92,7 @@ export default function Library(){
         setMembers(selected[0]?.members),[selected]))
     async function leaveLibrary({memberId,user,action}) {
         try{
-            await axios.put("https://movies4home.onrender.com/api/library/leave",
+            await axios.put("http://localhost:5001/api/library/leave",
                 {libraryId:selected[0]?._id,memberId,user,action},
                 {headers:{Authorization: `Bearer ${token}`}}
             ).then((res)=>{
@@ -115,7 +115,7 @@ export default function Library(){
     async function shareLibrary(e){
         try{
             const { clientX, clientY } = e
-            await axios.post("https://movies4home.onrender.com/api/library/invite",
+            await axios.post("http://localhost:5001/api/library/invite",
             {libraryId:selected[0]?._id,userId:user._id,action:"share"},
             {headers:{Authorization: `Bearer ${token}`}}).then((res)=>{
                 navigator.clipboard.writeText(res.data);
@@ -133,7 +133,7 @@ export default function Library(){
 
     async function deleteLibrary() {
         try{
-            await axios.delete("https://movies4home.onrender.com/api/library",{
+            await axios.delete("http://localhost:5001/api/library",{
             data: { libraryId: selected[0]._id,action:"delete" },
             headers:{Authorization: `Bearer ${token}`}
         }
@@ -151,7 +151,7 @@ export default function Library(){
     }
     async function removeSaved({libraryId,savedId,action}){
         try{
-        await axios.put("https://movies4home.onrender.com/api/library/remove",
+        await axios.put("http://localhost:5001/api/library/remove",
         {savedId,libraryId,action},
         {headers:{Authorization: `Bearer ${token}`}})
         setSaved((prev) => prev.filter((movie) => movie.id !== savedId));
@@ -167,7 +167,7 @@ export default function Library(){
         const libraryId=selected[0]._id
         const memberId=selectedMember[0]._id
         try{
-            await axios.put("https://movies4home.onrender.com/api/library/changeRole",
+            await axios.put("http://localhost:5001/api/library/changeRole",
                 {role,libraryId,memberId,action:"change role"},
                 {headers: {Authorization: `Bearer: ${token}`}}
             ).then((res)=>{
