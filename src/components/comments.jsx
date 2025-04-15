@@ -154,7 +154,7 @@ export default function Comments({ movieId }) {
       {comments.length > 0 ? (
         <div className="commentsContianer custom-scroll">
           {comments.map((comment) => (
-            <div key={comment._id} style={{  minWidth: "56.8vw",width: "fit-content", padding: "5px 5px 12px", border: "1px solid #ddd" }}>
+            <div key={comment._id} style={{  minWidth: "56.8vw",width: "fit-content", padding: "5px 5px 17px", border: "1px solid #ddd" }}>
               <div className="comment">
                 {editCommentId == comment._id ? (
               <div>

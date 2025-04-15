@@ -46,15 +46,20 @@
     font-size: 1.5rem;
     margin-bottom: 10px;
 }
-.settingWrapper{
+.settingsContainer{
     position: relative;
 }
 .settings:hover{
     cursor: pointer;
 }
 .settingWrapper .messageBox{
-    right: 114% !important;
-    bottom: -15px !important;
+    height: 101%;
+    flex-wrap: wrap;
+    padding: 0px 9px;
+    width: 263px;
+    justify-content: space-around;
+    right: -55% !important;
+    top: -1px !important;
 }
 .change{
     border: 2px solid orange;
@@ -72,4 +77,40 @@
 }
 .changeForm label{
     margin-bottom: 10px;
+}
+@media (max-width:600px){
+.profileContainer{
+    min-width: 319px;
+    gap: 5px;
+}
+.profileOverview{
+    padding: 0px 4px;
+    justify-content: center;
+}
+.profileOverview button {
+    font-size: 1.5rem;
+}
+.overviewContainer, .settingsContainer {
+    padding-right: 10px;
+}
+.overview{
+    gap: 10px;
+}
+.userName{
+    font-size: 1.5rem;
+}
+.contents p, .settings {
+    font-size: 1.5rem;
+}
+.settingWrapper .messageBox {
+    right: 30% !important;
+    top: 30% !important;
+}
+.settingWrapper .messageBox {
+    width: 214px;
+    padding-right: 6px;
+    height: 160px;
+    left: -4% !important;
+    top: -1% !important;
+}
 }
