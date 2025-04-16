@@ -123,15 +123,35 @@ margin-top:auto;
     background-image: linear-gradient(#9e6703, #005c5c);
     flex-direction: column;
 }
-.roleHolder input[disabled]:before{
-    color: orange;
-    content: "\25C9";
-    position: relative;
-    z-index: 100;
-    top: -3.6px;
-    left: -2.4px;
-
-}
+  .role input[type="radio"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 0.7em;
+    height: 0.7em;
+    border-radius: 50%;
+    background: white;
+    cursor: pointer;
+  }
+  .radioWrap {
+    height: fit-content;
+    margin: 3px 1px 0px 5px;
+    padding: 1px; /* creates space for the ring */
+    border-radius: 50%;
+    box-shadow: 0 0 0 1px orange; /* outer ring */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+  }
+  
+  .radioWrap input[type="radio"]:checked {
+    margin: 0px;
+    background-color: orange; /* this fills the center */
+  }
+  
+  .role input[type="radio"]:disabled {
+    cursor: not-allowed;
+  }
 .role{
     display: flex;
     align-content: center;
@@ -139,7 +159,7 @@ margin-top:auto;
 @media (max-width: 600px){
     .libContainer{
     padding: 0px 5px;
-    height: 85vh;
+    height: 82vh;
     gap: 10px;
     }
     .libraries{

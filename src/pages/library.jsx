@@ -221,9 +221,9 @@ export default function Library(){
               </li>
               {toggleRole.includes(member.username)&&(
               <div className="roleHolder ">
-              <label className="role" htmlFor="member Role"><input type="radio" disabled={selectedRole === "co-owner"} checked={selectedRole === "co-owner"} onChange={handleRoleChange} name="role" id={selectedMember[0]?._id} value="co-owner"/>co-owner</label>
-              <label className="role" htmlFor="member Role"><input type="radio" disabled={selectedRole === "editor"} checked={selectedRole === "editor"} onChange={handleRoleChange} name="role" id={selectedMember[0]?._id} value="editor"/>editor</label>
-              <label className="role" htmlFor="member Role"><input type="radio" disabled={selectedRole === "viewer"} checked={selectedRole === "viewer"} onChange={handleRoleChange} name="role" id={selectedMember[0]?._id} value="viewer"/>viewer</label>
+              <label className="role" htmlFor="member Role"><span className={selectedRole === "co-owner"?"radioWrap":""}><input type="radio" disabled={selectedRole === "co-owner"} checked={selectedRole === "co-owner"} onChange={handleRoleChange} name="role" id={selectedMember[0]?._id} value="co-owner"/></span>co-owner</label>
+              <label className="role" htmlFor="member Role"><span className={selectedRole === "editor"?"radioWrap":""}><input type="radio" disabled={selectedRole === "editor"} checked={selectedRole === "editor"} onChange={handleRoleChange} name="role" id={selectedMember[0]?._id} value="editor"/></span>editor</label>
+              <label className="role" htmlFor="member Role"><span className={selectedRole === "viewer"?"radioWrap":""}><input type="radio" disabled={selectedRole === "viewer"} checked={selectedRole === "viewer"} onChange={handleRoleChange} name="role" id={selectedMember[0]?._id} value="viewer"/></span>viewer</label>
               <div className="flex-row">
               {selectedRole!==selectedMember[0].role&&(<button onClick={()=>changeRole()}>Confirm change</button>)}
               <button onClick={()=>setToggleRole([])}>Cancel</button>
