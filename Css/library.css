@@ -136,6 +136,39 @@ margin-top:auto;
     display: flex;
     align-content: center;
 }
+@media (max-width: 600px){
+    .libContainer{
+    padding: 0px 5px;
+    height: 85vh;
+    gap: 10px;
+    }
+    .libraries{
+    padding: 9px;
+    width: 270vw;
+    }
+    .addLibraryForm{
+        flex-direction: column;
+    }
+    .addLibraryForm input{
+        width: 100%;
+    }
+    .savedMovies{
+    padding: 10px;
+    gap: 10px;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    }
+    .savedMovies .movieWithRemove{
+        width: -webkit-fill-available;
+        height: fit-content;
+    }
+    .movieCard{
+        height: fit-content;
+    }
+    .movieWithRemove .title {
+        width: -webkit-fill-available !important;
+    }
+}
 @media (min-width: 768px) {
     .movieWithRemove {
       width: 20vw; /* Adjust width for tablets */

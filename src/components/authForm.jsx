@@ -25,7 +25,7 @@ export default function AuthForm({ type }) {
 
   const {username,email,password}=data
    try{
-    await axios.post(`http://localhost:5001/api/auth/${type=="Log in"?"login":"register"}`,{
+    await axios.post(`https://movies4home.onrender.com/api/auth/${type=="Log in"?"login":"register"}`,{
       username,email,password
     }).then((res)=>{
       Cookies.set("token", res.data.token, { expires: 24});

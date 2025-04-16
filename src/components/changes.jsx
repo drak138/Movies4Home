@@ -14,7 +14,7 @@ export default function Changes({type}){
         e.preventDefault()
         if(type=="Change user name"){
             try{
-            await axios.put(`http://localhost:5001/api/profile/${user._id}`,
+            await axios.put(`https://movies4home.onrender.com/api/profile/${user._id}`,
             {username:username},
             {headers:{ Authorization: `Bearer ${token}` }
         }).then(()=>{window.location.reload()})
@@ -26,7 +26,7 @@ export default function Changes({type}){
         }
         else{
             try{
-            await axios.put(`http://localhost:5001/api/profile/${user._id}`,
+            await axios.put(`https://movies4home.onrender.com/api/profile/${user._id}`,
             {password:password,oldPass:oldPass},
             {headers:{Authorization: `Bearer ${token}`}
         }).then(()=>{logout()})

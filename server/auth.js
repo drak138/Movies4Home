@@ -34,6 +34,9 @@ export async function loginUser({username,email,password}){
     await checkIfTaken({username},{symbol:"!"})
     await checkIfTaken({email},{symbol:"!"})
     const user = await User.findOne({ email });
+    if(user.username!==username){
+        throw new Error(JSON.stringify({ input: "username", message: `Username and email don't match` }));
+    }
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
         throw new Error(JSON.stringify({ input: "password", message: `Incorrect password` }));

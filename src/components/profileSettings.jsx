@@ -10,7 +10,7 @@ export default function ProfileSettings({user,token,logout}){
     const navigate=useNavigate()
     const deleteUser=async()=>{
         try{
-            await axios.delete(`http://localhost:5001/api/profile/${user._id}`,
+            await axios.delete(`https://movies4home.onrender.com/api/profile/${user._id}`,
             {headers:{Authorization: `Bearer ${token}`}}).then(()=>{logout();navigate("/")})
         }catch(error){
 
