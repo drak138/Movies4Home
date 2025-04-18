@@ -8,34 +8,15 @@ export default function UseSimilarHook({ mediaType, genres = "", id }) {
     useEffect(() => {    
         const fetchSimilar = async () => {
             try {
-                const response = await axios.get(`https://api.themoviedb.org/3/discover/${mediaType}`, {
+
+                const response = await axios.get(`https://api.themoviedb.org/3/${mediaType}/${id}/recommendations`, {
                     params: {
                         api_key: TMDB_KEY,
-                        with_genres: genres,
-                        sort_by: "popularity.dec",
-                        with_original_language: "en||ja",
                     }
                 });
 
                 let results = response.data.results;
-
-                results = results.filter(item => item.id !== id);
-
-                if (results.length < 20) {
-                    const extraResults = await axios.get(`https://api.themoviedb.org/3/discover/${mediaType}`, {
-                        params: {
-                            api_key: TMDB_KEY,
-                            with_genres: genres,
-                            sort_by: "popularity.dec",
-                            page: 2,
-                            with_original_language: "en||ja",
-                        }
-                    });
-                    const extraItems = extraResults.data.results?.filter(item => item.id !== id);
-                    results = [...results, ...extraItems].slice(0, 20);
-                } else {
                     results = results.slice(0, 20);
-                }
 
                 setSimilar(results);
             } catch (error) {
@@ -43,7 +24,7 @@ export default function UseSimilarHook({ mediaType, genres = "", id }) {
             }
         };
 
-        if (genres) fetchSimilar();
+        if (id) fetchSimilar();
     }, [mediaType, genres, id]);
 
     return { similar };
