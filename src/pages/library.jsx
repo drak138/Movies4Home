@@ -40,7 +40,7 @@ export default function Library(){
     const handleRoleChange = (event) => {
     setSelectedRole(event.target.value);
 };
-    const { libraries } = UseLibrariesHook({
+    const { libraries,loading } = UseLibrariesHook({
         token,
         userId: user?._id,
         username: user?.username,
@@ -180,60 +180,62 @@ export default function Library(){
             return
         }
     }
-
-
     return (
         <section className="libWrapper">
         <section className="libContainer">
             <div className="libraries">
-                <ul className="custom-scroll">
-                {showLib?
-                <>
-                {libraries && libraries.length > 0 ? (
+            <ul className="custom-scroll">
+            {showLib ? 
+            (
+            loading ? (
+            <p>Loading...</p>
+            ) : libraries?.length > 0 ? (
             libraries.map((library) => (
-              <li key={library._id} 
-                onClick={()=>{
-                setType("Add Library");
-                setName("");
-                setSelected([library])
-              }} 
-              className={`library ${selected[0]?._id==library._id?"selected":""}`}  >
-              {library.name}</li>
+            <li key={library._id} onClick={() => {setType("Add Library");setName("");setSelected([library]);}}className={`library ${selected[0]?._id === library._id ? "selected" : ""}`}>
+            {library.name}</li>))
+            ) : (<p>No libraries found.</p>)
+            ) : 
+            members?.length > 0 ? (
+            members.map((member) => (
+            <div key={member._id}>
+            <li disabled={member.username === user.username} onClick={() => { if (member.username !== user.username) {
+            setSelectedMember([member]);
+            setSelectedRole(member.role);
+            }setToggleRole([]);}}
+            className={`member ${selectedMember?.[0]?._id === member._id ? "selected" : ""}`}>
+          {member.username} - {member.role}</li>
+          
+            {toggleRole.includes(member.username) && (
+            <div className="roleHolder">
+            {["co-owner", "editor", "viewer"].map((role) => (
+            <label className="role" key={role}>
+            <span className={selectedRole === role ? "radioWrap" : ""}>
+            <input
+            type="radio"
+            disabled={selectedRole === role}
+            checked={selectedRole === role}
+            onChange={handleRoleChange}
+            name="role"
+            id={selectedMember[0]?._id}
+            value={role}
+            />
+            </span>
+            {role}
+            </label>
+            ))}
+            <div className="flex-row">
+            {selectedRole !== selectedMember[0].role && (
+            <button onClick={changeRole}>Confirm change</button>
+            )}
+            <button onClick={() => setToggleRole([])}>Cancel</button>
+            </div>
+            </div>
+            )}
+            </div>
             ))
-          ) : (
-            <p>No libraries found.</p>
-          )}</>
-          :<>
-          {members && members.length>0?(
-            members.map((member)=>(
-                <div key={member._id}>
-                <li
-                disabled={member.username==user.username}
-                onClick={()=>{
-                if(member.username!==user.username){
-                setSelectedMember([member])
-                setSelectedRole(member.role)
-                };
-                setToggleRole([])
-              }} 
-              className={`member ${selectedMember? selectedMember[0]?._id==member._id?"selected":"":""}`}  >
-              {member.username}-{member.role}
-              </li>
-              {toggleRole.includes(member.username)&&(
-              <div className="roleHolder ">
-              <label className="role" htmlFor="member Role"><span className={selectedRole === "co-owner"?"radioWrap":""}><input type="radio" disabled={selectedRole === "co-owner"} checked={selectedRole === "co-owner"} onChange={handleRoleChange} name="role" id={selectedMember[0]?._id} value="co-owner"/></span>co-owner</label>
-              <label className="role" htmlFor="member Role"><span className={selectedRole === "editor"?"radioWrap":""}><input type="radio" disabled={selectedRole === "editor"} checked={selectedRole === "editor"} onChange={handleRoleChange} name="role" id={selectedMember[0]?._id} value="editor"/></span>editor</label>
-              <label className="role" htmlFor="member Role"><span className={selectedRole === "viewer"?"radioWrap":""}><input type="radio" disabled={selectedRole === "viewer"} checked={selectedRole === "viewer"} onChange={handleRoleChange} name="role" id={selectedMember[0]?._id} value="viewer"/></span>viewer</label>
-              <div className="flex-row">
-              {selectedRole!==selectedMember[0].role&&(<button onClick={()=>changeRole()}>Confirm change</button>)}
-              <button onClick={()=>setToggleRole([])}>Cancel</button>
-              </div>
-              </div>
-              )}
-              </div>
-            ))
-        ):
-          (<p>No Members found.</p>)}</>}
+            ) : (
+            <p>No Members found.</p>
+            )}
                 </ul>
                 <div className="libActions">
                 {showLib?

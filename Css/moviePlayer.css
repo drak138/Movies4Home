@@ -5,7 +5,7 @@
 .playerContainer{
     position: relative;
     margin-left: 20px;
-    background-color: white;
+    background-color: black;
     height: 70vh;
     width: 60vw;
 }

@@ -26,7 +26,7 @@ export default function MoviePlayer({mediaType,id,details,season,episode}){
         </div>
         <iframe
   src={server.src}
-  style={{ width: "100%", height: "101%" }}
+  style={{ width: "100%", height: "100%" }}
   frameBorder="0"
   referrerPolicy="origin"
   allowFullScreen
@@ -38,7 +38,7 @@ export default function MoviePlayer({mediaType,id,details,season,episode}){
             Alpha <img className="flag" src="https://www.svgrepo.com/show/248851/united-states.svg" alt="" />
             <p>Recommended</p>
         </li>
-        <li className={`server ${server.name=="Bravo"?"selected-server":""}`} onClick={e=>{setShowServers(false);setServer({"name":"Bravo","src":`https://vidfast.pro/${mediaType}/${mediaType==="tv"?details?.external_ids.imdb_id:details?.imdb_id}${mediaType==="tv"?`/${season==undefined?1:season}/${episode==undefined?1:episode}?nextButton=false`:""}&autoPlay=true`})}}>
+        <li className={`server ${server.name=="Bravo"?"selected-server":""}`} onClick={e=>{setShowServers(false);setServer({"name":"Bravo","src":`https://vidfast.pro/${mediaType}/${mediaType==="tv"?details?.external_ids.imdb_id:details?.imdb_id}${mediaType==="tv"?`/${season==undefined?1:season}/${episode==undefined?1:episode}?nextButton=false&autoPlay=true`:"?autoPlay=true"}`})}}>
             Bravo<img className="flag" src="https://www.svgrepo.com/show/248851/united-states.svg" alt="" />
             <p>Optional</p>
         </li>
