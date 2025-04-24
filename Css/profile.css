@@ -114,3 +114,8 @@
     top: -1% !important;
 }
 }
+@media (min-width: 1080px){
+    .settingWrapper .messageBox{
+        right: -53% !important;
+    }
+}
