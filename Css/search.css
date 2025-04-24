@@ -15,11 +15,13 @@
     cursor: pointer;
 }
 .pages{
+    justify-content: center;
+    width: 25em;
     display: flex;
     gap: 22px;
 }
 .pages span{
-    padding: 0px 5px;
+    padding: 0px 8px 0px 4px;
     border: 2px solid orange;
     display: inline-flex;
     justify-content: center;
@@ -39,8 +41,30 @@
     margin-bottom: 60px;
 }
 .results .movieCard{
-    height: 47vh;
-    width: 16vw;
+    height: fit-content;
+    width: fit-content;
+}
+@media (max-width:600px){
+    .pagination{
+        gap: 9px;
+        align-items: center;
+    }
+    .arrows{
+        gap: 9px;
+        font-size: small;
+    }
+    .pages{
+        width: 15em;
+        gap: 12px;
+    }
+    .pages span{
+    font-size: small;
+    padding: 0px 4px 0px 2px;
+    min-width: 2px;
+    }
+    .results{
+        gap: 30px;
+    }
 }
 @media (min-width: 1080px) {
     .posterHolder {

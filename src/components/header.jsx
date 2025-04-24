@@ -2,6 +2,7 @@ import { useState, useEffect, useRef, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/authContext";
 import { DownloadContext } from "../context/donwloadContext";
+import { encodeMovieName } from "./movieCard";
 
 export default function Header() {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
@@ -35,8 +36,10 @@ export default function Header() {
 
   const handleSubmit=(e)=>{
     e.preventDefault();
-    if (query) {
-      navigate(`/search/${query}/1`);
+    const trimmedQuery = query.trim();
+    const search=encodeMovieName(query)
+    if (trimmedQuery.length>0) {
+      navigate(`/search/${search}/1`);
     }
   }
   const logoutHanlder=(e)=>{

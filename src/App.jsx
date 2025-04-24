@@ -37,7 +37,6 @@ function App() {
         <Route path='/watch/:mediaType/:title/:id' element={<Movie/>}/>
         <Route path="/watch/:mediaType/:title/:id/season/:season/episode/:episode" element={<Movie/>}/>
         <Route path="*" element={<Navigate to="/" replace />}/>
-
         {/* specifically for invites */}
         <Route element={<InviteGuard/>}>
         <Route path="/library/invite/:inviteToken" element={<InviteMember/>}/>
