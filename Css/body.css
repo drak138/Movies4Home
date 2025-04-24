@@ -81,7 +81,6 @@ font-size: large;}
     width: 8px; /* width of the scrollbar */
     height: 8px; /* height for horizontal scrollbar */
   }
-  
   /* Style the scrollbar handle (thumb) */
 body::-webkit-scrollbar-thumb {
     background-color: orange;
@@ -97,5 +96,8 @@ body::-webkit-scrollbar-thumb:hover {
 body::-webkit-scrollbar-track {
     background: #f1f1f1; /* light background for track */
     border-radius: 10px;
+  }
+  p,span,a,input, textarea, select, button{
+    font-size: 1.3rem;
   }
   }

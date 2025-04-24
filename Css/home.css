@@ -67,7 +67,6 @@
     left: 50%;
     top: 0%;
     position: absolute;
-    transform: translateX(25%);
 }
 .selected{
     font-size: 1.3rem;
@@ -165,6 +164,9 @@ width: 16vw;
     flex-direction: column;
     gap: 30px;
 }
+.movieList .movieCard{
+    height: fit-content;
+}
 .onHover{
     opacity: 0;
     z-index: 1;
@@ -235,9 +237,6 @@ width: 16vw;
         background: #f1f1f1;
         border-radius: 10px;
       }
-    .movieList .movieCard{
-        height: fit-content;
-    }
     .posterHolder{
         width: 37vw;
     }
@@ -260,6 +259,9 @@ width: 16vw;
     .posterHolder {
       width: 16vw; /* Adjust width for desktop */
       max-width: 350px;
+    }
+    .playingMovies article{
+        height: 89vh;
     }
   }
 

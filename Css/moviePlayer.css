@@ -204,7 +204,7 @@
   .similarSection .movieCard{
     display: block;
     width: fit-content;
-    height: 220px;
+    height: fit-content;
   }
   .similarSection .movieCard .posterHolder{
     height: 30vh;
@@ -213,7 +213,7 @@
     width: 10vw;
   }
   .similarSection .movieCard .year,.similarSection .movieCard .rating,.similarSection .movieCard .title{
-    font-size: 1rem;
+    font-size: 1.3rem;
   }
   .commentsContianer{
     max-height: 91vh;
@@ -327,5 +327,11 @@
 .similarSection .movieCard .posterHolder {
   height: 27vh;
 }
+}
+@media (min-width:1080px){
+  .addToLibrary{
+    top: 47.4%;
+    width: 265px;
+  }
 }
   

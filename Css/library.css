@@ -99,10 +99,6 @@ margin-top:auto;
     width: 13vw;
     gap: 10px;
     flex-direction: column;
-    height: 360px;
-}
-.movieCard{
-    height: 360px;
 }
 .savedMovies.posterHolder{
     width: 13vw;
