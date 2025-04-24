@@ -192,7 +192,7 @@ margin-top:auto;
     }
   }
   
-  @media (min-width: 1080px) {
+  @media (min-width: 1920px) {
     .movieWithRemove {
       width: 11vw; /* Adjust width for desktop */
       max-width: 350px;

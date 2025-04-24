@@ -328,7 +328,7 @@
   height: 27vh;
 }
 }
-@media (min-width:1080px){
+@media (min-width:1920px){
   .addToLibrary{
     top: 47.4%;
     width: 265px;

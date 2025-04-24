@@ -76,7 +76,7 @@ font-size: large;}
   .error{
     color: red;
   }
-  @media (min-width: 1080px) {
+  @media (min-width: 1920px) {
   body::-webkit-scrollbar {
     width: 8px; /* width of the scrollbar */
     height: 8px; /* height for horizontal scrollbar */
