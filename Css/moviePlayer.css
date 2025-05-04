@@ -212,9 +212,6 @@
   .similarSection .movieCard .posterHolder,.similarSection .movieCard .title{
     width: 10vw;
   }
-  .similarSection .movieCard .year,.similarSection .movieCard .rating,.similarSection .movieCard .title{
-    font-size: 1.3rem;
-  }
   .commentsContianer{
     max-height: 91vh;
     overflow-y: auto;
@@ -332,6 +329,9 @@
   .addToLibrary{
     top: 47.4%;
     width: 265px;
+  }
+  .similarSection .movieCard .year,.similarSection .movieCard .rating,.similarSection .movieCard .title{
+    font-size: 1.3rem;
   }
 }
   
