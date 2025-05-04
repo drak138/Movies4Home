@@ -17,7 +17,7 @@
     margin-bottom: 10px;
 }
 .stars{
-    background: url(https://hydrahd.me/plugins/uFlixRatings/core/images/stars/medium/orange/rElements.png) repeat-x;
+    background: url(/rElements.png) repeat-x;
     width: 200px;
     height: 20px;
 }  

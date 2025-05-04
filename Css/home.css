@@ -248,7 +248,7 @@ width: 16vw;
     }
 }
 
-@media (min-width: 768px) {
+@media (max-width: 768px) {
     .posterHolder {
       width: 20vw; /* Adjust width for tablets */
       max-width: 300px;

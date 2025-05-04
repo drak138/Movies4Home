@@ -41,7 +41,7 @@ main{
 .container{
     color: white;
     width: 100vw;
-    background-image: url(/public/movie-9pvmdtvz4cb0xl37.jpg);
+    background-image: url(/movie-9pvmdtvz4cb0xl37.jpg);
 }
 .flex-row{
     display: flex;

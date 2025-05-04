@@ -185,7 +185,7 @@ margin-top:auto;
         width: -webkit-fill-available !important;
     }
 }
-@media (min-width: 768px) {
+@media (max-width: 768px) {
     .movieWithRemove {
       width: 20vw; /* Adjust width for tablets */
       max-width: 300px;
