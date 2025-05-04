@@ -10,7 +10,7 @@ header{
     display: flex;
 }
 header .logo{
-    font-size: 2.5em;
+    font-size: 2em;
 }
 header .logo span{
     font-size: 2.5rem;
@@ -81,6 +81,9 @@ header i{
     }
     header .logo {
         font-size: 1em;
+    }
+    header .logo span{
+        font-size: 1rem;
     }
     header .search{
         gap: 3px;
