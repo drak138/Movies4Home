@@ -100,7 +100,6 @@
 }
 .posterHolder{
         position: relative;
-        width: 17vw;  /* Fixed width */
         max-width: 300px;
         height: 300px; /* Fixed height */
         border-radius: 10px;
