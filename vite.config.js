@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react';
 
 export default defineConfig(({
   plugins: [react()],
-  base:"/Movies4Home",
+  base:"/",
   build: {
     outDir: "dist",
   },
