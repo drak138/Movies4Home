@@ -185,12 +185,6 @@ margin-top:auto;
         width: -webkit-fill-available !important;
     }
 }
-@media (max-width: 768px) {
-    .movieWithRemove {
-      width: 20vw; /* Adjust width for tablets */
-      max-width: 300px;
-    }
-  }
   
   @media (min-width: 1920px) {
     .movieWithRemove {

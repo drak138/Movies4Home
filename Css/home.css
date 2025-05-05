@@ -236,9 +236,6 @@ width: 16vw;
         background: #f1f1f1;
         border-radius: 10px;
       }
-    .posterHolder{
-        width: 37vw;
-    }
     .title {
         width: 36vw;
     }
@@ -246,13 +243,6 @@ width: 16vw;
         display: none;
     }
 }
-
-@media (max-width: 768px) {
-    .posterHolder {
-      width: 20vw; /* Adjust width for tablets */
-      max-width: 300px;
-    }
-  }
   
   @media (min-width: 1920px) {
     .posterHolder {

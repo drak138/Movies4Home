@@ -76,6 +76,11 @@ font-size: large;}
   .error{
     color: red;
   }
+  @media (min-width:600px){
+    body, p, h2{
+      font-size: medium;
+    }
+  }
   @media (min-width: 1440px) {
     body::-webkit-scrollbar {
       width: 8px; /* width of the scrollbar */
