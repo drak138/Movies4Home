@@ -65,6 +65,9 @@
     .results{
         gap: 30px;
     }
+    .results .posterHolder{
+        width: 37vw;
+    }
 }
 @media (min-width: 1920px) {
     .posterHolder {
