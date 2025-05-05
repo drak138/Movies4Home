@@ -27,6 +27,9 @@ dbConnect()
 app.use(cors(corsOptions));
 app.use(express.json());
 
+app.get("/",(req,res)=>{
+  res.json("wake up")
+})
 app.get("/api/hrefStealer", async (req, res) => {
   const { url } = req.query;
   if (!url) {
