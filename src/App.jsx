@@ -12,6 +12,7 @@ import useAuthExpiration from './utils/authExparation.js';
 import { GuestRoute, InviteGuard, ProtectedRoute } from './utils/protectedRoute.jsx';
 import InviteMember from './utils/inviteMember.jsx';
 import Footer from './components/footer.jsx';
+import RedirectPage from './pages/redirect.jsx';
 
 function App() {
     useAuthExpiration()

@@ -8,7 +8,7 @@ export default function Footer(){
                 <li>Mongo Atlas who keeps our data safe.</li>
                 <li>Netlify who even though didn't stick taught me much.</li>
                 <li>Softuni for the good lectures.</li>
-                <li>Github who hosts this so we can enjoy it together.</li>
+                <li>Vercel who hosts this so we can enjoy it together.</li>
                 <li>And of course ME!</li>
             </ul>
         </div>

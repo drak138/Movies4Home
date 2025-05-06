@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { encodeMovieName } from "./movieCard";
 
 const TMDB_KEY = import.meta.env.VITE_TMDB_API_KEY;
 
@@ -54,7 +55,7 @@ export default function TvSeasons({ details, id,sectionRef,openSeasons,toggleSea
                             return isReleased ? (
                                 <Link 
                                     className="episode" 
-                                    to={`/watch/tv/${details.name}/${details.id}/season/${season}/episode/${ep.episode_number}`} 
+                                    to={`/watch/tv/${encodeMovieName(details.name)}/${details.id}/season/${season}/episode/${ep.episode_number}`} 
                                     key={ep.id}
                                 >
                                     <span>Episode {ep.episode_number}.{ep.air_date} - </span>{ep.name} - {ep.runtime} min

@@ -1,0 +1,18 @@
+.redirectContainer{
+    font-size: x-large;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.newUrlHeader{
+    padding: 0px;
+    color: orange;
+}
+.redirectContainer p{
+    font-size: x-large;
+}
+.newLink{
+    color: orange;
+}
+
