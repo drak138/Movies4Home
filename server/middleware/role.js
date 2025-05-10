@@ -37,7 +37,7 @@ const verifyRole = async (req, res, next) => {
     const library=await Library.findById(libraryId)
     if (!library) return res.status(404).json({ message: "Library not found" });
 
-    if(library.type=="liked"||action!=="remove")return res.status(404).json({ message: "This library can't be edited by anybody" });
+    if(library.type=="liked"&&action!=="remove")return res.status(404).json({ message: "This library can't be edited by anybody" });
 
     if(library.userId.toString()==user._id.toString()){
         next()
