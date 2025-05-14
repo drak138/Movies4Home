@@ -4,7 +4,7 @@ import axios from "axios"
 import UseLibrariesHook from "../hooks/useLibrariesHook"
 import { AuthContext } from "../context/authContext"
 import Message from "./messageBox"
-import { submitHandler } from "../pages/library"
+import { removeSaved, submitHandler } from "../pages/library"
 
 export default function MovieActions({title,mediaType,details,season,seasonsCount,id}){
     const{token,user}=useContext(AuthContext)
@@ -17,6 +17,7 @@ export default function MovieActions({title,mediaType,details,season,seasonsCoun
     const [addForm,setAddForm]=useState(false)
     const [message,setMessage]=useState("")
     const [name,setName]=useState("")
+    const [selectedLibraryIds, setSelectedLibraryIds] = useState([]);
     const {count,downloadMovie}=useContext(DownloadContext)
     const { libraries } = UseLibrariesHook({
         token,
@@ -50,6 +51,15 @@ export default function MovieActions({title,mediaType,details,season,seasonsCoun
         fetchLink()
         }
     },[title])
+    useEffect(() => {
+        if (libraries && id) {
+          const savedIn = libraries
+            .filter((lib) => lib.movies.some((saved) => saved.id === id))
+            .map((lib) => lib._id);
+          setSelectedLibraryIds(savedIn);
+        }
+      }, [libraries, id]);
+
     const showMsgHandler=({set,message})=>{
         setMessage(message)
         setShowMsg(set)
@@ -66,27 +76,31 @@ export default function MovieActions({title,mediaType,details,season,seasonsCoun
         if(librariesId){
             body.librariesId=librariesId
         }
-
         try{
        await axios.put("https://movies4home.onrender.com/api/library/add",
        body,
        {headers:{Authorization: `Bearer ${token}`}}).then((res)=>{
         const response=res
-        setRefetchTrigger((prev)=>!prev)
        })
+       setSelectedLibraryIds((prev) => [...new Set([...prev, ...librariesId])]);
+       setRefetchTrigger((prev)=>!prev)
         }catch(error){
         }
     }
-    const addHandler=async(e)=>{
-        e.preventDefault()
-        const formData = new FormData(e.target);
-        const selectedLibraries = formData.getAll("library");
-        if(selectedLibraries.length<1){
-            return
-        }
+        async function addHandler({library}){
+        const selectedLibraries = [library._id]
+;
+
         try{
+            if(library.movies.some((saved)=>saved.id==id)){
+            await removeSaved({libraryId:library._id,savedId:id,action:"remove",token,setRefetchTrigger})
+            setSelectedLibraryIds((prev) => prev.filter((libId) => libId !== library._id))
+            }
+            else{
             await addToLibrary({ librariesId: selectedLibraries });
-            setShowLib(false);
+            setSelectedLibraryIds((prev) => [...new Set([...prev, library._id])]);
+            }
+
         }
         catch(error){
         }
@@ -95,7 +109,7 @@ export default function MovieActions({title,mediaType,details,season,seasonsCoun
     return(
         <section className="movieInteraction">
         <div className="smallStuff">
-        <button style={{color:libraries[0]?.movies.some(saved=>saved.id==id)?"orange":"white"}} onClick={()=>{user?addToLibrary({type:"liked"}):showMsgHandler({set:true,message:"You have to be logged in to Give a Like!"})}} className="like"><i className="fa-solid fa-thumbs-up"></i></button>
+        <button style={{color:libraries[0]?.movies.some(saved=>saved.id==id)||selectedLibraryIds.includes(libraries[0]?._id)?"orange":"white"}} onClick={()=>{user?addToLibrary({type:"liked",librariesId: [libraries[0]._id]}):showMsgHandler({set:true,message:"You have to be logged in to Give a Like!"})}} className="like"><i className="fa-solid fa-thumbs-up"></i></button>
         <button className="dislike"><i className="fa-solid fa-thumbs-down"></i></button>
         {canDowloand ?
         (
@@ -120,15 +134,24 @@ export default function MovieActions({title,mediaType,details,season,seasonsCoun
                 <>
                 <h3>Add Movie</h3>
                 <button onClick={()=>setAddForm(true)} className="addLibraryBtn"><i className="fa-solid fa-plus"></i></button>
-                <form className="libraryForm" onSubmit={addHandler}>
+                <form className="libraryForm">
                     <ul className="libraryList custom-scroll">
                    {libraries.map((library)=>
-                    <label key={library._id} htmlFor={library._id}><input type="checkbox" disabled={library.movies.some(saved=>saved.id==id)} defaultChecked={library.movies.some(saved=>saved.id==id)} name="library" id={library._id} value={library._id}/>{library.name}</label>
+                    <label  key={library._id} htmlFor={library._id}>
+                    <input onChange={(e)=>{addHandler({library})}} type="checkbox" disabled={library.members.find((el)=>el.username==user.username)?.role=="viewer"} checked={selectedLibraryIds.includes(library._id) || library.movies.some(saved => saved.id === id)||library.members.find((el)=>el.username==user.username)?.role=="viewer"} name="library" id={library._id} value={library._id}/>
+                    <svg viewBox="0 0 64 64" height="0.7em" width="0.7em">
+                    <path d="M 0 16 V 56 A 8 8 90 0 0 8 64 H 56 A 8 8 90 0 0 64 56 V 8 A 8 8 
+                    90 0 0 56 0 H 8 A 8 8 90 0 0 0 8 V 16 L 32 48 L 64 16 V 8 A 8 8 90 0 0 
+                    56 0 H 8 A 8 8 90 0 0 0 8 V 56 A 8 8 90 0 0 8 64 H 56 A 8 8 90 0 0 64 56 
+                    V 16" pathLength="575.0541381835938" className="path">
+                    </path>
+                    </svg>
+                    {library.name}
+                    </label>
                    )
                    }
                    </ul>
                 <div className="flex-row">
-                <button className="saveBtn">Save</button>
                 <button onClick={(e)=>setShowLib(!showLib)} className="cancelBtn">Cancel</button>
                 </div>
                 </form>

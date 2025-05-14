@@ -25,10 +25,23 @@ export async function submitHandler({e, name, selected, token, setName, setRefet
         alert(err || "Failed to create library");
     }
 }
+export async function removeSaved({libraryId,savedId,action,token,setRefetchTrigger}){
+    try{
+    await axios.put("https://movies4home.onrender.com/api/library/remove",
+    {savedId,libraryId,action},
+    {headers:{Authorization: `Bearer ${token}`}})
+    setRefetchTrigger((prev) => !prev);
+    }catch(error){
+        const err=error.response?.data?.message
+        alert(err || "Failed to Delete Library");
+        return
+    }
+}
 
 export default function Library(){
     const{token,user}=useContext(AuthContext)
     const [name,setName]=useState("")
+    const [refetchMovieTrigger, setRefetchMovieTrigger] = useState(false);
     const [refetchTrigger, setRefetchTrigger] = useState(false);
     const [type,setType]=useState("Add Library")
     const [saved,setSaved]=useState([])
@@ -44,7 +57,8 @@ export default function Library(){
         token,
         userId: user?._id,
         username: user?.username,
-        refetchTrigger
+        refetchTrigger,
+        refetchMovieTrigger
       });
       const [selected, setSelected] = useState([]);
       useEffect(() => {
@@ -143,19 +157,6 @@ export default function Library(){
                 setSelected([])
                 setRefetchTrigger((prev)=>!prev)
             })
-        }catch(error){
-            const err=error.response?.data?.message
-            alert(err || "Failed to Delete Library");
-            return
-        }
-    }
-    async function removeSaved({libraryId,savedId,action}){
-        try{
-        await axios.put("https://movies4home.onrender.com/api/library/remove",
-        {savedId,libraryId,action},
-        {headers:{Authorization: `Bearer ${token}`}})
-        setSaved((prev) => prev.filter((movie) => movie.id !== savedId));
-        setRefetchTrigger((prev) => !prev);
         }catch(error){
             const err=error.response?.data?.message
             alert(err || "Failed to Delete Library");
@@ -281,7 +282,7 @@ export default function Library(){
                 {saved.map((item) => (
                     <div className="movieWithRemove" key={item.id}>
                         <MovieCard movie={item} />
-                        <button onClick={()=>removeSaved({libraryId:selected[0]?._id,savedId:item.id,action:"remove"})} className="removeButton">Remove</button>
+                        <button onClick={()=>removeSaved({libraryId:selected[0]?._id,savedId:item.id,action:"remove",token,setRefetchTrigger:setRefetchMovieTrigger})} className="removeButton">Remove</button>
                     </div>
                 ))}
             </div>

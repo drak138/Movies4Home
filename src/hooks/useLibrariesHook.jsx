@@ -1,13 +1,13 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-export default function UseLibrariesHook({userId, username, token,refetchTrigger}) {
+export default function UseLibrariesHook({userId, username, token,refetchTrigger,refetchMovieTrigger}) {
   const [libraries, setLibraries] = useState([]);
   const [loading,setLoading]=useState(true)
 
   useEffect(() => {
-    const getLibraries = async () => {
-      setLoading(true)
+    const getLibraries = async (showLoading = true) => {
+      if (showLoading) setLoading(true);
       try {
         const response = await axios.get("https://movies4home.onrender.com/api/library/", {
           params: { userId,username},
@@ -15,17 +15,19 @@ export default function UseLibrariesHook({userId, username, token,refetchTrigger
         })
         setLibraries(response.data);
       } catch (error) {
-      }
-      finally {
+      } finally {
         setLoading(false);
       }
     };
 
-    if (token&& userId && username) {
-      getLibraries();
+    if (token && userId && username) {
+      if (refetchMovieTrigger) {
+        getLibraries(false);
+      } else {
+        getLibraries(true);
+      }
     }
-  }, [token,userId,username,refetchTrigger]);
+  }, [token,userId,username,refetchTrigger,refetchMovieTrigger]);
 
   return { libraries,loading };
 }
-
