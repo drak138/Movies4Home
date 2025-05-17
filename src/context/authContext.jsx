@@ -12,7 +12,6 @@ export function AuthProvider({ children }) {
 
   useEffect(() => {
     const controller = new AbortController();
-
     const verify = async () => {
       try {
         const decoded = jwtDecode(token);
@@ -31,7 +30,12 @@ export function AuthProvider({ children }) {
         setLoading(false);
       }
     };
-      if (token) verify();
+    if (token) {
+      verify();
+    } else {
+      setUser(false);
+      setLoading(false);
+    }
     return () => {
       controller.abort();
     };
