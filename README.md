@@ -1,7 +1,7 @@
 # Movies4Home
 This is my react project for online movie watching and downloading
 
-You can access it from https://drak138.github.io/Movies4Home/#/ for it to look good on 1080p zoom 150%
+You can access it from https://drak138.github.io/Movies4Home/#
 
 or sudo npm run dev and npm run nodemon 
 
