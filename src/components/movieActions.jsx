@@ -152,7 +152,7 @@ export default function MovieActions({title,mediaType,details,season,seasonsCoun
                    }
                    </ul>
                 <div className="flex-row">
-                <button onClick={(e)=>setShowLib(!showLib)} className="cancelBtn">Cancel</button>
+                <button onClick={(e)=>setShowLib(!showLib)} className="cancelBtn">Close</button>
                 </div>
                 </form>
                 </>:
