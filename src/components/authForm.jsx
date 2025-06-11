@@ -50,6 +50,7 @@ export default function AuthForm({ type }) {
           <label htmlFor="username">Username</label>
           <div className="input-contianer">
           <input type="text" id="username" name="username"
+          autoComplete="username"
           {...register("username",{
             required:"Username is required",
             minLength:{
@@ -62,7 +63,8 @@ export default function AuthForm({ type }) {
   
           <label htmlFor="email">Email</label>
           <div className="input-contianer">
-          <input type="text" id="email" name="email" {...register("email",{
+          <input type="text" id="email" name="email" autoComplete="email" 
+          {...register("email",{
             required:"Email is required",
             pattern: {
               value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
