@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie"
 import { AuthContext } from "../context/authContext";
-import { useContext } from "react";
+import { useContext,useEffect } from "react";
 import { jwtDecode } from "jwt-decode";
 export default function AuthForm({ type }) {
   const {
@@ -14,17 +14,8 @@ export default function AuthForm({ type }) {
     setError,
     formState:{errors,isSubmitting}}
     =useForm()
-
-    const navigate=useNavigate()
-    const { setUser } = useContext(AuthContext);
-    const submitAction=async(data)=>{
     
-    if (data.confirmPassword?data.password !== data.confirmPassword:null) {
-      resetField("confirmPassword")
-      return setError("confirmPassword",{type:"validate",message:"Missmatch password"})
-    }
-
-    useEffect(() => {
+        useEffect(() => {
   setTimeout(() => {
     const usernameInput = document.getElementById("username") ;
     const emailInput = document.getElementById("email");
@@ -35,8 +26,17 @@ export default function AuthForm({ type }) {
     if (emailInput?.value) {
       setValue("email", emailInput.value);
     }
-  }, 100);
+  }, 100); 
 }, []);
+
+    const navigate=useNavigate()
+    const { setUser } = useContext(AuthContext);
+    const submitAction=async(data)=>{
+    
+    if (data.confirmPassword?data.password !== data.confirmPassword:null) {
+      resetField("confirmPassword")
+      return setError("confirmPassword",{type:"validate",message:"Missmatch password"})
+    }
 
   const {username,email,password}=data
    try{
