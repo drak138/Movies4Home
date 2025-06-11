@@ -10,6 +10,7 @@ export default function AuthForm({ type }) {
     register,
     handleSubmit,
     resetField,
+    setValue,
     setError,
     formState:{errors,isSubmitting}}
     =useForm()
@@ -22,6 +23,20 @@ export default function AuthForm({ type }) {
       resetField("confirmPassword")
       return setError("confirmPassword",{type:"validate",message:"Missmatch password"})
     }
+
+    useEffect(() => {
+  setTimeout(() => {
+    const usernameInput = document.getElementById("username") ;
+    const emailInput = document.getElementById("email");
+
+    if (usernameInput?.value) {
+      setValue("username", usernameInput.value);
+    }
+    if (emailInput?.value) {
+      setValue("email", emailInput.value);
+    }
+  }, 100);
+}, []);
 
   const {username,email,password}=data
    try{
