@@ -3,31 +3,16 @@ import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie"
 import { AuthContext } from "../context/authContext";
-import { useContext,useEffect } from "react";
+import { useContext} from "react";
 import { jwtDecode } from "jwt-decode";
 export default function AuthForm({ type }) {
   const {
     register,
     handleSubmit,
     resetField,
-    setValue,
     setError,
     formState:{errors,isSubmitting}}
     =useForm()
-    
-        useEffect(() => {
-  setTimeout(() => {
-    const usernameInput = document.getElementById("username") ;
-    const emailInput = document.getElementById("email");
-
-    if (usernameInput?.value) {
-      setValue("username", usernameInput.value);
-    }
-    if (emailInput?.value) {
-      setValue("email", emailInput.value);
-    }
-  }, 100); 
-}, []);
 
     const navigate=useNavigate()
     const { setUser } = useContext(AuthContext);
