@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import UseSeasonHook from "../hooks/useSeasonHook";
+import { encodeMovieName } from "./movieCard";
 
 export default function SeriesActions({ season, episode, lastEpisode, title, handleScrollAndOpen }) {
     const { episode_number, season_number, show_id } = lastEpisode;
@@ -41,18 +42,17 @@ export default function SeriesActions({ season, episode, lastEpisode, title, han
         }
 
     }, [season, episode, seasonDetails, prevSeasonDetails]);
-
     return (
         <section className="seriesActionsHolder">
             <Link
             className="seriesAction"
-                to={`/watch/tv/${title}/${show_id}/season/${prevSeason}/episode/${prevEpisode}`}
+                to={`/watch/tv/${encodeMovieName(title)}/${show_id}/season/${prevSeason}/episode/${prevEpisode}`}
                 style={{ pointerEvents: !(season == 1 && episode == 1) ? "auto" : "none", opacity: !(season == 1 && episode == 1) ? 1 : 0.5 }}
             >
                 Prev
             </Link>
             <button onClick={handleScrollAndOpen} className="seriesAction">Episodes</button>
-            <Link className="seriesAction" to={`/watch/tv/${title}/${show_id}/season/${nextSeason}/episode/${nextEpisode}`}
+            <Link className="seriesAction" to={`/watch/tv/${encodeMovieName(title)}/${show_id}/season/${nextSeason}/episode/${nextEpisode}`}
             style={{ pointerEvents: !(season == season_number && episode == episode_number) ? "auto" : "none", opacity: !(season == season_number && episode == episode_number) ? 1 : 0.5 }}
 
             >Next</Link>

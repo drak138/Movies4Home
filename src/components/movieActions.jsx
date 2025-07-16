@@ -5,6 +5,7 @@ import UseLibrariesHook from "../hooks/useLibrariesHook"
 import { AuthContext } from "../context/authContext"
 import Message from "./messageBox"
 import { removeSaved, submitHandler } from "../pages/library"
+import { encodeMovieName } from "./movieCard"
 
 export default function MovieActions({title,mediaType,details,season,seasonsCount,id}){
     const{token,user}=useContext(AuthContext)
@@ -26,9 +27,6 @@ export default function MovieActions({title,mediaType,details,season,seasonsCoun
         refetchTrigger
       });
     const url=`https://yts.mx/movies/${title}`
-    function encodeMovieName(movieName) {
-        return encodeURIComponent(movieName?.replace(':', '').toLowerCase().replace(/\s+/g, '-'));
-      }
     const originName= `${details?.release_date?details?.release_date.split("-")[0]:details?.first_air_date.split("-")[0]}-`+encodeMovieName(details?.title||details?.name)+`/${seasonsCount==1||seasonsCount==undefined?"":`seasons/${season||1}`}`
     useEffect(()=>{
         setLoading(true)
