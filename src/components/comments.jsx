@@ -99,10 +99,11 @@ export default function Comments({ movieId }) {
   const cancelEdit = () => {
     setEditCommentId(null);
   };
-  const deleteComment = async (commentId) => {
+  const deleteComment = async (commentId,mainId) => {
     try {
       await axios.delete(`https://movies4home.onrender.com/api/comments/delete/${commentId}`, {
         headers: { Authorization: `Bearer ${token}` },
+        data:{mainId}
       });
       setShowMsg(false)
       fetchComments();
@@ -111,7 +112,7 @@ export default function Comments({ movieId }) {
     }
   };
 
-  const renderReplies = (replies) => {
+  const renderReplies = (replies,commentId) => {
     return replies.map((reply) => (
       <div className="replyWrapper" key={reply._id}>
         <div className="reply">
@@ -134,7 +135,7 @@ export default function Comments({ movieId }) {
                               <button onClick={() => startEditing(reply._id, reply.text)}>Edit</button>
                               <button onClick={() => setShowMsg(!showMsg)}>Delete</button>
                               {showMsg&&(
-          <Message message="Are you sure you want to delete you Comment" func={()=>deleteComment(reply._id)} show={showMsg} setShow={setShowMsg}/>
+          <Message message="Are you sure you want to delete you Comment" func={()=>deleteComment(reply._id,commentId)} show={showMsg} setShow={setShowMsg}/>
           )}
                             </div>
                           )}
@@ -186,7 +187,7 @@ export default function Comments({ movieId }) {
               </div>
               <p style={{color:"orange",marginTop:"-9px",marginBottom:"-5px"}}>{comment.formattedTimestamp}</p>
               <button onClick={() => handleReplyClick(comment._id, comment.userId.username)}>Reply</button>
-              {comment.replies?.length > 0 && renderReplies(comment.replies)}
+              {comment.replies?.length > 0 && renderReplies(comment.replies,comment._id)}
             </div>
           ))}
         </div>

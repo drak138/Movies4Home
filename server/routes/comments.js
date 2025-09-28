@@ -85,6 +85,7 @@ commentsRouter.post("/add", verifyToken, async (req, res) => {
   commentsRouter.delete("/delete/:commentId",verifyToken,async(req,res)=>{
     try {
       const { commentId } = req.params;
+      const {mainId}=req.body
       const comment = await Comment.findById(commentId);
       if (!comment) {
         return res.status(404).json({ error: "Comment not found" });
@@ -101,6 +102,11 @@ commentsRouter.post("/add", verifyToken, async (req, res) => {
       
         await Comment.findByIdAndDelete(commentId);
       };
+      if(mainId){
+        await Comment.updateOne({ _id: mainId},
+       { $pull: { replies: commentId }}
+      )
+      }
   
       await deleteCommentAndReplies(commentId);
   
