@@ -7,7 +7,7 @@ export default function MoviePlayer({mediaType,id,details,season,episode}){
     useEffect(()=>{
         setWatching(false)
         setShowServers(false)
-        setServer({"name":"Alpha","src":`https://vidfast.pro/${mediaType}/${mediaType==="tv"?details?.external_ids.imdb_id:details?.imdb_id}${mediaType==="tv"?`/${season==undefined?1:season}/${episode==undefined?1:episode}?nextButton=false&autoPlay=true`:"?autoPlay=true"}`})
+        setServer({"name":"Alpha","src":`https://vidfast.pro/${mediaType}/${mediaType==="tv"?details?.external_ids?.imdb_id:details?.imdb_id}${mediaType==="tv"?`/${season==undefined?1:season}/${episode==undefined?1:episode}?nextButton=false&autoPlay=true`:"?autoPlay=true"}`})
     },[season,episode,id,details])
     return(
         <div className="playerContainer">
