@@ -222,6 +222,7 @@
     transform: translate(50%, -50%);  /* To center the element */
   }
   .similarSection{
+    height: fit-content;
     justify-content: center;
     display: flex;
     flex-wrap: wrap;
