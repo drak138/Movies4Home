@@ -13,6 +13,8 @@ import { GuestRoute, InviteGuard, ProtectedRoute } from './utils/protectedRoute.
 import InviteMember from './utils/inviteMember.jsx';
 import Footer from './components/footer.jsx';
 import RedirectPage from './pages/redirect.jsx';
+import { SpeedInsights } from "@vercel/speed-insights/react"
+
 
 function App() {
     useAuthExpiration()
@@ -44,6 +46,7 @@ function App() {
         </Route>
         </Routes>
         <Footer/>
+        <SpeedInsights/>
         </>
     );
 }
