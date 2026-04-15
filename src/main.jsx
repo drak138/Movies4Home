@@ -11,11 +11,11 @@ import { SpeedInsights } from "@vercel/speed-insights/react"
 
 createRoot(document.getElementById('root')).render(
 <BrowserRouter>
+<SpeedInsights/>
 <AuthProvider>
 <DownloadCount>
 <UseScrollToTop/>
     <App />
-    <SpeedInsights/>
 </DownloadCount>
 </AuthProvider>
 </BrowserRouter>,
