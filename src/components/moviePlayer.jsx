@@ -38,6 +38,10 @@ export default function MoviePlayer({mediaType,id,details,season,episode}){
             Alpha<img className="flag" src="https://www.svgrepo.com/show/248851/united-states.svg" alt="" />
             <p>Recommended</p>
         </li>
+        <li className={`server ${server.name=="Mapple"?"selected-server":""}`} onClick={e=>{setShowServers(false);setServer({"name":"Mapple","src":`https://mapple.uk/watch/${mediaType}/${mediaType==="tv"?details?.id:details?.id}${mediaType==="tv"?`-${season==undefined?1:season}-${episode==undefined?1:episode}?nextbutton=false`:"?"}&autoplay=true&theme=ffa500`})}}>
+            Mapple<img className="flag" src="https://www.svgrepo.com/show/248851/united-states.svg" alt="" />
+            <p>Mapple</p>
+        </li>
         <li className={`server ${server.name=="Bravo"?"selected-server":""}`} onClick={e=>{setShowServers(false);setServer({"name":"Bravo","src":`https://111movies.com/${mediaType}/${mediaType==="tv"?details?.external_ids.imdb_id:details?.imdb_id}/${mediaType==="tv"?`/${season==undefined?1:season}/${episode==undefined?1:episode}?nextbutton=0`:"?"}&autoplay=1`})}}>
             Bravo<img className="flag" src="https://www.svgrepo.com/show/248851/united-states.svg" alt="" />
             <p>Fast</p>
